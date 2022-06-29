@@ -16,3 +16,9 @@ terraform {
     }
   }
 }
+
+module "root" {
+  source = "./modules/trilium-root"
+
+  stage  = local.stage
+}
