@@ -20,7 +20,16 @@ terraform {
 module "root" {
   source = "./modules/trilium-root"
 
-  stage            = local.stage
-  ec2_pubkey       = var.ec2_pubkey
-  ec2_privkey_path = var.ec2_privkey_path
+  stage = local.stage
+}
+
+module "app" {
+  source = "./modules/trilium-app"
+
+  stage                 = local.stage
+  vpc_id                = module.root.vpc_id
+  subnet_id             = module.root.public_subnet_ids[0]
+  instance_sg_ids       = module.root.instance_sg_ids
+  instance_pubkey       = var.ec2_pubkey
+  instance_privkey_path = "${path.root}/${var.ec2_privkey_path}"
 }

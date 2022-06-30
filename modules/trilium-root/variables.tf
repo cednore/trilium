@@ -33,14 +33,3 @@ variable "vpc_subnets" {
   type        = number
   default     = 1
 }
-
-variable "ec2_pubkey" {
-  description = "Public key for ssh connection to instances"
-  type        = string
-  sensitive   = true
-}
-
-variable "ec2_privkey_path" {
-  description = "Path to private key file for ssh connection to instances"
-  type        = string
-}
