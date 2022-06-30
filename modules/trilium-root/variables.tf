@@ -39,3 +39,8 @@ variable "ec2_pubkey" {
   type        = string
   sensitive   = true
 }
+
+variable "ec2_privkey_path" {
+  description = "Path to private key file for ssh connection to instances"
+  type        = string
+}
