@@ -34,6 +34,14 @@ variable "domain" {
   default     = "trilium.cednore.com"
 }
 
+variable "alternative_domains" {
+  description = "Alternative domains of this app"
+  type        = list(string)
+  default = [
+    "notes.cednore.com",
+  ]
+}
+
 variable "ec2_pubkey" {
   description = "Public key for ssh connection to instances"
   type        = string

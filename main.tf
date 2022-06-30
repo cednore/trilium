@@ -72,6 +72,7 @@ module "end" {
 
   stage                = local.stage
   domain               = var.domain
+  alternative_domains  = var.alternative_domains
   route53_apex_zone_id = data.aws_route53_zone.apex.zone_id
   route53_default_ttl  = 3600
   acm_apex_cert_arn    = data.aws_acm_certificate.apex.arn

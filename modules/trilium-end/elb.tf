@@ -42,7 +42,7 @@ resource "aws_lb_listener" "app_https" {
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = var.acm_apex_cert_arn
+  certificate_arn   = var.acm_apex_cert_arn # Assuming apex domain certificate is subject to all subdomains as well
 
   default_action {
     type             = "forward"
@@ -52,16 +52,6 @@ resource "aws_lb_listener" "app_https" {
   tags = merge(local.default_tags, {
     Name = "lbl-${local.slug}-app-https"
   })
-}
-
-resource "aws_lb_listener_certificate" "cert_root" {
-  listener_arn    = aws_lb_listener.app_https.arn
-  certificate_arn = var.acm_apex_cert_arn
-}
-
-resource "aws_lb_listener_certificate" "cert_subdomain" {
-  listener_arn    = aws_lb_listener.app_https.arn
-  certificate_arn = aws_acm_certificate.subdomain.arn
 }
 
 resource "aws_lb_target_group" "app" {
