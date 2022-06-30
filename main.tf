@@ -26,17 +26,17 @@ module "root" {
 module "app" {
   source = "./modules/trilium-app"
 
-  stage                 = local.stage
-  subnet_id             = module.root.public_subnet_ids[0]
-  instance_sg_ids       = module.root.instance_sg_ids
-  instance_pubkey       = var.ec2_pubkey
+  stage           = local.stage
+  subnet_id       = module.root.public_subnet_ids[0]
+  instance_sg_ids = module.root.instance_sg_ids
+  instance_pubkey = var.ec2_pubkey
 }
 
 module "storage" {
   source = "./modules/trilium-storage"
 
-  stage                  = local.stage
-  app_instance_id        = module.app.instance_id
-  availability_zone      = module.app.instance_availability_zone
-  device_name            = "/dev/sdf"
+  stage             = local.stage
+  app_instance_id   = module.app.instance_id
+  availability_zone = module.app.instance_availability_zone
+  device_letter     = "f"
 }
