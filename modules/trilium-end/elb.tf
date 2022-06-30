@@ -4,7 +4,7 @@ resource "aws_lb" "app" {
   load_balancer_type         = "application"
   subnets                    = var.app_lb_subnet_ids
   security_groups            = var.app_lb_sg_ids
-  enable_deletion_protection = false # TODO: "production" == var.stage // If set as true, destroy process stucks at internet_gateway
+  enable_deletion_protection = "production" == var.stage // If set as true, destroy process stucks at internet_gateway
 
   access_logs {
     bucket  = var.app_lb_log_bucket

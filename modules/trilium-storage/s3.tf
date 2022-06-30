@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "app_lb_logs" {
   bucket = "s3b-${local.slug}-app-lb-logs"
 
-  force_destroy = true # TODO: "production" != var.stage
+  force_destroy = "production" != var.stage
 
   tags = merge(local.default_tags, {
     Name = "s3b-${local.slug}"
