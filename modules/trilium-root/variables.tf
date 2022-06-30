@@ -31,5 +31,5 @@ variable "vpc_cidr" {
 variable "vpc_subnets" {
   description = "Number of private/public subnets of the VPC"
   type        = number
-  default     = 1
+  default     = 3
 }

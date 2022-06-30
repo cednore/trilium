@@ -56,8 +56,23 @@ module "provisioner" {
   app_image_tag           = "0.52.3"
   app_container_count     = 1
   app_container_name      = "app"
-  app_container_ports     = "8080:8080"
+  app_container_ports     = "80:8080"
   app_container_volumes   = "${var.data_volume_mount_path}:/home/node/trilium-data"
   data_volume_device_name = module.storage.data_volume_device_name
   data_volume_mount_path  = var.data_volume_mount_path
+}
+
+module "end" {
+  source = "./modules/trilium-end"
+
+  stage                = local.stage
+  domain               = var.domain
+  route53_apex_zone_id = data.aws_route53_zone.apex.zone_id
+  acm_apex_cert_arn    = data.aws_acm_certificate.apex.arn
+  vpc_id               = module.root.vpc_id
+  app_instance_id      = module.app.instance_id
+  app_lb_subnet_ids    = module.root.public_subnet_ids
+  app_lb_sg_ids        = module.root.app_lb_sg_ids
+  app_lb_log_bucket    = module.storage.app_lb_log_bucket
+  app_lb_tg_port       = 80
 }
