@@ -16,9 +16,14 @@ output "public_subnet_ids" {
 output "instance_sg_ids" {
   description = "Security group IDs to apply on app instance"
   value = [
+    aws_security_group.app.id,
     aws_security_group.ssh.id,
-    aws_security_group.http.id,
-    aws_security_group.https.id,
-    aws_security_group.out.id,
+  ]
+}
+
+output "app_lb_sg_ids" {
+  description = "Security group IDs to apply on app load balancer"
+  value = [
+    aws_security_group.lb.id,
   ]
 }
