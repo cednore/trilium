@@ -27,7 +27,7 @@ variable "subnet_id" {
   type        = string
 }
 
-variable "instance_sg_ids" {
+variable "sg_ids" {
   description = "IDs of security groups to apply to the instance"
   type        = list(string)
 }
@@ -38,7 +38,7 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
-variable "instance_pubkey" {
+variable "pubkey" {
   description = "Public key for ssh connection to instances"
   type        = string
   sensitive   = true

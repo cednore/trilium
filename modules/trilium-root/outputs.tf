@@ -13,7 +13,7 @@ output "public_subnet_ids" {
   value       = [for sn in aws_subnet.public : sn.id]
 }
 
-output "instance_sg_ids" {
+output "app_instance_sg_ids" {
   description = "Security group IDs to apply on app instance"
   value = [
     aws_security_group.app.id,

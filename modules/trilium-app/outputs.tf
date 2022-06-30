@@ -1,11 +1,14 @@
 output "instance_id" {
-  value = aws_instance.app.id
+  description = "ID of the app instance"
+  value       = aws_instance.app.id
 }
 
 output "instance_public_ip" {
-  value = aws_instance.app.public_ip
+  description = "Public IP address of the app instance"
+  value       = aws_instance.app.public_ip
 }
 
 output "instance_availability_zone" {
-  value = aws_instance.app.availability_zone
+  description = "Availability zone of the app instance"
+  value       = aws_instance.app.availability_zone
 }

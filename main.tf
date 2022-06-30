@@ -26,10 +26,11 @@ module "root" {
 module "app" {
   source = "./modules/trilium-app"
 
-  stage           = local.stage
-  subnet_id       = module.root.public_subnet_ids[0]
-  instance_sg_ids = module.root.instance_sg_ids
-  instance_pubkey = var.ec2_pubkey
+  stage         = local.stage
+  subnet_id     = module.root.public_subnet_ids[0]
+  sg_ids        = module.root.app_instance_sg_ids
+  instance_type = "t2.micro"
+  pubkey        = var.ec2_pubkey
 }
 
 module "storage" {
