@@ -26,7 +26,7 @@ resource "null_resource" "app_instance" {
                   -e 'image=${var.app_image}' \
                   -e 'tag=${var.app_image_tag}' \
                   -e 'container_count=${var.app_container_count}' \
-                  -e 'container_name=${var.app_container_name}' \
+                  -e 'container_name_prefix=${var.app_container_name_prefix}' \
                   -e 'ports=${var.app_container_ports}' \
                   -e 'volumes=${var.app_container_volumes}'
               BASH

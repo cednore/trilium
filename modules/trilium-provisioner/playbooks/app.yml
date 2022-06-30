@@ -6,7 +6,7 @@
     image: zadam/trilium
     tag: latest
     container_count: 1
-    container_name: app
+    container_name_prefix: app
     ports: 8080:8080
     volumes: /mnt/app_data:/home/node/trilium-data
   tasks:
@@ -49,7 +49,7 @@
         source: pull
     - name: Create containers
       community.docker.docker_container:
-        name: "{{ container_name }}{{ item }}"
+        name: "{{ container_name_prefix }}{{ item }}"
         image: "{{ image }}:{{ tag }}"
         ports: "{{ ports }}"
         volumes: "{{ volumes }}"

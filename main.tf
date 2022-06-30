@@ -20,7 +20,9 @@ terraform {
 module "root" {
   source = "./modules/trilium-root"
 
-  stage = local.stage
+  stage       = local.stage
+  vpc_cidr    = "10.0.0.0/16"
+  vpc_subnets = 3
 }
 
 module "app" {
@@ -39,7 +41,8 @@ module "storage" {
   stage             = local.stage
   app_instance_id   = module.app.instance_id
   availability_zone = module.app.instance_availability_zone
-  device_letter     = "f"
+  device_letter     = "f" # /dev/sdf, /dev/xvdf
+  volume_size       = 100 # 100 GB
 }
 
 module "provisioner" {
@@ -50,17 +53,18 @@ module "provisioner" {
     module.storage,
   ]
 
-  stage                   = local.stage
-  app_instance_public_ip  = module.app.instance_public_ip
-  app_privkey_path        = "${path.root}/${var.ec2_privkey_path}"
-  app_image               = "zadam/trilium"
-  app_image_tag           = "0.52.3"
-  app_container_count     = 1
-  app_container_name      = "app"
-  app_container_ports     = "80:8080"
-  app_container_volumes   = "${var.data_volume_mount_path}:/home/node/trilium-data"
-  data_volume_device_name = module.storage.data_volume_device_name
-  data_volume_mount_path  = var.data_volume_mount_path
+  stage                     = local.stage
+  app_instance_public_ip    = module.app.instance_public_ip
+  app_privkey_path          = "${path.root}/${var.ec2_privkey_path}"
+  app_image                 = "zadam/trilium"
+  app_image_tag             = "0.52.3"
+  app_container_count       = 1
+  app_container_name_prefix = "app"
+  app_container_ports       = "80:8080"
+  app_container_volumes     = "${var.data_volume_mount_path}:/home/node/trilium-data"
+  data_volume_device_name   = module.storage.data_volume_device_name
+  data_volume_filesystem    = "ext4"
+  data_volume_mount_path    = var.data_volume_mount_path
 }
 
 module "end" {
@@ -69,6 +73,7 @@ module "end" {
   stage                = local.stage
   domain               = var.domain
   route53_apex_zone_id = data.aws_route53_zone.apex.zone_id
+  route53_default_ttl  = 3600
   acm_apex_cert_arn    = data.aws_acm_certificate.apex.arn
   vpc_id               = module.root.vpc_id
   app_instance_id      = module.app.instance_id

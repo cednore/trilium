@@ -50,7 +50,7 @@ variable "app_container_count" {
   default     = 1
 }
 
-variable "app_container_name" {
+variable "app_container_name_prefix" {
   description = "Name prefix of app containers"
   type        = string
   default     = "app"
