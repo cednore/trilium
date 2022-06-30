@@ -27,9 +27,16 @@ module "app" {
   source = "./modules/trilium-app"
 
   stage                 = local.stage
-  vpc_id                = module.root.vpc_id
   subnet_id             = module.root.public_subnet_ids[0]
   instance_sg_ids       = module.root.instance_sg_ids
   instance_pubkey       = var.ec2_pubkey
-  instance_privkey_path = "${path.root}/${var.ec2_privkey_path}"
+}
+
+module "storage" {
+  source = "./modules/trilium-storage"
+
+  stage                  = local.stage
+  app_instance_id        = module.app.instance_id
+  availability_zone      = module.app.instance_availability_zone
+  device_name            = "/dev/sdf"
 }
