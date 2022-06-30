@@ -20,5 +20,6 @@ terraform {
 module "root" {
   source = "./modules/trilium-root"
 
-  stage  = local.stage
+  stage      = local.stage
+  ec2_pubkey = var.ec2_pubkey
 }

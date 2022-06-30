@@ -33,3 +33,9 @@ variable "vpc_subnets" {
   type        = number
   default     = 1
 }
+
+variable "ec2_pubkey" {
+  description = "Public key for ssh connection to instances"
+  type        = string
+  sensitive   = true
+}

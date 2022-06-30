@@ -9,3 +9,9 @@ variable "REPO_ORIGIN" {
   type        = string
   default     = "https://github.com/cednore/trilium.git"
 }
+
+variable "ec2_pubkey" {
+  description = "Public key for ssh connection to instances"
+  type        = string
+  sensitive   = true
+}

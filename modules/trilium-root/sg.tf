@@ -1,3 +1,21 @@
+resource "aws_security_group" "ssh" {
+  name        = "secg-${local.slug}-ssh"
+  description = "Allow ingress SSH traffic"
+  vpc_id      = aws_vpc.root.id
+
+  ingress {
+    description = "Allow inbound traffic from anywhere to SSH port"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(local.default_tags, {
+    Name = "secg-${local.slug}-ssh"
+  })
+}
+
 resource "aws_security_group" "http" {
   name        = "secg-${local.slug}-http"
   description = "Allow ingress HTTP traffic"
