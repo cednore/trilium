@@ -1,0 +1,19 @@
+---
+- name: Provision app data volume
+  hosts: all
+  become: true
+  vars:
+    device_name: /dev/xvdf
+    mount_path: /mnt/app_data
+    filesystem: ext4
+  tasks:
+    - name: Format the data volume
+      filesystem:
+        dev: "{{ device_name }}"
+        fstype: "{{ filesystem }}"
+    - name: Mount the data volume
+      mount:
+        name: "{{ mount_path }}"
+        src: "{{ device_name }}"
+        fstype: "{{ filesystem }}"
+        state: mounted

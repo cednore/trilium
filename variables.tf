@@ -20,3 +20,9 @@ variable "ec2_privkey_path" {
   description = "Path to private key file for ssh connection to instances"
   type        = string
 }
+
+variable "data_volume_mount_path" {
+  description = "value"
+  type        = string
+  default     = "/mnt/app_data"
+}

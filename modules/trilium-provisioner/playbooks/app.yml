@@ -1,0 +1,58 @@
+---
+- name: Provision app instance
+  hosts: all
+  become: true
+  vars:
+    image: zadam/trilium
+    tag: latest
+    container_count: 1
+    container_name: app
+    ports: 8080:8080
+    volumes: /mnt/app_data:/home/node/trilium-data
+  tasks:
+    - name: Install aptitude
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cache: true
+    - name: Add docker gpg apt key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: Add docker repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+    - name: Install docker module for python
+      pip:
+        name: docker
+    - name: Pull docker image
+      community.docker.docker_image:
+        name: "{{ image }}:{{ tag }}"
+        source: pull
+    - name: Create containers
+      community.docker.docker_container:
+        name: "{{ container_name }}{{ item }}"
+        image: "{{ image }}:{{ tag }}"
+        ports: "{{ ports }}"
+        volumes: "{{ volumes }}"
+        state: started
+        restart_policy: always
+      with_sequence: count={{ container_count }}
