@@ -6,7 +6,8 @@
     tag: latest
     container_count: 1
     container_name: app
-    command: sleep 1d
+    ports: 8080:8080
+    volumes: /mnt/app_data:/home/node/trilium-data
   tasks:
     - name: Install aptitude
       apt:
@@ -25,7 +26,7 @@
           - python3-setuptools
         state: latest
         update_cache: true
-    - name: Add docker GPG apt key
+    - name: Add docker gpg apt key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
@@ -49,7 +50,8 @@
       community.docker.docker_container:
         name: "{{ container_name }}{{ item }}"
         image: "{{ image }}:{{ tag }}"
-        command: "{{ command }}"
+        ports: "{{ ports }}"
+        volumes: "{{ volumes }}"
         state: started
         restart_policy: always
       with_sequence: count={{ container_count }}
