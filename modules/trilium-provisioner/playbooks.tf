@@ -1,4 +1,8 @@
 resource "null_resource" "app_data_volume" {
+  triggers = {
+    src_hash = "${data.archive_file.app_data_playbook.output_sha}"
+  }
+
   provisioner "local-exec" {
     command = <<BASH
                 sleep 10s && ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook ${path.module}/playbooks/app-data.yml \
@@ -16,6 +20,10 @@ resource "null_resource" "app_instance" {
   depends_on = [
     null_resource.app_data_volume,
   ]
+
+  triggers = {
+    src_hash = "${data.archive_file.app_playbook.output_sha}"
+  }
 
   provisioner "local-exec" {
     command = <<BASH
