@@ -1,6 +1,6 @@
 resource "null_resource" "app_data_volume" {
   triggers = {
-    src_hash = "${data.archive_file.app_data_playbook.output_sha}"
+    src_hash = filesha256("${path.module}/playbooks/app-data.yml")
   }
 
   provisioner "local-exec" {
@@ -22,7 +22,7 @@ resource "null_resource" "app_instance" {
   ]
 
   triggers = {
-    src_hash = "${data.archive_file.app_playbook.output_sha}"
+    src_hash = filesha256("${path.module}/playbooks/app.yml")
   }
 
   provisioner "local-exec" {
