@@ -13,12 +13,12 @@ resource "aws_iam_role" "ebs_snapshot" {
 }
 
 resource "aws_iam_policy" "ebs_snapshot" {
-  name = "ip-${local.slug}-ebs-snapshot"
+  name        = "ip-${local.slug}-ebs-snapshot"
   description = "Grant EBS snapshot permissions to CW event rule"
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Sid = "CloudWatchEventsBuiltInTargetExecutionAccess"
+      Sid    = "CloudWatchEventsBuiltInTargetExecutionAccess"
       Effect = "Allow"
       Action = [
         "ec2:CreateSnapshot"
