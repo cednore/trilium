@@ -5,10 +5,14 @@ on:
     branches:
       - master
     paths-ignore:
-      - README.md
+      - '**/*.md'
+      - 'docs/**'
+      - LICENSE
   pull_request:
     paths-ignore:
-      - README.md
+      - '**/*.md'
+      - 'docs/**'
+      - LICENSE
   schedule:
     - cron: '0 12 * * *'
   workflow_dispatch:
