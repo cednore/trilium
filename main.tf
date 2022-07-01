@@ -64,7 +64,7 @@ module "end" {
   app_instance_id      = module.app.instance_id
   app_lb_subnet_ids    = module.root.public_subnet_ids
   app_lb_sg_ids        = module.root.app_lb_sg_ids
-  app_lb_log_bucket    = module.storage.app_lb_log_bucket
+  app_lb_log_bucket    = module.logging.app_lb_log_bucket
   app_lb_tg_port       = 80
 }
 
