@@ -43,7 +43,7 @@ variable "app_image" {
 variable "app_image_tag" {
   description = "Tag for app docker image"
   type        = string
-  default     = "0.52.4"
+  default     = "latest"
 }
 
 variable "app_container_count" {
