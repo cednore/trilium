@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "app_lb_logs" {
 resource "aws_s3_bucket_policy" "app_lb_logs" {
   bucket = aws_s3_bucket.app_lb_logs.id
 
-  policy = <<POLICY
+  policy = <<JSON
     {
       "Version": "2012-10-17",
       "Statement": [
@@ -41,5 +41,5 @@ resource "aws_s3_bucket_policy" "app_lb_logs" {
         }
       ]
     }
-  POLICY
+  JSON
 }
