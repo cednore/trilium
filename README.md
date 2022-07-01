@@ -21,3 +21,8 @@ cd trilium
 # Initialize terraform project
 terraform init
 ```
+
+## Terraform documentation
+
+This project uses [**terraform-docs**](https://terraform-docs.io) to auto-generate markdown document of terraform
+resources being used. See [`docs/terraform.md`](docs/terraform.md).
