@@ -8,7 +8,6 @@ resource "aws_lb" "app" {
 
   access_logs {
     bucket  = var.app_lb_log_bucket
-    prefix  = local.slug
     enabled = true
   }
 
