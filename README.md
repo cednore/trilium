@@ -12,21 +12,21 @@
 ## Terraform
 
 <!-- BEGIN_TF_DOCS -->
-### Requirements
+## Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.20 |
 
-### Providers
+## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | 4.21.0 |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | 3.4.0 |
 
-### Modules
+## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
@@ -36,7 +36,7 @@
 | <a name="module_root"></a> [root](#module\_root) | ./modules/trilium-root | n/a |
 | <a name="module_storage"></a> [storage](#module\_storage) | ./modules/trilium-storage | n/a |
 
-### Resources
+## Resources
 
 | Name | Type |
 |------|------|
@@ -44,7 +44,7 @@
 | [aws_route53_zone.apex](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 | [tls_public_key.ec2_pubkey](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/data-sources/public_key) | data source |
 
-### Inputs
+## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
@@ -57,12 +57,12 @@
 | <a name="input_data_volume_mount_path"></a> [data\_volume\_mount\_path](#input\_data\_volume\_mount\_path) | value | `string` | `"/mnt/app_data"` | no |
 | <a name="input_domain"></a> [domain](#input\_domain) | Domain of this app | `string` | `"trilium.cednore.com"` | no |
 
-### Outputs
+## Outputs
 
 | Name | Description | Value | Sensitive |
 |------|-------------|-------|:---------:|
-| <a name="output_app_instance_public_ip"></a> [app\_instance\_public\_ip](#output\_app\_instance\_public\_ip) | Public IP address of the app instance | `"18.220.191.3"` | no |
-| <a name="output_app_lb_dns_name"></a> [app\_lb\_dns\_name](#output\_app\_lb\_dns\_name) | Domain name of app load balancer | `"lb-trilium-end-production-app-1337664474.us-east-2.elb.amazonaws.com"` | no |
+| <a name="output_app_instance_public_ip"></a> [app\_instance\_public\_ip](#output\_app\_instance\_public\_ip) | Public IP address of the app instance | `<sensitive>` | yes |
+| <a name="output_app_lb_dns_name"></a> [app\_lb\_dns\_name](#output\_app\_lb\_dns\_name) | Domain name of app load balancer | `<sensitive>` | yes |
 | <a name="output_app_url"></a> [app\_url](#output\_app\_url) | URL for this app | `"https://trilium.cednore.com"` | no |
 | <a name="output_app_urls"></a> [app\_urls](#output\_app\_urls) | All URLs for this app (including alternative domains) | <pre>[<br>  "https://trilium.cednore.com",<br>  "https://notes.cednore.com"<br>]</pre> | no |
 <!-- END_TF_DOCS -->
