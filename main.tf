@@ -35,8 +35,8 @@ module "app" {
   pubkey        = trimspace(data.tls_public_key.ec2_pubkey.public_key_openssh)
 }
 
-module "storage" {
-  source = "./modules/trilium-storage"
+module "data" {
+  source = "./modules/trilium-data"
 
   stage             = local.stage
   app_instance_id   = module.app.instance_id
@@ -45,8 +45,8 @@ module "storage" {
   volume_size       = 100 # 100 GB
 }
 
-module "logging" {
-  source = "./modules/trilium-logging"
+module "log" {
+  source = "./modules/trilium-log"
 
   stage = local.stage
 }
@@ -64,17 +64,17 @@ module "end" {
   app_instance_id      = module.app.instance_id
   app_lb_subnet_ids    = module.root.public_subnet_ids
   app_lb_sg_ids        = module.root.app_lb_sg_ids
-  app_lb_log_bucket    = module.logging.app_lb_log_bucket
+  app_lb_log_bucket    = module.log.app_lb_log_bucket
   app_lb_tg_port       = 80
 }
 
-module "provisioner" {
-  source = "./modules/trilium-provisioner"
+module "provision" {
+  source = "./modules/trilium-provision"
   depends_on = [
     module.root,
     module.app,
-    module.storage,
-    module.logging,
+    module.data,
+    module.log,
     module.end,
   ]
 
@@ -87,8 +87,8 @@ module "provisioner" {
   app_container_name_prefix = "app"
   app_container_ports       = "80:8080"
   app_container_volumes     = "${var.data_volume_mount_path}:/home/node/trilium-data"
-  app_container_log_group   = module.logging.app_container_log_group
-  data_volume_device_name   = module.storage.data_volume_device_name
+  app_container_log_group   = module.log.app_container_log_group
+  data_volume_device_name   = module.data.data_volume_device_name
   data_volume_filesystem    = "ext4"
   data_volume_mount_path    = var.data_volume_mount_path
 }
