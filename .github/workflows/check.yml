@@ -1,0 +1,98 @@
+name: Infrastructure drift check
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - README.md
+  pull_request:
+    paths-ignore:
+      - README.md
+  schedule:
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-2
+  APP: trilium
+
+jobs:
+  check:
+    strategy:
+      matrix:
+        stage: [production]
+    name: Drift detection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare variables
+        id: vars
+        run: |
+          export TIMESTAMP=$(date +%s)
+          export GITHUB_SHA_SHORT=$(git rev-parse --short HEAD)
+          export PRIVATE_KEY_FILENAME="kp-${{ env.APP }}-root-${{ matrix.stage }}.pem"
+          echo "TIMESTAMP: $TIMESTAMP"
+          echo "GITHUB_SHA_SHORT: $GITHUB_SHA_SHORT"
+          echo "PRIVATE_KEY_FILENAME: $PRIVATE_KEY_FILENAME"
+          echo "::set-output name=timestamp::$TIMESTAMP"
+          echo "::set-output name=sha_short::$GITHUB_SHA_SHORT"
+          echo "::set-output name=private_key_filename::$PRIVATE_KEY_FILENAME"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+          mask-aws-account-id: false
+      - name: Download private key file
+        run: aws s3 cp s3://${{ secrets.BACKEND_BUCKET }}/env:/${{ matrix.stage }}/${{ env.APP }}/${{ steps.vars.outputs.private_key_filename }} ${{ steps.vars.outputs.private_key_filename }}
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.2.4
+          terraform_wrapper: false
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v1
+      - name: Terraform Fmt
+        id: fmt
+        run: terraform fmt -check -diff -recursive -no-color
+      - name: Terraform Init
+        id: init
+        run: terraform init -no-color
+      - name: Select terraform workspace
+        id: select-workspace
+        run: terraform workspace select ${{ matrix.stage }}
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+      - name: Terraform Plan (detailed exitcode)
+        id: plan
+        run: terraform plan -detailed-exitcode -no-color
+      - name: Terraform Output
+        id: output
+        run: |
+          terraform output -json -no-color > output.json
+          cat output.json
+      - name: Terraform Graph
+        id: graph
+        run: |
+          terraform graph -draw-cycles > graph.gv
+          cat graph.gv
+          dot -Tsvg graph.gv > graph.svg
+      - name: Upload artifact of terraform output and graph
+        uses: actions/upload-artifact@v2
+        with:
+          name: terraform-output-and-graph-${{ steps.vars.outputs.timestamp }}-${{ steps.vars.outputs.sha_short }}
+          path: |
+            output.json
+            graph.gv
+            graph.svg
+      - name: Generate terraform documents
+        uses: terraform-docs/gh-actions@main
+        with:
+          working-dir: .
+          config-file: .terraform-docs.yml
+          git-push: "true"
+          git-commit-message: "📝 terraform-docs: auto-update"
