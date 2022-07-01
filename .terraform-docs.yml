@@ -6,7 +6,7 @@ header-from: main.tf
 footer-from: ""
 
 recursive:
-  enabled: true
+  enabled: false
   path: modules
 
 sections:
