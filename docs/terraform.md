@@ -44,7 +44,6 @@
 | <a name="input_apex_domain"></a> [apex\_domain](#input\_apex\_domain) | Apex domain to host this app | `string` | `"cednore.com"` | no |
 | <a name="input_app"></a> [app](#input\_app) | URL friendly name of this app | `string` | `"trilium"` | no |
 | <a name="input_app_name"></a> [app\_name](#input\_app\_name) | Name of this app | `string` | `"Cednore Notes"` | no |
-| <a name="input_data_volume_mount_path"></a> [data\_volume\_mount\_path](#input\_data\_volume\_mount\_path) | value | `string` | `"/mnt/app_data"` | no |
 | <a name="input_domain"></a> [domain](#input\_domain) | Domain of this app | `string` | `"trilium.cednore.com"` | no |
 
 ## Outputs
