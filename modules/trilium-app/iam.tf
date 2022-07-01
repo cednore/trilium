@@ -19,21 +19,7 @@ resource "aws_iam_role" "app_instance_profile" {
 resource "aws_iam_policy" "app_instance_profile" {
   name        = "ip-${local.slug}-app-instance-profile"
   description = "Policy for ${var.app} app instance profile"
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "logs:CreateLogStream",
-          "logs:PutLogEvents",
-        ],
-        Resource = [
-          "*"
-        ],
-      },
-    ]
-  })
+  policy      = data.aws_iam_policy_document.app_instance_profile.json
 
   tags = merge(local.default_tags, {
     Name = "ip-${local.slug}-app-instance-profile"
