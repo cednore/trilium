@@ -4,6 +4,7 @@ resource "aws_instance" "app" {
   subnet_id              = var.subnet_id
   key_name               = aws_key_pair.main.key_name
   vpc_security_group_ids = var.sg_ids
+  iam_instance_profile   = aws_iam_instance_profile.app.id
 
   tags = merge(local.default_tags, {
     Name = "i-${local.slug}-app"

@@ -45,26 +45,10 @@ module "storage" {
   volume_size       = 100 # 100 GB
 }
 
-module "provisioner" {
-  source = "./modules/trilium-provisioner"
-  depends_on = [
-    module.root,
-    module.app,
-    module.storage,
-  ]
+module "logging" {
+  source = "./modules/trilium-logging"
 
-  stage                     = local.stage
-  app_instance_public_ip    = module.app.instance_public_ip
-  app_privkey_path          = "${path.root}/${local.private_key_filename}"
-  app_image                 = "zadam/trilium"
-  app_image_tag             = "0.52.3"
-  app_container_count       = 1
-  app_container_name_prefix = "app"
-  app_container_ports       = "80:8080"
-  app_container_volumes     = "${var.data_volume_mount_path}:/home/node/trilium-data"
-  data_volume_device_name   = module.storage.data_volume_device_name
-  data_volume_filesystem    = "ext4"
-  data_volume_mount_path    = var.data_volume_mount_path
+  stage = local.stage
 }
 
 module "end" {
@@ -82,4 +66,29 @@ module "end" {
   app_lb_sg_ids        = module.root.app_lb_sg_ids
   app_lb_log_bucket    = module.storage.app_lb_log_bucket
   app_lb_tg_port       = 80
+}
+
+module "provisioner" {
+  source = "./modules/trilium-provisioner"
+  depends_on = [
+    module.root,
+    module.app,
+    module.storage,
+    module.logging,
+    module.end,
+  ]
+
+  stage                     = local.stage
+  app_instance_public_ip    = module.app.instance_public_ip
+  app_privkey_path          = "${path.root}/${local.private_key_filename}"
+  app_image                 = "zadam/trilium"
+  app_image_tag             = "0.52.3"
+  app_container_count       = 1
+  app_container_name_prefix = "app"
+  app_container_ports       = "80:8080"
+  app_container_volumes     = "${var.data_volume_mount_path}:/home/node/trilium-data"
+  app_container_log_group   = module.logging.app_container_log_group
+  data_volume_device_name   = module.storage.data_volume_device_name
+  data_volume_filesystem    = "ext4"
+  data_volume_mount_path    = var.data_volume_mount_path
 }

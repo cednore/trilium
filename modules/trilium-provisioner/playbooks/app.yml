@@ -9,6 +9,8 @@
     container_name_prefix: app
     ports: 8080:8080
     volumes: /mnt/app_data:/home/node/trilium-data
+    awslogs_region: us-east-2
+    awslogs_group:
   tasks:
     - name: Install aptitude
       apt:
@@ -53,6 +55,10 @@
         image: "{{ image }}:{{ tag }}"
         ports: "{{ ports }}"
         volumes: "{{ volumes }}"
+        log_driver: awslogs
+        log_options:
+          awslogs-region: "{{ awslogs_region }}"
+          awslogs-group: "{{ awslogs_group }}"
         state: started
         restart_policy: always
       with_sequence: count={{ container_count }}

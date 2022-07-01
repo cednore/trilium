@@ -68,6 +68,11 @@ variable "app_container_volumes" {
   default     = "/mnt/app_data:/home/node/trilium-data"
 }
 
+variable "app_container_log_group" {
+  description = "CloudWatch log group for app containers"
+  type        = string
+}
+
 variable "data_volume_device_name" {
   description = "Device name of data volume"
   type        = string
