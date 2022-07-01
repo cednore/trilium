@@ -42,17 +42,6 @@ variable "alternative_domains" {
   ]
 }
 
-variable "ec2_pubkey" {
-  description = "Public key for ssh connection to instances"
-  type        = string
-  sensitive   = true
-}
-
-variable "ec2_privkey_path" {
-  description = "Path to private key file for ssh connection to instances"
-  type        = string
-}
-
 variable "data_volume_mount_path" {
   description = "value"
   type        = string

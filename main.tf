@@ -32,7 +32,7 @@ module "app" {
   subnet_id     = module.root.public_subnet_ids[0]
   sg_ids        = module.root.app_instance_sg_ids
   instance_type = "t2.micro"
-  pubkey        = var.ec2_pubkey
+  pubkey        = trimspace(data.tls_public_key.ec2_pubkey.public_key_openssh)
 }
 
 module "storage" {
@@ -55,7 +55,7 @@ module "provisioner" {
 
   stage                     = local.stage
   app_instance_public_ip    = module.app.instance_public_ip
-  app_privkey_path          = "${path.root}/${var.ec2_privkey_path}"
+  app_privkey_path          = "${path.root}/${local.private_key_filename}"
   app_image                 = "zadam/trilium"
   app_image_tag             = "0.52.3"
   app_container_count       = 1

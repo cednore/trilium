@@ -7,3 +7,7 @@ data "aws_acm_certificate" "apex" {
   domain   = var.apex_domain
   statuses = ["ISSUED"]
 }
+
+data "tls_public_key" "ec2_pubkey" {
+  private_key_openssh = file("${path.root}/${local.private_key_filename}")
+}
