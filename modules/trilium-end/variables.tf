@@ -36,6 +36,7 @@ variable "alternative_domains" {
 variable "route53_apex_zone_id" {
   description = "Zone ID of master hosted zone"
   type        = string
+  sensitive   = true
 }
 
 variable "route53_default_ttl" {
@@ -47,6 +48,7 @@ variable "route53_default_ttl" {
 variable "acm_apex_cert_arn" {
   description = "ARN to the apex domain's certificate to attach onto HTTPS listener"
   type        = string
+  sensitive   = true
 }
 
 variable "vpc_id" {

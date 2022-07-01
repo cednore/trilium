@@ -25,11 +25,13 @@ variable "stage" {
 variable "app_instance_public_ip" {
   description = "Public IP address of the app instance"
   type        = string
+  sensitive   = true
 }
 
 variable "app_privkey_path" {
   description = "Path to private key file for ssh connection to the app instance"
   type        = string
+  sensitive   = true
 }
 
 variable "app_image" {

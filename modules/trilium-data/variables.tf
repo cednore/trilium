@@ -45,7 +45,7 @@ variable "device_letter" {
 }
 
 variable "volume_size" {
-  description = "Size of data volume"
+  description = "Size of data volume (in GB)"
   type        = number
   default     = 100
 }
