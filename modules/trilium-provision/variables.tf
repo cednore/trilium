@@ -13,7 +13,7 @@ variable "app" {
 variable "module" {
   description = "Module name"
   type        = string
-  default     = "provisioner"
+  default     = "provision"
 }
 
 variable "stage" {
