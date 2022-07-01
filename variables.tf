@@ -41,9 +41,3 @@ variable "alternative_domains" {
     "notes.cednore.com",
   ]
 }
-
-variable "data_volume_mount_path" {
-  description = "value"
-  type        = string
-  default     = "/mnt/app_data"
-}

@@ -86,9 +86,9 @@ module "provision" {
   app_container_count       = 1
   app_container_name_prefix = "app"
   app_container_ports       = "80:8080"
-  app_container_volumes     = "${var.data_volume_mount_path}:/home/node/trilium-data"
+  app_container_data_path   = "/home/node/trilium-data"
   app_container_log_group   = module.log.app_container_log_group
   data_volume_device_name   = module.data.data_volume_device_name
   data_volume_filesystem    = "ext4"
-  data_volume_mount_path    = var.data_volume_mount_path
+  data_volume_mount_path    = local.data_volume_mount_path
 }

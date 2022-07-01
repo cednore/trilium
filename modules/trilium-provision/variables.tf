@@ -61,13 +61,13 @@ variable "app_container_name_prefix" {
 variable "app_container_ports" {
   description = "Ports to publish from the container to the host"
   type        = string
-  default     = "8080:8080"
+  default     = "80:8080"
 }
 
-variable "app_container_volumes" {
-  description = "Volumes to mount within the container"
+variable "app_container_data_path" {
+  description = "Path to the data directory inside the app container"
   type        = string
-  default     = "/mnt/app_data:/home/node/trilium-data"
+  default     = "/home/node/trilium-data"
 }
 
 variable "app_container_log_group" {

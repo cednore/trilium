@@ -36,7 +36,7 @@ resource "null_resource" "app_instance" {
                   -e 'container_count=${var.app_container_count}' \
                   -e 'container_name_prefix=${var.app_container_name_prefix}' \
                   -e 'ports=${var.app_container_ports}' \
-                  -e 'volumes=${var.app_container_volumes}' \
+                  -e 'volumes=${var.data_volume_mount_path}:${var.app_container_data_path}' \
                   -e 'awslogs_region=${data.aws_region.current.name}' \
                   -e 'awslogs_group=${var.app_container_log_group}'
               BASH
