@@ -1,4 +1,4 @@
-name: Infrastructure drift check
+name: Infrastructure check
 
 on:
   push:
