@@ -8,3 +8,16 @@
 [![Ansible](https://img.shields.io/badge/ansible-%231A1918.svg?style=for-the-badge&logo=ansible&logoColor=white)](https://ansible.com/)
 [![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com/)
+
+## Getting started
+
+```bash
+# Clone from github
+git clone git@github.com:cednore/trilium.git
+
+# Cd into repo directory
+cd trilium
+
+# Initialize terraform project
+terraform init
+```
