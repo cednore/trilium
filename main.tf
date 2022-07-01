@@ -82,7 +82,7 @@ module "provision" {
   app_instance_public_ip    = module.app.instance_public_ip
   app_privkey_path          = "${path.root}/${local.private_key_filename}"
   app_image                 = "zadam/trilium"
-  app_image_tag             = "0.52.3"
+  app_image_tag             = "0.52.4"
   app_container_count       = 1
   app_container_name_prefix = "app"
   app_container_ports       = "80:8080"
