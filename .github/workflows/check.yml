@@ -94,9 +94,10 @@ jobs:
             graph.gv
             graph.svg
       - name: Generate terraform documents
-        uses: terraform-docs/gh-actions@main
+        uses: terraform-docs/gh-actions@v1.0.0
         with:
           working-dir: .
           config-file: .terraform-docs.yml
+          output-file: docs/terraform.md
           git-push: "true"
           git-commit-message: "📝 terraform-docs: auto-update"
