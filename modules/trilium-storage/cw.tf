@@ -1,8 +1,11 @@
 resource "aws_cloudwatch_event_rule" "schedule_backup_app_data" {
-  name        = "cwer-${local.slug}-schedule-backup-app-data"
-  description = "Backup your trilium app data volume"
-
+  name                = "cwer-${local.slug}-schedule-backup-app-data"
+  description         = "Backup your trilium app data volume"
   schedule_expression = "cron(0 0 ? * 7 *)" # Weekly, every sunday at midnight
+
+  tags = merge(local.default_tags, {
+    Name = "cwer-${local.slug}-schedule-backup-app-data"
+  })
 }
 
 resource "aws_cloudwatch_event_target" "schedule_backup_app_data" {

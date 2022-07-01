@@ -10,6 +10,10 @@ resource "aws_iam_role" "ebs_snapshot" {
       }
     }]
   })
+
+  tags = merge(local.default_tags, {
+    Name = "ir-${local.slug}-ebs-snapshot"
+  })
 }
 
 resource "aws_iam_policy" "ebs_snapshot" {
@@ -27,6 +31,10 @@ resource "aws_iam_policy" "ebs_snapshot" {
         "*"
       ]
     }]
+  })
+
+  tags = merge(local.default_tags, {
+    Name = "ip-${local.slug}-ebs-snapshot"
   })
 }
 
