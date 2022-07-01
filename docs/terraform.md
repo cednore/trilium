@@ -21,6 +21,7 @@
 |------|--------|---------|
 | <a name="module_app"></a> [app](#module\_app) | ./modules/trilium-app | n/a |
 | <a name="module_end"></a> [end](#module\_end) | ./modules/trilium-end | n/a |
+| <a name="module_logging"></a> [logging](#module\_logging) | ./modules/trilium-logging | n/a |
 | <a name="module_provisioner"></a> [provisioner](#module\_provisioner) | ./modules/trilium-provisioner | n/a |
 | <a name="module_root"></a> [root](#module\_root) | ./modules/trilium-root | n/a |
 | <a name="module_storage"></a> [storage](#module\_storage) | ./modules/trilium-storage | n/a |
