@@ -34,7 +34,7 @@ jobs:
         run: |
           export TIMESTAMP=$(date +%s)
           export GITHUB_SHA_SHORT=$(git rev-parse --short HEAD)
-          export PRIVATE_KEY_FILENAME="kp-${{ env.APP }}-root-${{ matrix.stage }}.pem"
+          export PRIVATE_KEY_FILENAME="kp-${{ env.APP }}-app-${{ matrix.stage }}.pem"
           echo "TIMESTAMP: $TIMESTAMP"
           echo "GITHUB_SHA_SHORT: $GITHUB_SHA_SHORT"
           echo "PRIVATE_KEY_FILENAME: $PRIVATE_KEY_FILENAME"
