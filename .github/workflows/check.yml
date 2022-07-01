@@ -99,5 +99,6 @@ jobs:
           working-dir: .
           config-file: .terraform-docs.yml
           output-file: docs/terraform.md
-          git-push: "true"
+          recursive: true
+          git-push: true
           git-commit-message: "📝 terraform-docs: auto-update"
