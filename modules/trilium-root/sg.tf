@@ -26,7 +26,7 @@ resource "aws_security_group" "ssh" {
 
 resource "aws_security_group" "lb" {
   name        = "secg-${local.slug}-lb"
-  description = "Security group for LB instances"
+  description = "Security group for LB instance"
   vpc_id      = aws_vpc.root.id
 
   ingress {
