@@ -31,7 +31,7 @@ module "app" {
   stage         = local.stage
   subnet_id     = module.root.public_subnet_ids[0]
   sg_ids        = module.root.app_instance_sg_ids
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
   pubkey        = trimspace(data.tls_public_key.ec2_pubkey.public_key_openssh)
 }
 
@@ -42,7 +42,7 @@ module "data" {
   app_instance_id   = module.app.instance_id
   availability_zone = module.app.instance_availability_zone
   device_letter     = "f" # /dev/sdf, /dev/xvdf
-  volume_size       = 100 # 100 GB
+  volume_size       = 20 # 20 GB
 }
 
 module "log" {
