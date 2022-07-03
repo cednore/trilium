@@ -50,8 +50,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
           mask-aws-account-id: false
+      - name: Download terraform.tfvars
+        run: aws s3 cp s3://${{ secrets.BACKEND_BUCKET }}/env:/${{ matrix.stage }}/${{ env.APP }}/terraform.tfvars terraform.tfvars
+        continue-on-error: true
       - name: Download private key file
         run: aws s3 cp s3://${{ secrets.BACKEND_BUCKET }}/env:/${{ matrix.stage }}/${{ env.APP }}/${{ steps.vars.outputs.private_key_filename }} ${{ steps.vars.outputs.private_key_filename }}
+        continue-on-error: true
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
