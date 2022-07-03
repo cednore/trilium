@@ -1,6 +1,13 @@
-resource "null_resource" "app_data_volume" {
+resource "null_resource" "app_data_volume_provisioner" {
   triggers = {
-    src_hash = filesha256("${path.module}/playbooks/app-data.yml")
+    src_hash  = filesha256("${path.module}/playbooks/app-data.yml")
+    variables = json_encode([
+      var.app_instance_public_ip,
+      var.app_privkey_path,
+      var.data_volume_device_name,
+      var.data_volume_mount_path,
+      var.data_volume_filesystem,
+    ])
   }
 
   provisioner "local-exec" {
@@ -16,13 +23,26 @@ resource "null_resource" "app_data_volume" {
   }
 }
 
-resource "null_resource" "app_instance" {
+resource "null_resource" "app_instance_provisioner" {
   depends_on = [
     null_resource.app_data_volume,
   ]
 
   triggers = {
-    src_hash = filesha256("${path.module}/playbooks/app.yml")
+    src_hash  = filesha256("${path.module}/playbooks/app.yml")
+    variables = json_encode([
+      var.app_instance_public_ip,
+      var.app_privkey_path,
+      var.app_image,
+      var.app_image_tag,
+      var.app_container_count,
+      var.app_container_name_prefix,
+      var.app_container_ports,
+      var.data_volume_mount_path,
+      var.app_container_data_path,
+      data.aws_region.current.name,
+      var.app_container_log_group,
+    ])
   }
 
   provisioner "local-exec" {
