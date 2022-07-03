@@ -1,7 +1,7 @@
 resource "null_resource" "app_data_volume_provisioner" {
   triggers = {
     src_hash = filesha256("${path.module}/playbooks/app-data.yml")
-    variables = json_encode([
+    variables = jsonencode([
       var.app_instance_public_ip,
       var.app_privkey_path,
       var.data_volume_device_name,
@@ -30,7 +30,7 @@ resource "null_resource" "app_instance_provisioner" {
 
   triggers = {
     src_hash = filesha256("${path.module}/playbooks/app.yml")
-    variables = json_encode([
+    variables = jsonencode([
       var.app_instance_public_ip,
       var.app_privkey_path,
       var.app_image,
