@@ -25,7 +25,7 @@ resource "null_resource" "app_data_volume_provisioner" {
 
 resource "null_resource" "app_instance_provisioner" {
   depends_on = [
-    null_resource.app_data_volume,
+    null_resource.app_data_volume_provisioner,
   ]
 
   triggers = {
