@@ -33,7 +33,6 @@ jobs:
         id: vars
         run: |
           export PRIVATE_KEY_FILENAME="kp-${{ env.APP }}-app-${{ matrix.stage }}.pem"
-          echo "PRIVATE_KEY_FILENAME: $PRIVATE_KEY_FILENAME"
           echo "::set-output name=private_key_filename::$PRIVATE_KEY_FILENAME"
       - name: Checkout
         uses: actions/checkout@v2
