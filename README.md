@@ -18,11 +18,23 @@ git clone git@github.com:cednore/trilium.git
 # Cd into repo directory
 cd trilium
 
+# Install nodejs modules
+yarn install
+
 # Initialize terraform project
 terraform init
+
+# Select production stage
+yarn stage production
 ```
 
 ## Terraform documentation
 
 This project uses [**terraform-docs**](https://terraform-docs.io) to auto-generate markdown document of terraform
-resources being used. See [`docs/terraform.md`](docs/terraform.md).
+resources being used. You can run following command to run the generator.
+
+```bash
+yarn tf-docs
+```
+
+Generated document will be stored at [`docs/terraform.md`](docs/terraform.md).
