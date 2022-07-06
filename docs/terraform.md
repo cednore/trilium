@@ -57,6 +57,8 @@
 
 | Name | Description | Value | Sensitive |
 |------|-------------|-------|:---------:|
+| <a name="output_app_instance_public_ip"></a> [app\_instance\_public\_ip](#output\_app\_instance\_public\_ip) | Public IP of app instance | `<sensitive>` | yes |
+| <a name="output_app_instance_username"></a> [app\_instance\_username](#output\_app\_instance\_username) | User name for app instance | `<sensitive>` | yes |
 | <a name="output_app_lb_dns_name"></a> [app\_lb\_dns\_name](#output\_app\_lb\_dns\_name) | Domain name of app load balancer | `<sensitive>` | yes |
 | <a name="output_app_url"></a> [app\_url](#output\_app\_url) | URL for this app | `"https://trilium.cednore.com"` | no |
 | <a name="output_app_urls"></a> [app\_urls](#output\_app\_urls) | All URLs for this app (including alternative domains) | <pre>[<br>  "https://trilium.cednore.com",<br>  "https://notes.cednore.com"<br>]</pre> | no |
