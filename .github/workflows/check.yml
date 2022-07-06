@@ -54,8 +54,6 @@ jobs:
         with:
           terraform_version: 1.2.4
           terraform_wrapper: false
-      - name: Setup graphviz
-        uses: ts-graphviz/setup-graphviz@v1
       - name: Install npm dependencies
         run: yarn install --frozen-lockfile
       - name: Initialize terraform project
@@ -70,16 +68,10 @@ jobs:
         continue-on-error: true
       - name: Lint tf files
         run: yarn lint -no-color
-      - name: Validate
+      - name: Validate terraform project
         run: terraform validate -no-color
       - name: Terraform plan (detailed exitcode)
         run: terraform plan -detailed-exitcode -no-color
-      - name: Generate terraform outputs
-        run: yarn output:json
-      - name: Terraform graph
-        run: |
-          terraform graph -draw-cycles > graph.gv
-          dot -Tsvg graph.gv > graph.svg
       - name: Generate terraform documents
         uses: terraform-docs/gh-actions@v1.0.0
         with:
