@@ -44,3 +44,6 @@ graph.svg
 # document file
 document.db
 document.db*
+
+# nodejs modules
+node_modules/
