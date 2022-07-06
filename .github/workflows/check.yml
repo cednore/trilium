@@ -58,6 +58,10 @@ jobs:
         uses: ts-graphviz/setup-graphviz@v1
       - name: Install npm dependencies
         run: yarn install --frozen-lockfile
+      - name: Initialize terraform project
+        run: terraform init -no-color
+      - name: Select stage
+        run: yarn stage ${{ matrix.stage }}
       - name: Download terraform.tfvars
         run: yarn download:tfvars
         continue-on-error: true
@@ -66,10 +70,6 @@ jobs:
         continue-on-error: true
       - name: Lint tf files
         run: yarn lint -no-color
-      - name: Initialize terraform project
-        run: terraform init -no-color
-      - name: Select stage
-        run: yarn stage ${{ matrix.stage }}
       - name: Validate
         run: terraform validate -no-color
       - name: Terraform plan (detailed exitcode)
