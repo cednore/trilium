@@ -84,7 +84,7 @@ module "provision" {
   app_image                 = "zadam/trilium"
   app_image_tag             = "0.52.4"
   app_container_count       = 1
-  app_container_name_prefix = "app"
+  app_container_name_prefix = local.app_container_name_prefix
   app_container_ports       = "80:8080"
   app_container_data_path   = "/home/node/trilium-data"
   app_container_log_group   = module.log.app_container_log_group

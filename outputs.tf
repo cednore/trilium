@@ -26,6 +26,12 @@ output "app_instance_username" {
   sensitive   = true
 }
 
+output "app_container_name_prefix" {
+  description = "Name prefix of app containers"
+  value       = local.app_container_name_prefix
+  sensitive   = true
+}
+
 output "data_volume_mount_path" {
   description = "Path to mount the data volume device"
   value       = local.data_volume_mount_path
