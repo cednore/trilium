@@ -5,6 +5,7 @@
   "scripts": {
     "prepare": "husky install",
     "stage": "terraform workspace select",
+    "graph": "terraform graph -draw-cycles > graph.gv && dot -Tsvg graph.gv > graph.svg",
     "key:generate": "ssh-keygen -t rsa -m PEM -f kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem -N '' -C '' && chmod 400 kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem",
     "download:private-key": "aws s3 cp s3://tf-common-backend/env:/$(terraform workspace show)/$(jq -r '.name' package.json)/kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem .",
     "upload:private-key": "aws s3 cp kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem s3://tf-common-backend/env:/$(terraform workspace show)/$(jq -r '.name' package.json)/kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem",
