@@ -29,11 +29,6 @@ jobs:
     name: Drift detection
     runs-on: ubuntu-latest
     steps:
-      - name: Prepare variables
-        id: vars
-        run: |
-          export PRIVATE_KEY_FILENAME="kp-${{ env.APP }}-app-${{ matrix.stage }}.pem"
-          echo "::set-output name=private_key_filename::$PRIVATE_KEY_FILENAME"
       - name: Checkout
         uses: actions/checkout@v2
       - name: Configure AWS credentials
@@ -63,8 +58,8 @@ jobs:
       - name: Download terraform.tfvars
         run: yarn download:tfvars
         continue-on-error: true
-      - name: Download private key file
-        run: yarn download:private-key
+      - name: Download keypair file
+        run: yarn download:keypair
         continue-on-error: true
       - name: Lint tf files
         run: yarn lint -no-color
