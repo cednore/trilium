@@ -72,6 +72,8 @@ jobs:
         run: terraform validate -no-color
       - name: Terraform plan (detailed exitcode)
         run: terraform plan -detailed-exitcode -no-color
+      - name: Generate terraform outputs
+        run: yarn output:json
       - name: Generate terraform documents
         uses: terraform-docs/gh-actions@v1.0.0
         with:
