@@ -9,7 +9,7 @@
 [![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com/)
 
-## Introduction
+## ✨ Introduction
 
 This project demonstrates how-to of hosting [`zadam/trilium`](https://github.com/zadam/trilium) on your AWS
 infrastructure. If you want to host your very own personal knowledge base on AWS, this project could be a good starting
@@ -20,7 +20,7 @@ automatic infrastructure provisioning, frequent drift-checking, and more. And al
 Before you start, it is strongly recommended to read [trilium wiki](https://github.com/zadam/trilium/wiki) first,
 especially [server installation/deployment page](https://github.com/zadam/trilium/wiki/Docker-server-installation).
 
-### What's included
+### What's included 🗃️
 
 1. A single terraform project defining hosting infrastructure and provisioners
 2. Auto-generated [terraform documentation](#terraform-documentation)
@@ -29,7 +29,7 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 4. Time-saving development scripts
 5. Guides and documentations
 
-### Infrastructure summary
+### Infrastructure summary 🏗️
 
 1. Single **VPC** with 3 public/private subnets
 2. App instance on **EC2** (default `t3.micro`), publicly accessible via SSH
@@ -45,7 +45,7 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 12. **Ansible** playbooks to provision app container and data volume
 13. Everything is written in **Terraform**, highly modularized
 
-## Prerequisites
+## 🧱 Prerequisites
 
 1. [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.2`
 2. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
@@ -62,7 +62,7 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 10. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
 11. Code editor/IDE ofc 😉
 
-## Getting started
+## ⚡ Getting started
 
 ```bash
 # Clone from github
@@ -88,7 +88,7 @@ yarn download:tfvars
 terraform plan
 ```
 
-## Development scripts
+## 🔨 Development scripts
 
 ### Selecting stage
 
@@ -198,11 +198,11 @@ yarn tf-docs
 
 Generated document will be stored at [`docs/terraform.md`](docs/terraform.md).
 
-## Contributions
+## 👋 Contributions
 
 Contributions are welcome by opening issues and pull requests. See [CONTRIBUTING.md](CONTRIBUTING.md) file for details.
 
-## Roadmap
+## 🚧 Roadmap
 
 - [ ] Automatic deletion of old data volume snapshots (🤔 really?)
 - [ ] Seperate CloudWatch logs every single day
@@ -212,11 +212,11 @@ Contributions are welcome by opening issues and pull requests. See [CONTRIBUTING
 - [ ] Diagrams explaining the infrastructure
 - [ ] GitHub issue templates; `bug`, `security`, `cost`, `feature` and so on
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License.
 
-## Credits
+## 🙇 Credits
 
 - Credit to [@zadam](https://github.com/zadam) for building such a beautiful note-taking app. (and also powerful
   🐋 image and documentation)
