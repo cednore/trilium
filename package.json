@@ -7,6 +7,8 @@
     "stage": "terraform workspace select",
     "download:private-key": "aws s3 cp s3://tf-common-backend/env:/$(terraform workspace show)/$(jq -r '.name' package.json)/kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem .",
     "download:tfvars": "aws s3 cp s3://tf-common-backend/env:/$(terraform workspace show)/$(jq -r '.name' package.json)/terraform.tfvars .",
+    "download:db": "scp -i kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json):$(jq -r '.data_volume_mount_path.value' output.json)/document.db .",
+    "upload:db": "scp -i kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem document.db $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json):$(jq -r '.data_volume_mount_path.value' output.json)/document.db",
     "output:json": "terraform output -json > output.json",
     "lint": "terraform fmt -check -diff -recursive",
     "lint:fix": "terraform fmt -recursive",
