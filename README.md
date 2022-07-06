@@ -26,6 +26,10 @@ terraform init
 
 # Select production stage
 yarn stage production
+
+# Download private key and tfvars file
+yarn download:private-key
+yarn download:tfvars
 ```
 
 ## Terraform documentation
