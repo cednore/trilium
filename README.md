@@ -1,6 +1,6 @@
 # trilium
 
-> My personal trilium server on cloud
+> Trilium server on AWS
 
 [![Infrastructure check](https://github.com/cednore/trilium/actions/workflows/check.yml/badge.svg)](https://github.com/cednore/trilium/actions/workflows/check.yml)
 
@@ -11,13 +11,31 @@
 
 ## Introduction
 
-### Infrastructure
+This project demonstrates how-to of hosting [`zadam/trilium`](https://github.com/zadam/trilium) on your AWS
+infrastructure. If you want to host your very own personal knowledge base on AWS, this project could be a good starting
+point. You can easily use this project as a boilerplate for managing your trilium hosting infrastructure in IaC way,
+automatic infrastructure provisioning, frequent drift-checking, and more. And also (@cednore) uses this repository
+to manage his own trilium hosting as well 😉.
+
+Before you start, it is strongly recommended to read [trilium wiki](https://github.com/zadam/trilium/wiki) first,
+especially [server installation/deployment page](https://github.com/zadam/trilium/wiki/Docker-server-installation).
+
+### What's included
+
+1. A single terraform project defining hosting infrastructure and provisioners
+2. Auto-generated [terraform documentation](#terraform-documentation)
+3. [GitHub action](https://github.com/cednore/trilium/actions/workflows/check.ym) for infrastructure drift checking (on
+   every push, scheduled)
+4. Time-saving development scripts
+5. Guides and documentations
+
+### Infrastructure summary
 
 1. Single **VPC** with 3 public/private subnets
 2. App instance on **EC2** (default `t3.micro`), publicly accessible via SSH
 3. **Docker**ized app container (default count `1`)
 4. Frontline **ALB** with HTTP/HTTPS listeners
-5. **ACM** certificate attached to ALB (use apex domain's ACM by default, assuming this covers )
+5. **ACM** certificate attached to ALB (use apex domain's ACM by default, assuming this covers subdomains as well)
 6. **EBS** data volume attached (default 20GB)
 7. **CloudWatch event rule** to backup data volume (every Sunday by default)
 8. **CloudWatch log group** to keep app container logs
@@ -30,9 +48,11 @@
 ## Prerequisites
 
 1. [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.2`
-2. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials configured)
+2. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
+   configured)
 3. S3 backend (a S3 bucket for state and a DynamoDB table for lock)
-4. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning playbooks)
+4. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
+   playbooks)
 5. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
 6. Node.js + Yarn (for development scripts and utilities)
 7. SQLite DB Browser (optional, for manually tweaking app db)
@@ -62,7 +82,9 @@ yarn download:private-key
 yarn download:tfvars
 ```
 
-## Linting & validation
+## Development scripts
+
+### Linting & validation
 
 ```bash
 # Lint tf files
@@ -75,7 +97,7 @@ yarn lint:fix
 terraform validate
 ```
 
-## Interacting with live server
+### Interacting with live server
 
 ```bash
 # Open a ssh session into app instance
@@ -91,7 +113,7 @@ yarn upload:db
 yarn restart:app
 ```
 
-## Terraform documentation
+### Terraform documentation
 
 This project uses [**terraform-docs**](https://terraform-docs.io) to auto-generate markdown document of terraform
 resources being used. You can run following command to run the generator.
@@ -101,3 +123,25 @@ yarn tf-docs
 ```
 
 Generated document will be stored at [`docs/terraform.md`](docs/terraform.md).
+
+## Contributions
+
+Contributions are welcome by opening issues and pull requests. See [CONTRIBUTING.md](CONTRIBUTING.md) file for details.
+
+## Roadmap
+
+- [ ] Automatic deletion of old data volume snapshots (🤔 really?)
+- [ ] Seperate CloudWatch logs every single day
+- [ ] Self-starter guide
+- [ ] Budget-tracking
+- [ ] SRE concepts; monitoring performance
+- [ ] Diagrams explaining the infrastructure
+
+## License
+
+This project is licensed under the MIT License.
+
+## Credits
+
+- Credit to @zadam for building such a beautiful note-taking app. (and also powerful 🐋 image and documentation)
+- Thanks to @geneccx for giving me this whole idea.
