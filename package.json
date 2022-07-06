@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "init": "terraform init",
     "stage": "terraform workspace select",
     "key:generate": "ssh-keygen -t rsa -m PEM -f kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem -N '' -C '' && chmod 400 kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem",
     "download:private-key": "aws s3 cp s3://tf-common-backend/env:/$(terraform workspace show)/$(jq -r '.name' package.json)/kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem .",
