@@ -14,8 +14,8 @@
 This project demonstrates how-to of hosting [`zadam/trilium`](https://github.com/zadam/trilium) on your AWS
 infrastructure. If you want to host your very own personal knowledge base on AWS, this project could be a good starting
 point. You can easily use this project as a boilerplate for managing your trilium hosting infrastructure in IaC way,
-automatic infrastructure provisioning, frequent drift-checking, and more. And also (@cednore) uses this repository
-to manage his own trilium hosting as well 😉.
+automatic infrastructure provisioning, frequent drift-checking, and more. And also
+([@cednore](https://github.com/cednore)) uses this repository to manage his own trilium hosting as well 😉.
 
 Before you start, it is strongly recommended to read [trilium wiki](https://github.com/zadam/trilium/wiki) first,
 especially [server installation/deployment page](https://github.com/zadam/trilium/wiki/Docker-server-installation).
@@ -24,7 +24,7 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 
 1. A single terraform project defining hosting infrastructure and provisioners
 2. Auto-generated [terraform documentation](#terraform-documentation)
-3. [GitHub action](https://github.com/cednore/trilium/actions/workflows/check.ym) for infrastructure drift checking (on
+3. [GitHub action](https://github.com/cednore/trilium/actions/workflows/check.yml) for infrastructure drift checking (on
    every push, scheduled)
 4. Time-saving development scripts
 5. Guides and documentations
@@ -134,8 +134,9 @@ Contributions are welcome by opening issues and pull requests. See [CONTRIBUTING
 - [ ] Seperate CloudWatch logs every single day
 - [ ] Self-starter guide
 - [ ] Budget-tracking
-- [ ] SRE concepts; monitoring performance
+- [ ] SRE concepts; monitoring performance and more
 - [ ] Diagrams explaining the infrastructure
+- [ ] GitHub issue templates; `bug`, `security`, `cost`, `feature` and so on
 
 ## License
 
@@ -143,5 +144,7 @@ This project is licensed under the MIT License.
 
 ## Credits
 
-- Credit to @zadam for building such a beautiful note-taking app. (and also powerful 🐋 image and documentation)
-- Thanks to @geneccx for giving me this whole idea.
+- Credit to [@zadam](https://github.com/zadam) for building such a beautiful note-taking app. (and also powerful
+  🐋 image and documentation)
+- Special thanks to [@geneccx](https://github.com/geneccx) for giving me this whole idea.
+- Thanks to [`gitmoji`](https://gitmoji.dev/), I use it everyday.
