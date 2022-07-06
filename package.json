@@ -1,5 +1,6 @@
 {
   "name": "trilium",
+  "description": "development scripts and dependencies",
   "private": true,
   "scripts": {
     "prepare": "husky install",
