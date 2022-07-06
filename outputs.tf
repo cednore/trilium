@@ -25,3 +25,9 @@ output "app_instance_username" {
   value       = module.app.instance_username
   sensitive   = true
 }
+
+output "data_volume_mount_path" {
+  description = "Path to mount the data volume device"
+  value       = local.data_volume_mount_path
+  sensitive   = true
+}
