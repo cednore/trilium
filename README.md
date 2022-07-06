@@ -12,9 +12,9 @@
 ## ✨ Introduction
 
 This project demonstrates how-to of hosting [`zadam/trilium`](https://github.com/zadam/trilium) on your AWS
-infrastructure. If you want to host your very own personal knowledge base on AWS, this project could be a good starting
-point. You can easily use this project as a boilerplate for managing your trilium hosting infrastructure in IaC way,
-automatic infrastructure provisioning, frequent drift-checking, and more. And also
+infrastructure. If you want to self-host your very own personal knowledge base on AWS, this project could be a good
+starting point. You can easily use this project as a boilerplate for managing your trilium hosting infrastructure in IaC
+way, automatic infrastructure provisioning, frequent drift-checking, and more. And also
 ([@cednore](https://github.com/cednore)) uses this repository to manage his own trilium hosting as well 😉.
 
 Before you start, it is strongly recommended to read [trilium wiki](https://github.com/zadam/trilium/wiki) first,
@@ -32,12 +32,12 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 ### Infrastructure summary 🏗️
 
 1. Single **VPC** with 3 public/private subnets
-2. App instance on **EC2** (default `t3.micro`), publicly accessible via SSH
+2. App instance by **EC2** (default `t3.micro`), publicly accessible via SSH
 3. **Docker**ized app container (default count `1`)
 4. Frontline **ALB** with HTTP/HTTPS listeners
 5. **ACM** certificate attached to ALB (use apex domain's ACM by default, assuming this covers subdomains as well)
-6. **EBS** data volume attached (default 20GB)
-7. **CloudWatch event rule** to backup data volume (every Sunday by default)
+6. **EBS** data volume attached (default `20GB`)
+7. **CloudWatch event rule** to backup data volume (`every Sunday` by default)
 8. **CloudWatch log group** to keep app container logs
 9. **S3** bucket to keep ALB logs
 10. **Security group**s for app instance and ALB
@@ -50,7 +50,7 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 1. [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.2`
 2. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
    configured)
-3. S3 backend (a S3 bucket for state and a DynamoDB table for lock)
+3. S3 backend (a S3 bucket a DynamoDB table)
 4. A personal domain, Route 53 hosted zone, and an ACM certificate. (preferably for the apex domain, which is subject to
    all subdomains as well)
 5. SSH keypair, for connecting app instance
