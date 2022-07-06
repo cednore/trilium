@@ -93,7 +93,7 @@ terraform plan
 ### Selecting stage
 
 This project uses [terraform workspace](https://www.terraform.io/cli/workspaces) to manage different stages. Below
-command is relevant to `terraform workspace select production`.
+command is equivalent to `terraform workspace select production`.
 
 > ⚠️ WARNING: Don't use `default` workspace.
 
