@@ -21,6 +21,7 @@
     "tf-docs": "terraform-docs . -c .terraform-docs.yml"
   },
   "devDependencies": {
-    "husky": "^8.0.1"
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3"
   }
 }
