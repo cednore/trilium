@@ -38,8 +38,9 @@ output.json
 graph.gv
 graph.svg
 
-# Private key files
+# SSH keypairs
 *.pem
+*.pem.pub
 
 # document file
 document.db
