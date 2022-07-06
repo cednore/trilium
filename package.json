@@ -1,7 +1,15 @@
 {
+  "name": "trilium",
   "private": true,
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "init": "terraform init",
+    "stage": "terraform workspace select",
+    "download:private-key": "aws s3 cp s3://tf-common-backend/env:/$(terraform workspace show)/$(jq -r '.name' package.json)/kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem .",
+    "download:tfvars": "aws s3 cp s3://tf-common-backend/env:/$(terraform workspace show)/$(jq -r '.name' package.json)/terraform.tfvars .",
+    "output:json": "terraform output -json > output.json",
+    "connect": "ssh -i kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json)",
+    "tf-docs": "terraform-docs . -c .terraform-docs.yml"
   },
   "devDependencies": {
     "husky": "^8.0.1"
