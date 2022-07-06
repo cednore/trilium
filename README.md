@@ -48,19 +48,20 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 ## 🧱 Prerequisites
 
 1. [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.2`
-2. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
+2. An AWS account
+3. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
    configured)
-3. S3 backend (a S3 bucket a DynamoDB table)
-4. A personal domain, Route 53 hosted zone, and an ACM certificate. (preferably for the apex domain, which is subject to
+4. S3 backend (a S3 bucket a DynamoDB table)
+5. A personal domain, Route 53 hosted zone, and an ACM certificate. (preferably for the apex domain, which is subject to
    all subdomains as well)
-5. SSH keypair, for connecting app instance
-6. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
+6. SSH keypair, for connecting app instance
+7. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
    playbooks)
-7. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
-8. Node.js + Yarn (for development scripts and utilities)
-9. SQLite DB Browser (optional, for manually tweaking app db)
-10. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
-11. Code editor/IDE ofc 😉
+8. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
+9. Node.js + Yarn (for development scripts and utilities)
+10. SQLite DB Browser (optional, for manually tweaking app db)
+11. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
+12. Code editor/IDE ofc 😉
 
 ## ⚡ Getting started
 
