@@ -28,8 +28,8 @@ variable "app_instance_public_ip" {
   sensitive   = true
 }
 
-variable "app_privkey_path" {
-  description = "Path to private key file for ssh connection to the app instance"
+variable "app_keypair_path" {
+  description = "Path to keypair file for ssh connection to the app instance"
   type        = string
   sensitive   = true
 }

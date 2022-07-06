@@ -80,9 +80,12 @@ terraform init
 # Select stage
 yarn stage production # or other stages
 
-# Download private key and tfvars file from backend bucket
-yarn download:private-key
+# Download keypair and tfvars file from backend bucket
+yarn download:keypair
 yarn download:tfvars
+
+# Terraform plan
+terraform plan
 ```
 
 ## Development scripts
@@ -112,13 +115,13 @@ yarn graph
 
 ```bash
 # Download keypair from backend bucket
-yarn download:private-key
+yarn download:keypair
 
 # Download tfvars from backend bucket
 yarn download:tfvars
 
 # Upload keypair to backend bucket
-yarn upload:private-key
+yarn upload:keypair
 
 # Upload tfvars to backend bucket
 yarn upload:tfvars

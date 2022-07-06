@@ -3,7 +3,7 @@ resource "null_resource" "app_data_volume_provisioner" {
     src_hash = filesha256("${path.module}/playbooks/app-data.yml")
     variables = jsonencode([
       var.app_instance_public_ip,
-      var.app_privkey_path,
+      var.app_keypair_path,
       var.data_volume_id,
       var.data_volume_mount_path,
       var.data_volume_filesystem,
@@ -15,7 +15,7 @@ resource "null_resource" "app_data_volume_provisioner" {
                 sleep 10s && ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook ${path.module}/playbooks/app-data.yml \
                   -u ubuntu \
                   -i '${var.app_instance_public_ip},' \
-                  --private-key ${var.app_privkey_path} \
+                  --private-key ${var.app_keypair_path} \
                   -e 'volume_serial=${replace(var.data_volume_id, "-", "")}' \
                   -e 'mount_path=${var.data_volume_mount_path}' \
                   -e 'filesystem=${var.data_volume_filesystem}'
@@ -32,7 +32,7 @@ resource "null_resource" "app_instance_provisioner" {
     src_hash = filesha256("${path.module}/playbooks/app.yml")
     variables = jsonencode([
       var.app_instance_public_ip,
-      var.app_privkey_path,
+      var.app_keypair_path,
       var.app_image,
       var.app_image_tag,
       var.app_container_count,
@@ -50,7 +50,7 @@ resource "null_resource" "app_instance_provisioner" {
                 sleep 10s && ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook ${path.module}/playbooks/app.yml \
                   -u ubuntu \
                   -i '${var.app_instance_public_ip},' \
-                  --private-key ${var.app_privkey_path} \
+                  --private-key ${var.app_keypair_path} \
                   -e 'image=${var.app_image}' \
                   -e 'tag=${var.app_image_tag}' \
                   -e 'container_count=${var.app_container_count}' \
