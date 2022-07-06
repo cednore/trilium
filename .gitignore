@@ -40,3 +40,7 @@ graph.svg
 
 # Private key files
 *.pem
+
+# document file
+document.db
+document.db*
