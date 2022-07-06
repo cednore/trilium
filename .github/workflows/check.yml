@@ -43,12 +43,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
           mask-aws-account-id: false
-      - name: Download terraform.tfvars
-        run: aws s3 cp s3://${{ secrets.BACKEND_BUCKET }}/env:/${{ matrix.stage }}/${{ env.APP }}/terraform.tfvars terraform.tfvars
-        continue-on-error: true
-      - name: Download private key file
-        run: aws s3 cp s3://${{ secrets.BACKEND_BUCKET }}/env:/${{ matrix.stage }}/${{ env.APP }}/${{ steps.vars.outputs.private_key_filename }} ${{ steps.vars.outputs.private_key_filename }}
-        continue-on-error: true
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: yarn
+          cache-dependency-path: '**/yarn.lock'
       - name: Setup terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -56,26 +56,27 @@ jobs:
           terraform_wrapper: false
       - name: Setup graphviz
         uses: ts-graphviz/setup-graphviz@v1
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt -check -diff -recursive -no-color
-      - name: Terraform init
-        id: init
+      - name: Install npm dependencies
+        run: yarn install --frozen-lockfile
+      - name: Download terraform.tfvars
+        run: yarn download:tfvars
+        continue-on-error: true
+      - name: Download private key file
+        run: yarn download:private-key
+        continue-on-error: true
+      - name: Lint tf files
+        run: yarn lint -no-color
+      - name: Initialize terraform project
         run: terraform init -no-color
-      - name: Select terraform workspace
-        id: select-workspace
-        run: terraform workspace select ${{ matrix.stage }}
-      - name: Terraform validate
-        id: validate
+      - name: Select stage
+        run: yarn stage ${{ matrix.stage }}
+      - name: Validate
         run: terraform validate -no-color
       - name: Terraform plan (detailed exitcode)
-        id: plan
         run: terraform plan -detailed-exitcode -no-color
-      - name: Terraform output
-        id: output
-        run: terraform output -json -no-color > output.json
+      - name: Generate terraform outputs
+        run: yarn output:json
       - name: Terraform graph
-        id: graph
         run: |
           terraform graph -draw-cycles > graph.gv
           dot -Tsvg graph.gv > graph.svg
