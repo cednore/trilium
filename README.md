@@ -24,12 +24,41 @@ yarn install
 # Initialize terraform project
 terraform init
 
-# Select production stage
-yarn stage production
+# Select stage
+yarn stage production # or other stages
 
 # Download private key and tfvars file
 yarn download:private-key
 yarn download:tfvars
+```
+
+## Linting & validation
+
+```bash
+# Lint tf files
+yarn lint
+
+# Lint tf files and fix
+yarn lint:fix
+
+# Validate terraform project
+terraform validate
+```
+
+## Interacting with live server
+
+```bash
+# Open a ssh session into app instance
+yarn connect
+
+# Download app db file (sqlite)
+yarn download:db
+
+# Upload app db file
+yarn upload:db
+
+# Restart app container
+yarn restart:app
 ```
 
 ## Terraform documentation
