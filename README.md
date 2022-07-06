@@ -51,13 +51,16 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 2. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
    configured)
 3. S3 backend (a S3 bucket for state and a DynamoDB table for lock)
-4. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
+4. A personal domain, Route 53 hosted zone, and an ACM certificate. (preferably for the apex domain, which is subject to
+   all subdomains as well)
+5. SSH keypair, for connecting app instance.
+6. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
    playbooks)
-5. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
-6. Node.js + Yarn (for development scripts and utilities)
-7. SQLite DB Browser (optional, for manually tweaking app db)
-8. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
-9. Code editor/IDE ofc 😉
+7. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
+8. Node.js + Yarn (for development scripts and utilities)
+9. SQLite DB Browser (optional, for manually tweaking app db)
+10. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
+11. Code editor/IDE ofc 😉
 
 ## Getting started
 
@@ -77,12 +80,56 @@ terraform init
 # Select stage
 yarn stage production # or other stages
 
-# Download private key and tfvars file
+# Download private key and tfvars file from backend bucket
 yarn download:private-key
 yarn download:tfvars
 ```
 
 ## Development scripts
+
+### Selecting stage
+
+```bash
+# Select production stage
+yarn stage production
+```
+
+### Outputs
+
+```bash
+# Terraform output in json format
+yarn output:json
+```
+
+### Generating terraform graph
+
+```bash
+# Generate terraform graph and convert into svg format (requires graphviz)
+yarn graph
+```
+
+### Downloading/uploading keypair and tfvars from/to backend bucket
+
+```bash
+# Download keypair from backend bucket
+yarn download:private-key
+
+# Download tfvars from backend bucket
+yarn download:tfvars
+
+# Upload keypair to backend bucket
+yarn upload:private-key
+
+# Upload tfvars to backend bucket
+yarn upload:tfvars
+```
+
+### Generating a new keypair
+
+```bash
+# Generate a new keypair, if you don't have one already
+yarn key:generate
+```
 
 ### Linting & validation
 
@@ -103,14 +150,14 @@ terraform validate
 # Open a ssh session into app instance
 yarn connect
 
+# Restart app container (this fixes broken notes and branches)
+yarn restart:app
+
 # Download app db file (sqlite)
 yarn download:db
 
 # Upload app db file
 yarn upload:db
-
-# Restart app container
-yarn restart:app
 ```
 
 ### Terraform documentation
