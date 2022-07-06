@@ -7,14 +7,12 @@ on:
     paths-ignore:
       - '**/*.md'
       - 'docs/**'
-      - LICENSE
   pull_request:
     paths-ignore:
       - '**/*.md'
       - 'docs/**'
-      - LICENSE
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 12 * * *' # Everyday
   workflow_dispatch:
 
 env:
@@ -77,3 +75,10 @@ jobs:
           output-file: docs/terraform.md
           git-push: "true"
           git-commit-message: "📝 terraform-docs: auto-update"
+      - name: Outputs
+        id: output
+        run: |
+          echo "::set-output name=environment_url::$(jq -Mr '.app_url.value' output.json)"
+    environment:
+      name: ${{ matrix.stage }}
+      url: ${{ steps.vars.outputs.url_output }}
