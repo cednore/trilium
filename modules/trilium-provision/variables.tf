@@ -75,10 +75,10 @@ variable "app_container_log_group" {
   type        = string
 }
 
-variable "data_volume_device_name" {
-  description = "Device name of data volume"
+variable "data_volume_id" {
+  description = "Volume ID of data volume"
   type        = string
-  default     = "/dev/xvdf"
+  sensitive   = true
 }
 
 variable "data_volume_filesystem" {

@@ -3,17 +3,20 @@
   hosts: all
   become: true
   vars:
-    device_name: /dev/xvdf
+    volume_serial:
     mount_path: /mnt/app_data
     filesystem: ext4
   tasks:
+    - name: Get device name of data volume
+      shell: lsblk -o +SERIAL | grep {{ volume_serial }} | awk '{print $1}'
+      register: device_name
     - name: Format the data volume
       filesystem:
-        dev: "{{ device_name }}"
+        dev: "/dev/{{ device_name.stdout }}"
         fstype: "{{ filesystem }}"
     - name: Mount the data volume
       mount:
         name: "{{ mount_path }}"
-        src: "{{ device_name }}"
+        src: "/dev/{{ device_name.stdout }}"
         fstype: "{{ filesystem }}"
         state: mounted

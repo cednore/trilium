@@ -4,7 +4,7 @@ resource "null_resource" "app_data_volume_provisioner" {
     variables = jsonencode([
       var.app_instance_public_ip,
       var.app_privkey_path,
-      var.data_volume_device_name,
+      var.data_volume_id,
       var.data_volume_mount_path,
       var.data_volume_filesystem,
     ])
@@ -16,7 +16,7 @@ resource "null_resource" "app_data_volume_provisioner" {
                   -u ubuntu \
                   -i '${var.app_instance_public_ip},' \
                   --private-key ${var.app_privkey_path} \
-                  -e 'device_name=${var.data_volume_device_name}' \
+                  -e 'volume_serial=${replace(var.data_volume_id, "-", "")}' \
                   -e 'mount_path=${var.data_volume_mount_path}' \
                   -e 'filesystem=${var.data_volume_filesystem}'
               BASH

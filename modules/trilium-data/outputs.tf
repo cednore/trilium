@@ -1,4 +1,4 @@
-output "data_volume_device_name" {
-  description = "Device name of data volume"
-  value       = "/dev/xvd${var.device_letter}"
+output "data_volume_id" {
+  description = "Volume ID of data volume"
+  value       = aws_ebs_volume.app_data.id
 }
