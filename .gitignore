@@ -62,8 +62,10 @@ yarn-error.log*
 # nodejs modules
 node_modules/
 
-# terragrunt vars configuration
-.vars.hcl
+# dotenv files
+.env
+.env.*
+!.env.example
 
 # terragrunt generated files
 backend.tf
