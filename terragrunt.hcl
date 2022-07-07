@@ -35,7 +35,7 @@ remote_state {
     region         = local.aws_region
     dynamodb_table = local.backend_locktable
     bucket         = local.backend_bucket
-    key            = "${local.app}/terraform.tfstate"
+    key            = "env:/${local.stage}/${local.app}/terraform.tfstate"
   }
 
   generate = {
