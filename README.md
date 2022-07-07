@@ -49,22 +49,23 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 
 1. [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.2`
 2. [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/) `>= 0.38.0`
-3. An AWS account
-4. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
+3. Node.js + Yarn (for development scripts and utilities)
+4. [dotenv-cli](https://github.com/entropitor/dotenv-cli)
+5. An AWS account
+6. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
    configured)
-5. S3 backend (a S3 bucket and a DynamoDB table)
-6. A personal domain, Route 53 hosted zone, and an ACM certificate (preferably for the apex domain, which is subject to
+7. S3 backend (a S3 bucket and a DynamoDB table)
+8. A personal domain, Route 53 hosted zone, and an ACM certificate (preferably for the apex domain, which is subject to
    all subdomains as well).
-7. SSH keypair at `.keypair.pem`, for connecting app instance
-8. `.env` file, for environment variables (see [`.env.example`](.env.example))
-9. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
-   playbooks)
-10. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
-11. [TFLint](https://github.com/terraform-linters/tflint)
-12. Node.js + Yarn (for development scripts and utilities)
-13. SQLite DB Browser (optional, for manually tweaking app db)
-14. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
-15. Code editor/IDE ofc 😉
+9. SSH keypair at `.keypair.pem`, for connecting app instance
+10. `.env` file, for environment variables (see [`.env.example`](.env.example))
+11. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
+    playbooks)
+12. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
+13. [TFLint](https://github.com/terraform-linters/tflint)
+14. SQLite DB Browser (optional, for manually tweaking app db)
+15. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
+16. Code editor/IDE ofc 😉
 
 ## ⚡ Getting started
 

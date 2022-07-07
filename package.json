@@ -19,8 +19,5 @@
     "download:db": "scp -i .keypair.pem $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json):$(jq -r '.data_volume_mount_path.value' output.json)/document.db .",
     "upload:db": "scp -i .keypair.pem document.db $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json):$(jq -r '.data_volume_mount_path.value' output.json)/document.db",
     "tf-docs": "terraform-docs . -c .terraform-docs.yml"
-  },
-  "devDependencies": {
-    "dotenv-cli": "^6.0.0"
   }
 }

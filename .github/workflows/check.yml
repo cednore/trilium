@@ -61,10 +61,10 @@ jobs:
         uses: terraform-linters/setup-tflint@v1
         with:
           tflint_version: latest
+      - name: Install dotenv-cli
+        run: yarn global add dotenv-cli
       - name: Install npm dependencies
         run: yarn install --frozen-lockfile
-      - name: Create empty .env file
-        run: touch .env
       - name: Initialize project
         run: yarn initialize
       - name: Format check tf files
