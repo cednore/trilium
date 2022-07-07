@@ -42,30 +42,40 @@ jobs:
           node-version: 16
           cache: yarn
           cache-dependency-path: '**/yarn.lock'
-      - name: Setup terraform
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.2.4
           terraform_wrapper: false
+      - name: Setup Terragrunt
+        uses: autero1/action-terragrunt@v1.1.0
+        with:
+          terragrunt_version: 0.38.4
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v1
+        with:
+          tflint_version: latest
       - name: Install npm dependencies
         run: yarn install --frozen-lockfile
-      - name: Initialize terraform project
-        run: terraform init -no-color
+      - name: Initialize project
+        run: yarn initialize
       - name: Select stage
         run: yarn stage ${{ matrix.stage }}
-      - name: Download terraform.tfvars
+      - name: Download tfvars
         run: yarn download:tfvars
         continue-on-error: true
       - name: Download keypair file
         run: yarn download:keypair
         continue-on-error: true
-      - name: Lint tf files
-        run: yarn lint -no-color
-      - name: Validate terraform project
-        run: terraform validate -no-color
-      - name: Terraform plan (detailed exitcode)
-        run: terraform plan -detailed-exitcode -no-color
-      - name: Generate terraform outputs
+      - name: Format check tf files
+        run: yarn fmt:check -no-color
+      - name: Lint project
+        run: yarn lint:ci
+      - name: Validate project
+        run: yarn validate -no-color
+      - name: Terragrunt plan (detailed exitcode)
+        run: yarn plan -detailed-exitcode -no-color
+      - name: Generate outputs
         run: yarn output:json
       - name: Generate terraform documents
         uses: terraform-docs/gh-actions@v1.0.0
