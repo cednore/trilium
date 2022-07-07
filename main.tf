@@ -24,7 +24,7 @@ module "app" {
   subnet_id     = module.root.public_subnet_ids[0]
   sg_ids        = module.root.app_instance_sg_ids
   instance_type = "t3.micro"
-  pubkey        = trimspace(data.tls_public_key.ec2_pubkey.public_key_openssh)
+  pubkey        = trimspace(var.app_instance_public_key)
 }
 
 module "data" {

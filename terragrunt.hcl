@@ -4,10 +4,11 @@ locals {
   backend_bucket    = get_env("BACKEND_BUCKET")
   backend_locktable = get_env("BACKEND_LOCKTABLE")
 
-  app_name            = get_env("APP_NAME", "Trilium Notes")
-  app                 = get_env("APP", "trilium")
-  stage               = get_env("STAGE", "production")
-  domain              = get_env("DOMAIN", "trilium.someone.me")
+  app_name                = get_env("APP_NAME", "Trilium Notes")
+  app                     = get_env("APP", "trilium")
+  stage                   = get_env("STAGE", "production")
+  domain                  = get_env("DOMAIN", "trilium.someone.me")
+  app_instance_public_key = get_env("APP_INSTANCE_PUBLIC_KEY")
 }
 
 generate "providers" {
@@ -44,8 +45,9 @@ remote_state {
 }
 
 inputs = {
-  app_name            = local.app_name
-  app                 = local.app
-  stage               = local.stage
-  domain              = local.domain
+  app_name                = local.app_name
+  app                     = local.app
+  stage                   = local.stage
+  domain                  = local.domain
+  app_instance_public_key = local.app_instance_public_key
 }
