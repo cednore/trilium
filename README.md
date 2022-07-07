@@ -49,23 +49,22 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 
 1. [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.2`
 2. [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/) `>= 0.38.0`
-3. Node.js + Yarn (for development scripts and utilities)
-4. [dotenv-cli](https://github.com/entropitor/dotenv-cli)
-5. An AWS account
-6. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
+3. [dotenv-cli](https://github.com/entropitor/dotenv-cli)
+4. An AWS account
+5. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
    configured)
-7. S3 backend (a S3 bucket and a DynamoDB table)
-8. A personal domain, Route 53 hosted zone, and an ACM certificate (preferably for the apex domain, which is subject to
+6. S3 backend (a S3 bucket and a DynamoDB table)
+7. A personal domain, Route 53 hosted zone, and an ACM certificate (preferably for the apex domain, which is subject to
    all subdomains as well).
-9. SSH keypair at `.keypair.pem`, for connecting app instance
-10. `.env` file, for environment variables (see [`.env.example`](.env.example))
-11. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
+8. SSH keypair at `.keypair.pem`, for connecting app instance
+9. `.env` file, for environment variables (see [`.env.example`](.env.example))
+10. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
     playbooks)
-12. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
-13. [TFLint](https://github.com/terraform-linters/tflint)
-14. SQLite DB Browser (optional, for manually tweaking app db)
-15. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
-16. Code editor/IDE ofc 😉
+11. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
+12. [TFLint](https://github.com/terraform-linters/tflint)
+13. SQLite DB Browser (optional, for manually tweaking app db)
+14. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
+15. Code editor/IDE ofc 😉
 
 ## ⚡ Getting started
 
@@ -79,33 +78,23 @@ git clone git@github.com:cednore/trilium.git
 cd trilium
 ```
 
-### 2. Install dependencies
-
-```bash
-# Install nodejs modules
-yarn install
-
-# Install tflint plugins
-tflint --init
-```
-
-### 3. Configure project
+### 2. Configure project
 
 1. Prepare dotenv file at `.env`. If you don't have `.env` file, you can create a new one by `cp .env.example .env` and
    customize with your own settings
 2. Prepare keypair file at `.keypair.pem`. You should either download from your secret vault or generate one by
-   `yarn key:generate` if you don't have already.
+   `make keygen` if you don't have already.
 
-### 4. Intialize project
+### 3. Intialize project
 
 ```bash
-yarn initialize
+make init
 ```
 
-### 5. Try create an execution plan
+### 4. Try create an execution plan
 
 ```bash
-yarn plan
+make plan
 ```
 
 ## 🔨 Development scripts
@@ -117,16 +106,16 @@ wrapped basic terragrunt commands with [`dotenv-cli`](https://github.com/entropi
 
 ```bash
 # terragrunt init
-yarn initialize
+make init
 
 # terragrunt plan
-yarn plan
+make plan
 
 # terragrunt validate
-yarn validate
+make validate
 
 # terragrunt apply
-yarn apply
+make apply
 ```
 
 For the rest of the terragrunt commands, just append `dotenv run` in front of them to load the dotenv file and prior to
@@ -144,7 +133,7 @@ See [`outputs.tf`](outputs.tf) file and check out what's being outputted.
 
 ```bash
 # Terraform output in json format (into output.json)
-yarn output:json
+make output
 ```
 
 > ℹ️ INFO: `output.json` file is gitignored.
@@ -156,7 +145,7 @@ SVG format, which is converted by GraphViz.
 
 ```bash
 # Generate terraform graph and convert into svg format (requires graphviz)
-yarn graph
+make graph
 ```
 
 ### Keypair and variable files
@@ -169,7 +158,7 @@ instance.
 
 ```bash
 # Generate a new keypair, if you don't have one already
-yarn key:generate
+make keygen
 ```
 
 > ℹ️ INFO: Keypair file is only needed when `terragrunt apply`. It's not necessary for `terragrunt plan`.
@@ -178,13 +167,13 @@ yarn key:generate
 
 ```bash
 # Format check tf files
-yarn fmt:check
+make fmt-check
 
 # Format tf files
-yarn fmt
+make fmt
 
 # Lint project (by tflint)
-yarn lint
+make lint
 ```
 
 ### Interacting with live server
@@ -192,20 +181,20 @@ yarn lint
 Often, you might wanna login to app instance (EC2) and run a few commands or download/upload app data.
 
 > ⚠️ WARNING: Below commands depends on terragrunt output file. Make sure you have `output.json` file. You can
-> run `yarn output:json` to generate this file.
+> run `make output` to generate this file.
 
 ```bash
 # Open a ssh session into app instance
-yarn connect
+make connect
 
 # Restart app container (this fixes broken notes and branches)
-yarn restart:app
+make restart
 
 # Download app db file (sqlite)
-yarn download:db
+make dbdump
 
 # Upload app db file
-yarn upload:db
+make dbrestore
 ```
 
 > ℹ️ INFO: `restart:app` command is useful when facing
@@ -217,7 +206,7 @@ This project uses [**terraform-docs**](https://terraform-docs.io) to auto-genera
 resources being used. You can run following command to run the generator.
 
 ```bash
-yarn tf-docs
+make tfdocs
 ```
 
 Generated document will be stored at [`docs/terraform.md`](docs/terraform.md).
