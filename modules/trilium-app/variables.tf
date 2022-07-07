@@ -23,12 +23,12 @@ variable "stage" {
 }
 
 variable "subnet_id" {
-  description = "ID of subnet to place the instance"
+  description = "ID of subnet to place the app instance"
   type        = string
 }
 
 variable "sg_ids" {
-  description = "IDs of security groups to apply to the instance"
+  description = "IDs of security groups to apply to the app instance"
   type        = list(string)
 }
 
@@ -39,7 +39,7 @@ variable "instance_type" {
 }
 
 variable "pubkey" {
-  description = "Public key for ssh connection to instances"
+  description = "SSH public key for the app instance"
   type        = string
   sensitive   = true
 }
