@@ -61,8 +61,8 @@ jobs:
         run: yarn initialize
       - name: Select stage
         run: yarn stage ${{ matrix.stage }}
-      - name: Download tfvars
-        run: yarn download:tfvars
+      - name: Download terragrunt variable file
+        run: yarn download:vars
         continue-on-error: true
       - name: Download keypair file
         run: yarn download:keypair

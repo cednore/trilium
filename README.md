@@ -57,13 +57,14 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 6. A personal domain, Route 53 hosted zone, and an ACM certificate. (preferably for the apex domain, which is subject to
    all subdomains as well)
 7. SSH keypair, for connecting app instance
-8. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
+8. Variable file `.vars.hcl`, which contains all terragrunt variables (see [`.vars.hcl.example`](.vars.hcl.example))
+9. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
    playbooks)
-9. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
-10. Node.js + Yarn (for development scripts and utilities)
-11. SQLite DB Browser (optional, for manually tweaking app db)
-12. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
-13. Code editor/IDE ofc 😉
+10. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
+11. Node.js + Yarn (for development scripts and utilities)
+12. SQLite DB Browser (optional, for manually tweaking app db)
+13. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
+14. Code editor/IDE ofc 😉
 
 ## ⚡ Getting started
 
@@ -77,17 +78,21 @@ cd trilium
 # Install nodejs modules
 yarn install
 
+# Download keypair and variable files from backend bucket
+yarn download:keypair
+yarn download:vars
+
+# Or, make a new keypair and variable file if you don't have them already
+cp .vars.hcl.example .vars.hcl # Customize your own settings after this
+yarn key:generate
+
 # Initialize project
 yarn initialize
 
 # Select stage
 yarn stage production # or other stages
 
-# Download keypair and tfvars file from backend bucket
-yarn download:keypair
-yarn download:tfvars
-
-# Terragrunt plan
+# Try create an execution plan
 yarn plan
 ```
 
@@ -130,11 +135,11 @@ SVG format, which is converted by GraphViz.
 yarn graph
 ```
 
-### Keypairs and tfvars
+### Keypair and variable files
 
-Keypair file and tfvars files are essential parts of this project. It uses \*.pem format keyfile for SSH connection into
-EC2 app instance, tfavrs file for customized terraform variables. This project assumes these files are stored inside
-backend bucket (S3), along with tfstate file.
+Keypair and variable files are essential parts of this project. It uses \*.pem format keyfile for SSH connection into
+EC2 app instance, `.vars.hcl` file for customized terragrunt variables. This project assumes these files are stored
+inside backend bucket (S3), along with tfstate file.
 
 If you are starting a new hosting based on this repository, you might wanna generate a new keypair for your EC2 app
 instance.
@@ -143,8 +148,8 @@ instance.
 # Download keypair from backend bucket
 yarn download:keypair
 
-# Download tfvars from backend bucket
-yarn download:tfvars
+# Download variable file from backend bucket
+yarn download:vars
 
 # Generate a new keypair, if you don't have one already
 yarn key:generate
@@ -152,8 +157,8 @@ yarn key:generate
 # Upload keypair to backend bucket
 yarn upload:keypair
 
-# Upload tfvars to backend bucket
-yarn upload:tfvars
+# Upload variable file to backend bucket
+yarn upload:vars
 ```
 
 ### Formatting & linting & validation
