@@ -1,0 +1,14 @@
+inputs = {
+  aws_region        = "us-east-2"
+  repo_origin       = "https://github.com/cednore/trilium.git"
+  backend_bucket    = "tf-common-backend"
+  backend_locktable = "tf-common-backend"
+
+  app_name            = "Cednore Notes"
+  app                 = "trilium"
+  apex_domain         = "cednore.com"
+  domain              = "trilium.cednore.com"
+  alternative_domains = [
+    "notes.cednore.com",
+  ]
+}

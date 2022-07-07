@@ -33,6 +33,12 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# terragrunt cache directories
+**/.terragrunt-cache/*
+
+# Terragrunt debug output file (when using `--terragrunt-debug` option)
+terragrunt-debug.tfvars.json
+
 # Artifact of terraform output and graph
 output.json
 graph.gv
@@ -46,5 +52,19 @@ graph.svg
 document.db
 document.db*
 
+# nodejs logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 # nodejs modules
 node_modules/
+
+# terragrunt vars configuration
+.vars.hcl
+
+# terragrunt generated files
+backend.tf
+providers.tf
