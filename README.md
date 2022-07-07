@@ -47,8 +47,8 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 
 ## 🧱 Prerequisites
 
-1. [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.2`
-2. [Terragrunt CLI](https://terragrunt.gruntwork.io/docs/getting-started/install/) `>= 0.38.0`
+1. [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.2`
+2. [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/) `>= 0.38.0`
 3. An AWS account
 4. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
    configured)
@@ -111,7 +111,8 @@ yarn plan
 
 ### Basic terragrunt scripts
 
-Terragrunt doesn't load dotenv file automatically (see https://github.com/gruntwork-io/terragrunt/issues/1750), so I've wrapped basic terragrunt commands with [`dotenv-cli`](https://github.com/entropitor/dotenv-cli).
+Terragrunt doesn't load dotenv file automatically (see https://github.com/gruntwork-io/terragrunt/issues/1750), so I've
+wrapped basic terragrunt commands with [`dotenv-cli`](https://github.com/entropitor/dotenv-cli).
 
 ```bash
 # terragrunt init
