@@ -17,7 +17,6 @@ on:
 
 env:
   AWS_REGION: us-east-2
-  APP: trilium
 
 jobs:
   check:
@@ -26,6 +25,8 @@ jobs:
         stage: [production]
     name: Drift detection
     runs-on: ubuntu-latest
+    env:
+      STAGE: ${{ github.ref_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -57,16 +58,16 @@ jobs:
           tflint_version: latest
       - name: Install npm dependencies
         run: yarn install --frozen-lockfile
-      - name: Initialize project
-        run: yarn initialize
-      - name: Select stage
-        run: yarn stage ${{ matrix.stage }}
       - name: Download terragrunt variable file
         run: yarn download:vars
         continue-on-error: true
       - name: Download keypair file
         run: yarn download:keypair
         continue-on-error: true
+      - name: Initialize project
+        run: yarn initialize
+      - name: Select stage
+        run: yarn stage ${{ matrix.stage }}
       - name: Format check tf files
         run: yarn fmt:check -no-color
       - name: Lint project
