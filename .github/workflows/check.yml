@@ -15,9 +15,6 @@ on:
     - cron: '0 12 * * *' # Everyday
   workflow_dispatch:
 
-env:
-  AWS_REGION: us-east-2
-
 jobs:
   check:
     strategy:
@@ -26,7 +23,15 @@ jobs:
     name: Drift detection
     runs-on: ubuntu-latest
     env:
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      REPO_ORIGIN: ${{ github.repositoryUrl }}
+      BACKEND_BUCKET: ${{ secrets.BACKEND_BUCKET }}
+      BACKEND_LOCKTABLE: ${{ secrets.BACKEND_LOCKTABLE }}
+      APP_NAME: ${{ secrets.APP_NAME }}
+      APP: ${{ secrets.APP }}
       STAGE: ${{ matrix.stage }}
+      DOMAIN: ${{ secrets.DOMAIN }}
+      APP_INSTANCE_PUBLIC_KEY: ${{ secrets.APP_INSTANCE_PUBLIC_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -58,16 +63,8 @@ jobs:
           tflint_version: latest
       - name: Install npm dependencies
         run: yarn install --frozen-lockfile
-      - name: Download terragrunt variable file
-        run: yarn download:vars
-        continue-on-error: true
-      - name: Download keypair file
-        run: yarn download:keypair
-        continue-on-error: true
       - name: Initialize project
         run: yarn initialize
-      - name: Select stage
-        run: yarn stage ${{ matrix.stage }}
       - name: Format check tf files
         run: yarn fmt:check -no-color
       - name: Lint project
