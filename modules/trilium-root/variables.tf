@@ -1,7 +1,7 @@
 variable "app_name" {
   description = "Name of this app"
   type        = string
-  default     = "Cednore Notes"
+  default     = "Trilium Notes"
 }
 
 variable "app" {

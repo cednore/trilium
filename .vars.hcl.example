@@ -6,8 +6,8 @@ inputs = {
 
   app_name            = "Trilium Notes"       # Name of this app
   app                 = "trilium"             # URL friendly name of this app
-  domain              = "trilium.example.com" # Domain of this app
+  domain              = "trilium.someone.me"  # Domain of this app
   alternative_domains = [                     # Alternative domain names to host this app
-    "notes.example.com",
+    "notes.someone.me",
   ]
 }

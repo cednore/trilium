@@ -1,7 +1,7 @@
 variable "app_name" {
   description = "Name of this app"
   type        = string
-  default     = "Cednore Notes"
+  default     = "Trilium Notes"
 }
 
 variable "app" {
@@ -25,7 +25,7 @@ variable "stage" {
 variable "domain" {
   description = "Domain name to host this app"
   type        = string
-  default     = "trilium.cednore.com"
+  default     = "trilium.someone.me"
 }
 
 variable "alternative_domains" {
