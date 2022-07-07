@@ -3,7 +3,6 @@
   "description": "development scripts and dependencies",
   "private": true,
   "scripts": {
-    "prepare": "husky install",
     "stage": "terraform workspace select",
     "graph": "terraform graph -draw-cycles > graph.gv && dot -Tsvg graph.gv > graph.svg",
     "key:generate": "ssh-keygen -t rsa -m PEM -f kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem -N '' -C '' && chmod 400 kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem",
@@ -19,9 +18,5 @@
     "download:db": "scp -i kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json):$(jq -r '.data_volume_mount_path.value' output.json)/document.db .",
     "upload:db": "scp -i kp-$(jq -r '.name' package.json)-app-$(terraform workspace show).pem document.db $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json):$(jq -r '.data_volume_mount_path.value' output.json)/document.db",
     "tf-docs": "terraform-docs . -c .terraform-docs.yml"
-  },
-  "devDependencies": {
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3"
   }
 }
