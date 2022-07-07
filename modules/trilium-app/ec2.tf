@@ -9,6 +9,12 @@ resource "aws_instance" "app" {
   tags = merge(local.default_tags, {
     Name = "i-${local.slug}-app"
   })
+
+  lifecycle {
+    ignore_changes = [
+      ami, # Ignore ami updates
+    ]
+  }
 }
 
 resource "aws_key_pair" "main" {
