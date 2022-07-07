@@ -26,7 +26,7 @@ jobs:
     name: Drift detection
     runs-on: ubuntu-latest
     env:
-      STAGE: ${{ github.ref_name }}
+      STAGE: ${{ matrix.stage }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
