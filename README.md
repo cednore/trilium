@@ -23,11 +23,12 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 ### What's included 🗃️
 
 1. A single terraform project defining hosting infrastructure and provisioners
-2. Auto-generated [terraform documentation](#terraform-documentation)
-3. [GitHub action](https://github.com/cednore/trilium/actions/workflows/check.yml) for infrastructure drift checking (on
+2. Terragrunt wrapper, to variablize terraform backend and providers
+3. Auto-generated [terraform documentation](#terraform-documentation)
+4. [GitHub action](https://github.com/cednore/trilium/actions/workflows/check.yml) for infrastructure drift checking (on
    every push, scheduled)
-4. Time-saving development scripts
-5. Guides and documentations
+5. Time-saving development scripts
+6. Guides and documentations
 
 ### Infrastructure summary 🏗️
 
@@ -48,20 +49,21 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 ## 🧱 Prerequisites
 
 1. [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.2`
-2. An AWS account
-3. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
+2. [Terragrunt CLI](https://terragrunt.gruntwork.io/docs/getting-started/install/) `>= 0.38.0`
+3. An AWS account
+4. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
    configured)
-4. S3 backend (a S3 bucket a DynamoDB table)
-5. A personal domain, Route 53 hosted zone, and an ACM certificate. (preferably for the apex domain, which is subject to
+5. S3 backend (a S3 bucket a DynamoDB table)
+6. A personal domain, Route 53 hosted zone, and an ACM certificate. (preferably for the apex domain, which is subject to
    all subdomains as well)
-6. SSH keypair, for connecting app instance
-7. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
+7. SSH keypair, for connecting app instance
+8. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
    playbooks)
-8. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
-9. Node.js + Yarn (for development scripts and utilities)
-10. SQLite DB Browser (optional, for manually tweaking app db)
-11. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
-12. Code editor/IDE ofc 😉
+9. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
+10. Node.js + Yarn (for development scripts and utilities)
+11. SQLite DB Browser (optional, for manually tweaking app db)
+12. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
+13. Code editor/IDE ofc 😉
 
 ## ⚡ Getting started
 
@@ -75,8 +77,8 @@ cd trilium
 # Install nodejs modules
 yarn install
 
-# Initialize terraform project
-terraform init
+# Initialize project
+yarn initialize
 
 # Select stage
 yarn stage production # or other stages
@@ -85,8 +87,8 @@ yarn stage production # or other stages
 yarn download:keypair
 yarn download:tfvars
 
-# Terraform plan
-terraform plan
+# Terragrunt plan
+yarn plan
 ```
 
 ## 🔨 Development scripts
@@ -154,17 +156,20 @@ yarn upload:keypair
 yarn upload:tfvars
 ```
 
-### Linting & validation
+### Formatting & linting & validation
 
 ```bash
-# Lint tf files
+# Format check tf files
+yarn fmt:check
+
+# Format tf files
+yarn fmt
+
+# Lint project (by tflint)
 yarn lint
 
-# Lint tf files and fix
-yarn lint:fix
-
 # Validate terraform project
-terraform validate
+yarn validate
 ```
 
 ### Interacting with live server
@@ -206,7 +211,6 @@ Contributions are welcome by opening issues and pull requests. See [CONTRIBUTING
 ## 🚧 Roadmap
 
 - [ ] Seperate CloudWatch logs every single day
-- [ ] Terragrunt wrapper for variable backend bucket
 - [ ] Self-starter/forking guide
 - [ ] Budget-tracking
 - [ ] SRE concepts; monitoring performance and more
