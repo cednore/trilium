@@ -37,7 +37,7 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 4. Frontline **ALB** with HTTP/HTTPS listeners
 5. **ACM** certificate attached to ALB (use apex domain's ACM by default, assuming this covers subdomains as well)
 6. **EBS** data volume attached (default `20GB`)
-7. **CloudWatch event rule** to backup data volume (`every Sunday` by default)
+7. **DLM lifecycle policy** to snapshot data volume (`every Sunday` by default, keeping last 4 snapshots)
 8. **CloudWatch log group** to keep app container logs
 9. **S3** bucket to keep ALB logs
 10. **Security group**s for app instance and ALB
@@ -205,7 +205,6 @@ Contributions are welcome by opening issues and pull requests. See [CONTRIBUTING
 
 ## 🚧 Roadmap
 
-- [ ] Automatic deletion of old data volume snapshots (🤔 really?)
 - [ ] Seperate CloudWatch logs every single day
 - [ ] Terragrunt wrapper for variable backend bucket
 - [ ] Self-starter/forking guide
