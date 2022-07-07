@@ -22,13 +22,12 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 
 ### What's included 🗃️
 
-1. A single terraform project defining hosting infrastructure and provisioners
-2. Terragrunt wrapper, to variablize terraform backend and providers
-3. Auto-generated [terraform documentation](#terraform-documentation)
-4. [GitHub action](https://github.com/cednore/trilium/actions/workflows/check.yml) for infrastructure drift checking (on
+1. A terragrunt project defining hosting infrastructure and provisioners
+2. Auto-generated [terraform documentation](#terraform-documentation)
+3. [GitHub action](https://github.com/cednore/trilium/actions/workflows/check.yml) for infrastructure drift checking (on
    every push, scheduled)
-5. Time-saving development scripts
-6. Guides and documentations
+4. Time-saving development scripts
+5. Documentations, including self-start/forking guide
 
 ### Infrastructure summary 🏗️
 
@@ -53,20 +52,23 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 3. An AWS account
 4. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
    configured)
-5. S3 backend (a S3 bucket a DynamoDB table)
-6. A personal domain, Route 53 hosted zone, and an ACM certificate. (preferably for the apex domain, which is subject to
-   all subdomains as well)
-7. SSH keypair, for connecting app instance
-8. Variable file `.vars.hcl`, which contains all terragrunt variables (see [`.vars.hcl.example`](.vars.hcl.example))
+5. S3 backend (a S3 bucket and a DynamoDB table)
+6. A personal domain, Route 53 hosted zone, and an ACM certificate (preferably for the apex domain, which is subject to
+   all subdomains as well).
+7. SSH keypair at `.keypair.pem`, for connecting app instance
+8. `.env` file, for environment variables (see [`.env.example`](.env.example))
 9. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
    playbooks)
 10. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
-11. Node.js + Yarn (for development scripts and utilities)
-12. SQLite DB Browser (optional, for manually tweaking app db)
-13. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
-14. Code editor/IDE ofc 😉
+11. [TFLint](https://github.com/terraform-linters/tflint)
+12. Node.js + Yarn (for development scripts and utilities)
+13. SQLite DB Browser (optional, for manually tweaking app db)
+14. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
+15. Code editor/IDE ofc 😉
 
 ## ⚡ Getting started
+
+### 1. Clone this repository
 
 ```bash
 # Clone from github
@@ -74,41 +76,59 @@ git clone git@github.com:cednore/trilium.git
 
 # Cd into repo directory
 cd trilium
+```
 
+### 2. Install dependencies
+
+```bash
 # Install nodejs modules
 yarn install
 
-# Download keypair and variable files from backend bucket
-yarn download:keypair
-yarn download:vars
+# Install tflint plugins
+tflint --init
+```
 
-# Or, make a new keypair and variable file if you don't have them already
-cp .vars.hcl.example .vars.hcl # Customize your own settings after this
-yarn key:generate
+### 3. Configure project
 
-# Initialize project
+1. Prepare dotenv file at `.env`. If you don't have `.env` file, you can create a new one by `cp .env.example .env` and
+   customize with your own settings
+2. Prepare keypair file at `.keypair.pem`. You should either download from your secret vault or generate one by
+   `yarn key:generate` if you don't have already.
+
+### 4. Intialize project
+
+```bash
 yarn initialize
+```
 
-# Select stage
-yarn stage production # or other stages
+### 5. Try create an execution plan
 
-# Try create an execution plan
+```bash
 yarn plan
 ```
 
 ## 🔨 Development scripts
 
-### Selecting stage
+### Basic terragrunt scripts
 
-This project uses [terraform workspace](https://www.terraform.io/cli/workspaces) to manage different stages. Below
-command is equivalent to `terraform workspace select production`.
-
-> ⚠️ WARNING: Don't use `default` workspace.
+Terragrunt doesn't load dotenv file automatically (see https://github.com/gruntwork-io/terragrunt/issues/1750), so I've wrapped basic terragrunt commands with [`dotenv-cli`](https://github.com/entropitor/dotenv-cli).
 
 ```bash
-# Select production stage
-yarn stage production
+# terragrunt init
+yarn initialize
+
+# terragrunt plan
+yarn plan
+
+# terragrunt validate
+yarn validate
+
+# terragrunt apply
+yarn apply
 ```
+
+For the rest of the terragrunt commands, just append `dotenv run` in front of them to load the dotenv file and prior to
+run. (e.g `dotenv run terragrunt destroy`)
 
 ### Outputs
 
@@ -121,9 +141,11 @@ See [`outputs.tf`](outputs.tf) file and check out what's being outputted.
 > in public place where everyone is accessible (e.g CI/CD pipelines' stdout).
 
 ```bash
-# Terraform output in json format
+# Terraform output in json format (into output.json)
 yarn output:json
 ```
+
+> ℹ️ INFO: `output.json` file is gitignored.
 
 ### Generating terraform graph
 
@@ -137,31 +159,20 @@ yarn graph
 
 ### Keypair and variable files
 
-Keypair and variable files are essential parts of this project. It uses \*.pem format keyfile for SSH connection into
-EC2 app instance, `.vars.hcl` file for customized terragrunt variables. This project assumes these files are stored
-inside backend bucket (S3), along with tfstate file.
+Keypair and dotenv file are essential parts of this project. It uses \*.pem format keypair file for SSH connection into
+EC2 app instance, `.env` file for customized terragrunt variables.
 
-If you are starting a new hosting based on this repository, you might wanna generate a new keypair for your EC2 app
+If you are forking this repository and starting a new hosting, you might wanna generate a new keypair for your EC2 app
 instance.
 
 ```bash
-# Download keypair from backend bucket
-yarn download:keypair
-
-# Download variable file from backend bucket
-yarn download:vars
-
 # Generate a new keypair, if you don't have one already
 yarn key:generate
-
-# Upload keypair to backend bucket
-yarn upload:keypair
-
-# Upload variable file to backend bucket
-yarn upload:vars
 ```
 
-### Formatting & linting & validation
+> ℹ️ INFO: Keypair file is only needed when `terragrunt apply`. It's not necessary for `terragrunt plan`.
+
+### Formatting & linting
 
 ```bash
 # Format check tf files
@@ -172,17 +183,14 @@ yarn fmt
 
 # Lint project (by tflint)
 yarn lint
-
-# Validate terraform project
-yarn validate
 ```
 
 ### Interacting with live server
 
 Often, you might wanna login to app instance (EC2) and run a few commands or download/upload app data.
 
-> ℹ️ INFO: `restart:app` command is useful when facing
-> [`broken branch/note` issue](https://github.com/zadam/trilium/issues/2950).
+> ⚠️ WARNING: Below commands depends on terragrunt output file. Make sure you have `output.json` file. You can
+> run `yarn output:json` to generate this file.
 
 ```bash
 # Open a ssh session into app instance
@@ -197,6 +205,9 @@ yarn download:db
 # Upload app db file
 yarn upload:db
 ```
+
+> ℹ️ INFO: `restart:app` command is useful when facing
+> [`broken branch/note` issue](https://github.com/zadam/trilium/issues/2950).
 
 ### Terraform documentation
 
