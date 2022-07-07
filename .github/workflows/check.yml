@@ -55,10 +55,10 @@ jobs:
         uses: terraform-linters/setup-tflint@v1
         with:
           tflint_version: latest
-      - name: Initialize project
-        run: terragrunt init
       - name: Format check tf files
         run: terragrunt fmt-check -no-color
+      - name: Initialize project
+        run: terragrunt init
       - name: Lint project
         run: tflint -f compact
       - name: Validate project
