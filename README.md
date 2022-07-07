@@ -207,6 +207,7 @@ Contributions are welcome by opening issues and pull requests. See [CONTRIBUTING
 
 - [ ] Automatic deletion of old data volume snapshots (🤔 really?)
 - [ ] Seperate CloudWatch logs every single day
+- [ ] Terragrunt wrapper for variable backend bucket
 - [ ] Self-starter/forking guide
 - [ ] Budget-tracking
 - [ ] SRE concepts; monitoring performance and more
