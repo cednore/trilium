@@ -38,7 +38,6 @@ remote_state {
 inputs = {
   app_name            = local.vars.inputs.app_name
   app                 = local.vars.inputs.app
-  apex_domain         = local.vars.inputs.apex_domain
   domain              = local.vars.inputs.domain
   alternative_domains = local.vars.inputs.alternative_domains
 }

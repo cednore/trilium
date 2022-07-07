@@ -23,14 +23,15 @@ variable "stage" {
 }
 
 variable "domain" {
-  description = "Domain of this app"
+  description = "Domain name to host this app"
   type        = string
   default     = "trilium.cednore.com"
 }
 
 variable "alternative_domains" {
-  description = "Alternative domains of this app"
+  description = "Alternative domain names to host this app"
   type        = list(string)
+  default     = []
 }
 
 variable "route53_apex_zone_id" {

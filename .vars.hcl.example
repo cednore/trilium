@@ -1,14 +1,13 @@
 inputs = {
-  aws_region        = "us-east-2"
-  repo_origin       = "https://github.com/cednore/trilium.git"
-  backend_bucket    = "tf-common-backend"
-  backend_locktable = "tf-common-backend"
+  aws_region        = "us-east-2"                         # AWS region
+  repo_origin       = "https://github.com/owner/repo.git" # Git repository who owns this infrastructure
+  backend_bucket    = ""                                  # Your backend bucket
+  backend_locktable = ""                                  # Your backend lock table
 
-  app_name            = "Cednore Notes"
-  app                 = "trilium"
-  apex_domain         = "cednore.com"
-  domain              = "trilium.cednore.com"
-  alternative_domains = [
-    "notes.cednore.com",
+  app_name            = "Trilium Notes"       # Name of this app
+  app                 = "trilium"             # URL friendly name of this app
+  domain              = "trilium.example.com" # Domain of this app
+  alternative_domains = [                     # Alternative domain names to host this app
+    "notes.example.com",
   ]
 }

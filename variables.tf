@@ -10,20 +10,14 @@ variable "app" {
   default     = "trilium"
 }
 
-variable "apex_domain" {
-  description = "Apex domain to host this app"
-  type        = string
-  default     = "cednore.com"
-}
-
 variable "domain" {
-  description = "Domain of this app"
+  description = "Domain name to host this app"
   type        = string
   default     = "trilium.cednore.com"
 }
 
 variable "alternative_domains" {
-  description = "Alternative domains of this app"
+  description = "Alternative domain names to host this app"
   type        = list(string)
   default = [
     "notes.cednore.com",
