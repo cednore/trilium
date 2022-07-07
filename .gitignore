@@ -52,16 +52,6 @@ graph.svg
 document.db
 document.db*
 
-# nodejs logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# nodejs modules
-node_modules/
-
 # dotenv files
 .env
 .env.*
