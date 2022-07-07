@@ -28,12 +28,6 @@ variable "domain" {
   default     = "trilium.someone.me"
 }
 
-variable "alternative_domains" {
-  description = "Alternative domain names to host this app"
-  type        = list(string)
-  default     = []
-}
-
 variable "route53_apex_zone_id" {
   description = "Zone ID of master hosted zone"
   type        = string

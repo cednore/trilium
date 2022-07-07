@@ -1,5 +1,13 @@
 locals {
-  vars = read_terragrunt_config(".vars.hcl")
+  aws_region        = get_env("AWS_REGION")
+  repo_origin       = get_env("REPO_ORIGIN")
+  backend_bucket    = get_env("BACKEND_BUCKET")
+  backend_locktable = get_env("BACKEND_LOCKTABLE")
+
+  app_name            = get_env("APP_NAME", "Trilium Notes")
+  app                 = get_env("APP", "trilium")
+  stage               = get_env("STAGE", "production")
+  domain              = get_env("DOMAIN", "trilium.someone.me")
 }
 
 generate "providers" {
@@ -8,11 +16,11 @@ generate "providers" {
 
   contents = <<EOF
     provider "aws" {
-      region = "${local.vars.inputs.aws_region}"
+      region = "${local.aws_region}"
 
       default_tags {
         tags = {
-          Repo = "${local.vars.inputs.repo_origin}"
+          Repo = "${local.repo_origin}"
         }
       }
     }
@@ -23,10 +31,10 @@ remote_state {
   backend = "s3"
   config = {
     encrypt        = true
-    bucket         = local.vars.inputs.backend_bucket
-    key            = "${local.vars.inputs.app}/terraform.tfstate"
-    region         = local.vars.inputs.aws_region
-    dynamodb_table = local.vars.inputs.backend_locktable
+    region         = local.aws_region
+    dynamodb_table = local.backend_locktable
+    bucket         = local.backend_bucket
+    key            = "${local.app}/terraform.tfstate"
   }
 
   generate = {
@@ -36,8 +44,8 @@ remote_state {
 }
 
 inputs = {
-  app_name            = local.vars.inputs.app_name
-  app                 = local.vars.inputs.app
-  domain              = local.vars.inputs.domain
-  alternative_domains = local.vars.inputs.alternative_domains
+  app_name            = local.app_name
+  app                 = local.app
+  stage               = local.stage
+  domain              = local.domain
 }

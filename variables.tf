@@ -10,14 +10,14 @@ variable "app" {
   default     = "trilium"
 }
 
+variable "stage" {
+  description = "Stage of deployment"
+  type        = string
+  default     = "production"
+}
+
 variable "domain" {
   description = "Domain name to host this app"
   type        = string
   default     = "trilium.someone.me"
-}
-
-variable "alternative_domains" {
-  description = "Alternative domain names to host this app"
-  type        = list(string)
-  default     = []
 }

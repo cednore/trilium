@@ -12,7 +12,7 @@ terraform {
 module "root" {
   source = "./modules/trilium-root"
 
-  stage       = local.stage
+  stage       = var.stage
   vpc_cidr    = "10.0.0.0/16"
   vpc_subnets = 3
 }
@@ -20,7 +20,7 @@ module "root" {
 module "app" {
   source = "./modules/trilium-app"
 
-  stage         = local.stage
+  stage         = var.stage
   subnet_id     = module.root.public_subnet_ids[0]
   sg_ids        = module.root.app_instance_sg_ids
   instance_type = "t3.micro"
@@ -30,7 +30,7 @@ module "app" {
 module "data" {
   source = "./modules/trilium-data"
 
-  stage                 = local.stage
+  stage                 = var.stage
   app_instance_id       = module.app.instance_id
   availability_zone     = module.app.instance_availability_zone
   device_letter         = "f" # /dev/sdf, /dev/xvdf
@@ -41,15 +41,14 @@ module "data" {
 module "log" {
   source = "./modules/trilium-log"
 
-  stage = local.stage
+  stage = var.stage
 }
 
 module "end" {
   source = "./modules/trilium-end"
 
-  stage                = local.stage
+  stage                = var.stage
   domain               = var.domain
-  alternative_domains  = var.alternative_domains
   route53_apex_zone_id = data.aws_route53_zone.apex.zone_id
   route53_default_ttl  = 3600
   acm_apex_cert_arn    = data.aws_acm_certificate.apex.arn
@@ -71,7 +70,7 @@ module "provision" {
     module.end,
   ]
 
-  stage                     = local.stage
+  stage                     = var.stage
   app_instance_public_ip    = module.app.instance_public_ip
   app_keypair_path          = "${path.root}/${local.keypair_filename}"
   app_image                 = "zadam/trilium"
