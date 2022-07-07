@@ -38,11 +38,12 @@ module "app" {
 module "data" {
   source = "./modules/trilium-data"
 
-  stage             = local.stage
-  app_instance_id   = module.app.instance_id
-  availability_zone = module.app.instance_availability_zone
-  device_letter     = "f" # /dev/sdf, /dev/xvdf
-  volume_size       = 20  # 20 GB
+  stage                 = local.stage
+  app_instance_id       = module.app.instance_id
+  availability_zone     = module.app.instance_availability_zone
+  device_letter         = "f" # /dev/sdf, /dev/xvdf
+  volume_size           = 20  # 20 GB
+  snapshot_retain_count = 4
 }
 
 module "log" {

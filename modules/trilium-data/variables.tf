@@ -49,3 +49,9 @@ variable "volume_size" {
   type        = number
   default     = 100
 }
+
+variable "snapshot_retain_count" {
+  description = "Number of backup snapshots to keep"
+  type        = number
+  default     = 4
+}
