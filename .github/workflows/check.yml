@@ -55,8 +55,6 @@ jobs:
         uses: terraform-linters/setup-tflint@v1
         with:
           tflint_version: latest
-      - name: Install dotenv-cli
-        run: yarn global add dotenv-cli
       - name: Initialize project
         run: terragrunt init
       - name: Format check tf files
