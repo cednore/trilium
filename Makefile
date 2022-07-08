@@ -31,6 +31,9 @@ keygen:
 fmt:
 	terraform fmt -recursive
 
+hclfmt:
+	terragrunt hclfmt
+
 lint:
 	tflint
 

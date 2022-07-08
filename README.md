@@ -174,6 +174,9 @@ make keygen
 # Format tf files
 make fmt
 
+# Format hcl files
+make hclfmt
+
 # Lint project (by tflint)
 make lint
 ```
