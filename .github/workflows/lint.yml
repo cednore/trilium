@@ -1,0 +1,47 @@
+name: Lint check
+
+on:
+  push:
+    paths:
+      - '**/*.tf'
+      - '**/*.hcl'
+  pull_request:
+    paths:
+      - '**/*.tf'
+      - '**/*.hcl'
+  workflow_dispatch:
+
+jobs:
+  fmt:
+    name: tffmt & hclfmt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.2.4
+          terraform_wrapper: false
+      - name: Setup Terragrunt
+        uses: autero1/action-terragrunt@v1.1.0
+        with:
+          terragrunt_version: 0.38.4
+      - name: Format check tf files
+        run: terraform fmt -diff -check -recursive -no-color
+      - name: Format check hcl files
+        run: terragrunt hclfmt
+  tflint:
+    name: TFLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v1
+        with:
+          tflint_version: latest
+      - name: Initialize
+        run: tflint --init
+      - name: Run
+        run: tflint -f compact
