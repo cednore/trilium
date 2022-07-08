@@ -1,4 +1,4 @@
-name: Infrastructure check
+name: Infrastructure
 
 on:
   push:
