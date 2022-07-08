@@ -56,9 +56,11 @@ jobs:
         with:
           tflint_version: latest
       - name: Format check tf files
-        run: terragrunt fmt-check -no-color
+        run: terraform fmt -no-color
+      - name: Format check hcl files
+        run: terragrunt hclfmt
       - name: Initialize project
-        run: terragrunt init
+        run: terragrunt init -no-color
       - name: Lint project
         run: tflint -f compact
       - name: Validate project
