@@ -1,13 +1,13 @@
-# trilium
-
-> Trilium server on AWS
-
-[![Stargazers](https://img.shields.io/github/stars/cednore/trilium?style=social)](https://github.com/cednore/trilium/stargazers)
-[![Forks](https://img.shields.io/github/forks/cednore/trilium?style=social)](https://github.com/cednore/trilium/network/members)
 [![License](https://img.shields.io/github/license/cednore/trilium)](LICENSE)
 ![Language count](https://img.shields.io/github/languages/count/cednore/trilium)
 ![Top language](https://img.shields.io/github/languages/top/cednore/trilium)
 [![Contributors](https://img.shields.io/github/contributors/cednore/trilium)](https://github.com/cednore/trilium/graphs/contributors)
+[![Stargazers](https://img.shields.io/github/stars/cednore/trilium?style=social)](https://github.com/cednore/trilium/stargazers)
+[![Forks](https://img.shields.io/github/forks/cednore/trilium?style=social)](https://github.com/cednore/trilium/network/members)
+
+# trilium
+
+> Trilium server on AWS
 
 [![Infrastructure](https://github.com/cednore/trilium/actions/workflows/infrastructure.yml/badge.svg)](https://github.com/cednore/trilium/actions/workflows/infrastructure.yml)
 [![Security](https://github.com/cednore/trilium/actions/workflows/security.yml/badge.svg)](https://github.com/cednore/trilium/actions/workflows/security.yml)
