@@ -5,7 +5,7 @@
 Please send a detailed mail to **cednore@gmail.com** to report vulnerabilities in this repository.
 
 Even when unsure whether the bug in question is an exploitable vulnerability, it is recommended to submit an
-[issue](https://github.com/zadam/trilium/issues) and attach [`security`](https://github.com/cednore/trilium/labels)
+[issue](https://github.com/cednore/trilium/issues) and attach [`security`](https://github.com/cednore/trilium/labels)
 label.
 
 Critical vulnerabilities are expected to be discussed only on email threads, and not in public, until the official
