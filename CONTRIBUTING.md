@@ -3,7 +3,7 @@
 Please submit your issues and pull requests directly on [this repo](https://github.com/cednore/trilium). Please do
 consider followings when you are opening;
 
-1. This project is not a fork of and not related to [`trilium`](https://github.com/zadam/trilium) source code. It only
+1. This project is not a fork of and not related to [trilium](https://github.com/zadam/trilium) source code. It just
    uses pre-built [docker image](https://hub.docker.com/r/zadam/trilium).
 2. I use this repo to provide a boilerplate and also, to manage my own trilium hosting. Please don't submit changes
    might affect my infrastructure.

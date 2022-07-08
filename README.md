@@ -22,8 +22,9 @@
 
 ## ✨ Introduction
 
-This project demonstrates how-to of hosting [`zadam/trilium`](https://github.com/zadam/trilium) on your AWS
-infrastructure. If you want to self-host your very own personal knowledge base on AWS, this project could be a good
+This project demonstrates how-to of hosting
+[![zadam/trilium](https://img.shields.io/badge/zadam-trilium-red?logo=github)](https://github.com/zadam/trilium) on your
+AWS infrastructure. If you want to self-host your very own personal knowledge base on AWS, this project could be a good
 starting point. You can easily use this project as a boilerplate for managing your trilium hosting infrastructure in IaC
 way; automatic infrastructure provisioning, frequent drift-checking, security scanning and more. (I use this repository
 to manage my own trilium hosting 😉.)
@@ -46,7 +47,9 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 
 1. Single **VPC** with 3 public/private subnets
 2. App instance by **EC2** (default `t3.micro`), publicly accessible via SSH
-3. **Docker**ized app container (default count `1`)
+3. **Docker**ized app container (default
+   [![zadam/trilium:0.52.4](https://img.shields.io/badge/zadam%2Ftrilium-0.52.4-blue?logo=docker)](https://hub.docker.com/r/zadam/trilium)
+   , count `1`)
 4. Frontline **ALB** with HTTP/HTTPS listeners
 5. **ACM** certificate attached to ALB (use apex domain's ACM by default, assuming this covers subdomains as well)
 6. **EBS** data volume attached (default `20GB`)
