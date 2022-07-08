@@ -3,12 +3,12 @@ name: Lint check
 on:
   push:
     paths:
-      - '**/*.tf'
-      - '**/*.hcl'
+      - '**.tf'
+      - '**.hcl'
   pull_request:
     paths:
-      - '**/*.tf'
-      - '**/*.hcl'
+      - '**.tf'
+      - '**.hcl'
   workflow_dispatch:
 
 jobs:

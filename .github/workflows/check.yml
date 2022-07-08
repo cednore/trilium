@@ -5,11 +5,11 @@ on:
     branches:
       - master
     paths-ignore:
-      - '**/*.md'
+      - '**.md'
       - 'docs/**'
   pull_request:
     paths-ignore:
-      - '**/*.md'
+      - '**.md'
       - 'docs/**'
   schedule:
     - cron: '0 12 * * *' # Everyday
