@@ -1,0 +1,50 @@
+name: Security check
+
+on:
+  push:
+    paths:
+      - '**.tf'
+      - '**.hcl'
+      - '.env.example'
+      - 'modules/**'
+  pull_request:
+    paths:
+      - '**.tf'
+      - '**.hcl'
+      - '.env.example'
+      - 'modules/**'
+  workflow_dispatch:
+
+jobs:
+  checkov:
+    name: Checkov
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          quiet: true # display only failed checks
+          framework: all
+          download_external_modules: true
+          log_level: DEBUG
+      - name: Upload SARIF result
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: results.sarif
+  tfsec:
+    name: tfsec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run tfsec
+        uses: aquasecurity/tfsec-action@v1.0.0
+        with:
+          sarif_file: tfsec.sarif
+      - name: Upload SARIF result
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: tfsec.sarif
