@@ -30,7 +30,7 @@ jobs:
       - name: Format check tf files
         run: terraform fmt -diff -check -recursive -no-color
       - name: Format check hcl files
-        run: terragrunt hclfmt
+        run: terragrunt hclfmt --terragrunt-check
   tflint:
     name: TFLint
     runs-on: ubuntu-latest
