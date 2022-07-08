@@ -162,6 +162,9 @@ If you are forking this repository and starting a new hosting, you might wanna g
 instance.
 
 ```bash
+# Create dotenv file based from example
+cp .env.example .env
+
 # Generate a new keypair, if you don't have one already
 make keygen
 ```
