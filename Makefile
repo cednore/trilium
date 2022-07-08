@@ -1,3 +1,4 @@
+# Load dotenv file
 ifneq (,$(wildcard ./.env))
   include .env
   export
@@ -37,13 +38,13 @@ tfdocs:
 	terraform-docs . -c .terraform-docs.yml
 
 connect:
-	ssh -i .keypair.pem $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json)
+	ssh -i .keypair.pem $(shell jq -r '.app_instance_username.value' output.json)@$(shell jq -r '.app_instance_public_ip.value' output.json)
 
 restart:
-	make connect sudo docker restart $(jq -r '.app_container_name_prefix.value' output.json)1
+	make connect sudo docker restart $(shell jq -r '.app_container_name_prefix.value' output.json)1
 
 dbdump:
-	scp -i .keypair.pem $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json):$(jq -r '.data_volume_mount_path.value' output.json)/document.db .
+	scp -i .keypair.pem $(shell jq -r '.app_instance_username.value' output.json)@$(shell jq -r '.app_instance_public_ip.value' output.json):$(shell jq -r '.data_volume_mount_path.value' output.json)/document.db .
 
 dbrestore:
-	scp -i .keypair.pem document.db $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json):$(jq -r '.data_volume_mount_path.value' output.json)/document.db
+	scp -i .keypair.pem document.db $(shell jq -r '.app_instance_username.value' output.json)@$(shell jq -r '.app_instance_public_ip.value' output.json):$(shell jq -r '.data_volume_mount_path.value' output.json)/document.db
