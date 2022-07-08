@@ -85,6 +85,8 @@ cd trilium
 2. Prepare keypair file at `.keypair.pem`. You should either download from your secret vault or generate one by
    `make keygen` if you don't have already.
 
+> ⚠️ WARNING: Don't wrap environment variables in double quote inside the `.env` file.
+
 ### 3. Intialize project
 
 ```bash
@@ -121,6 +123,8 @@ make apply
 For the rest of the terragrunt commands, you need to load the dotenv file prior to actual run, otherwise it fails. You
 can use dotenv cli tools like [`dotenv-cli`](https://github.com/entropitor/dotenv-cli) or
 [`python-dotenv`](https://github.com/theskumar/python-dotenv).
+
+> ⚠️ WARNING: Don't wrap environment variables in double quote inside the `.env` file.
 
 ### Outputs
 
