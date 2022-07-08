@@ -48,7 +48,7 @@ jobs:
         with:
           sarif_file: tfsec.sarif
       - name: Check if results are empty
-        run: "[[ '0' == $(jq '.runs[0].results | length' tfsec.sarif) ]] && true && false"
+        run: "[[ '0' == $(jq '.runs[0].results | length' tfsec.sarif) ]] && true || false"
       - name: Upload SARIF result
         if: always()
         uses: github/codeql-action/upload-sarif@v2
