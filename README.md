@@ -50,22 +50,21 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 
 1. [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.2`
 2. [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/) `>= 0.38.0`
-3. [dotenv-cli](https://github.com/entropitor/dotenv-cli)
-4. An AWS account
-5. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
+3. An AWS account
+4. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
    configured)
-6. S3 backend (a S3 bucket and a DynamoDB table)
-7. A personal domain, Route 53 hosted zone, and an ACM certificate (preferably for the apex domain, which is subject to
+5. S3 backend (a S3 bucket and a DynamoDB table)
+6. A personal domain, Route 53 hosted zone, and an ACM certificate (preferably for the apex domain, which is subject to
    all subdomains as well).
-8. SSH keypair at `.keypair.pem`, for connecting app instance
-9. `.env` file, for environment variables (see [`.env.example`](.env.example))
-10. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
-    playbooks)
-11. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
-12. [TFLint](https://github.com/terraform-linters/tflint)
-13. SQLite DB Browser (optional, for manually tweaking app db)
-14. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
-15. Code editor/IDE ofc 😉
+7. SSH keypair at `.keypair.pem`, for connecting app instance
+8. `.env` file, for environment variables (see [`.env.example`](.env.example))
+9. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
+   playbooks)
+10. [terraform-docs](https://terraform-docs.io/user-guide/installation/)
+11. [TFLint](https://github.com/terraform-linters/tflint)
+12. SQLite DB Browser (optional, for manually tweaking app db)
+13. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
+14. Code editor/IDE ofc 😉
 
 ## ⚡ Getting started
 
@@ -103,11 +102,11 @@ make plan
 ### Basic terragrunt scripts
 
 Terragrunt doesn't load dotenv file automatically (see https://github.com/gruntwork-io/terragrunt/issues/1750), so I've
-wrapped basic terragrunt commands with [`dotenv-cli`](https://github.com/entropitor/dotenv-cli).
+wrapped basic terragrunt commands with preloading of dotenv files (see [`Makefile`](Makefile)).
 
 ```bash
 # terragrunt init
-make init
+make init # this initializes tflint as well
 
 # terragrunt plan
 make plan
@@ -119,8 +118,9 @@ make validate
 make apply
 ```
 
-For the rest of the terragrunt commands, just append `dotenv run` in front of them to load the dotenv file and prior to
-run. (e.g `dotenv run terragrunt destroy`)
+For the rest of the terragrunt commands, you need to load the dotenv file prior to actual run, otherwise it fails. You
+can use dotenv cli tools like [`dotenv-cli`](https://github.com/entropitor/dotenv-cli) or
+[`python-dotenv`](https://github.com/theskumar/python-dotenv).
 
 ### Outputs
 
@@ -167,9 +167,6 @@ make keygen
 ### Formatting & linting
 
 ```bash
-# Format check tf files
-make fmt-check
-
 # Format tf files
 make fmt
 
@@ -198,7 +195,7 @@ make dbdump
 make dbrestore
 ```
 
-> ℹ️ INFO: `restart:app` command is useful when facing
+> ℹ️ INFO: `make restart` command is useful when facing
 > [`broken branch/note` issue](https://github.com/zadam/trilium/issues/2950).
 
 ### Terraform documentation

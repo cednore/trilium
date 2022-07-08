@@ -1,38 +1,37 @@
+ifneq (,$(wildcard ./.env))
+  include .env
+  export
+endif
+
 tflint-init:
 	tflint --init
 
 init: tflint-init
-	dotenv run terragrunt init $(ARGS)
+	terragrunt init
 
 plan:
-	dotenv run terragrunt plan $(ARGS)
+	terragrunt plan
 
 validate:
-	dotenv run terragrunt validate $(ARGS)
+	terragrunt validate
 
 apply:
-	dotenv run terragrunt apply $(ARGS)
+	terragrunt apply
 
 output:
-	dotenv run terragrunt output -json > output.json
+	terragrunt output -json > output.json
 
 graph:
-	dotenv run terragrunt graph -draw-cycles > graph.gv && dot -Tsvg graph.gv > graph.svg
+	terragrunt graph -draw-cycles > graph.gv && dot -Tsvg graph.gv > graph.svg
 
 keygen:
 	ssh-keygen -t rsa -m PEM -f .keypair.pem -N '' -C '' && chmod 400 .keypair.pem
 
 fmt:
-	terraform fmt -recursive $(ARGS)
-
-fmt-check:
-	make fmt -check -diff $(ARGS)
+	terraform fmt -recursive
 
 lint:
-	tflint $(ARGS)
-
-lint-ci:
-	make lint -f compact $(ARGS)
+	tflint
 
 connect:
 	ssh -i .keypair.pem $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json)
