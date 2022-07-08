@@ -27,7 +27,7 @@ This project demonstrates how-to of hosting
 AWS infrastructure. If you want to self-host your very own personal knowledge base on AWS, this project could be a good
 starting point. You can easily use this project as a boilerplate for managing your trilium hosting infrastructure in IaC
 way; automatic infrastructure provisioning, frequent drift-checking, security scanning and more. (I use this repository
-to manage my own trilium hosting 😉.)
+too for managing my own trilium hosting 😉.)
 
 Before you start, it is strongly recommended to read [trilium wiki](https://github.com/zadam/trilium/wiki) first,
 especially [server installation/deployment page](https://github.com/zadam/trilium/wiki/Docker-server-installation).
