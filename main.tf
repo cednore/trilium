@@ -23,7 +23,7 @@ module "app" {
   stage         = var.stage
   subnet_id     = module.root.public_subnet_ids[0]
   sg_ids        = module.root.app_instance_sg_ids
-  instance_type = "t3.micro"
+  instance_type = "t3.micro" # 7$ per month
   pubkey        = trimspace(var.app_instance_public_key)
 }
 
@@ -35,7 +35,7 @@ module "data" {
   availability_zone     = module.app.instance_availability_zone
   device_letter         = "f" # /dev/sdf, /dev/xvdf
   volume_size           = 20  # 20 GB
-  snapshot_retain_count = 4
+  snapshot_retain_count = 4   # keep last 4 snapshots
 }
 
 module "log" {
@@ -57,7 +57,7 @@ module "end" {
   app_lb_subnet_ids    = module.root.public_subnet_ids
   app_lb_sg_ids        = module.root.app_lb_sg_ids
   app_lb_log_bucket    = module.log.app_lb_log_bucket
-  app_lb_tg_port       = 80
+  app_lb_tg_port       = 80 # HTTP
 }
 
 module "provision" {
@@ -74,7 +74,7 @@ module "provision" {
   app_instance_public_ip    = module.app.instance_public_ip
   app_keypair_path          = "${path.root}/${local.keypair_filename}"
   app_image                 = "zadam/trilium"
-  app_image_tag             = "0.52.4"
+  app_image_tag             = "0.52.4" # https://hub.docker.com/layers/trilium/zadam/trilium/0.52.4/images/sha256-98c15992753e7b9bc8bcc170ddb970cbcac72244765093a8b276660c6ef308d3
   app_container_count       = 1
   app_container_name_prefix = local.app_container_name_prefix
   app_container_ports       = "80:8080"
