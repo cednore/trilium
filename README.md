@@ -64,8 +64,8 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 8. `.env` file, for environment variables (see [`.env.example`](.env.example))
 9. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
    playbooks)
-10. [`dotenv-cli`](https://github.com/entropitor/dotenv-cli) or
-    [`python-dotenv`](https://github.com/theskumar/python-dotenv) for loading dotenv file (optional)
+10. [dotenv-cli](https://github.com/entropitor/dotenv-cli) or
+    [python-dotenv](https://github.com/theskumar/python-dotenv) for loading dotenv file (optional)
 11. [terraform-docs](https://terraform-docs.io/user-guide/installation/) for generating terraform documentation
     (optional)
 12. [TFLint](https://github.com/terraform-linters/tflint) for linting tf files
@@ -130,8 +130,8 @@ make apply
 ```
 
 For the rest of the terragrunt commands, you need to load the dotenv file prior to actual run, otherwise it fails. You
-can use dotenv cli tools like [`dotenv-cli`](https://github.com/entropitor/dotenv-cli) or
-[`python-dotenv`](https://github.com/theskumar/python-dotenv).
+can use dotenv cli tools like [dotenv-cli](https://github.com/entropitor/dotenv-cli) or
+[python-dotenv](https://github.com/theskumar/python-dotenv).
 
 > ⚠️ WARNING: Don't wrap environment variables in double quote inside the `.env` file.
 
@@ -227,7 +227,7 @@ make dbrestore
 ```
 
 > ℹ️ INFO: `make restart` command is useful when facing
-> [`broken branch` issue](https://github.com/zadam/trilium/issues/2950).
+> [_broken branch_ issue](https://github.com/zadam/trilium/issues/2950).
 
 ## 👋 Contributions
 
