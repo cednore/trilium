@@ -61,6 +61,8 @@ jobs:
         run: terragrunt hclfmt
       - name: Initialize project
         run: terragrunt init -no-color
+      - name: Initialize tflint
+        run: tflint --init
       - name: Lint project
         run: tflint -f compact
       - name: Validate project
