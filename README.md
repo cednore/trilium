@@ -137,7 +137,7 @@ See [`outputs.tf`](outputs.tf) file and check out what's being outputted.
 > in public place where everyone is accessible (e.g CI/CD pipelines' stdout).
 
 ```bash
-# Terraform output in json format (into output.json)
+# Terragrunt output in json format (into output.json)
 make output
 ```
 
@@ -190,6 +190,7 @@ This project uses [**terraform-docs**](https://terraform-docs.io) to auto-genera
 resources being used. You can run following command to run the generator.
 
 ```bash
+# Generate terraform documentation in markdown
 make tfdocs
 ```
 
