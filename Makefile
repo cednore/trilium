@@ -33,6 +33,9 @@ fmt:
 lint:
 	tflint
 
+tfdocs:
+	terraform-docs . -c .terraform-docs.yml
+
 connect:
 	ssh -i .keypair.pem $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json)
 
@@ -44,6 +47,3 @@ dbdump:
 
 dbrestore:
 	scp -i .keypair.pem document.db $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json):$(jq -r '.data_volume_mount_path.value' output.json)/document.db
-
-tfdocs:
-	terraform-docs . -c .terraform-docs.yml

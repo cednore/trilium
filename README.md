@@ -81,7 +81,7 @@ cd trilium
 ### 2. Configure project
 
 1. Prepare dotenv file at `.env`. If you don't have `.env` file, you can create a new one by `cp .env.example .env` and
-   customize with your own settings
+   customize with your own settings.
 2. Prepare keypair file at `.keypair.pem`. You should either download from your secret vault or generate one by
    `make keygen` if you don't have already.
 
@@ -174,6 +174,17 @@ make fmt
 make lint
 ```
 
+### Terraform documentation
+
+This project uses [**terraform-docs**](https://terraform-docs.io) to auto-generate markdown document of terraform
+resources being used. You can run following command to run the generator.
+
+```bash
+make tfdocs
+```
+
+Generated document will be stored at [`docs/terraform.md`](docs/terraform.md).
+
 ### Interacting with live server
 
 Often, you might wanna login to app instance (EC2) and run a few commands or download/upload app data.
@@ -197,17 +208,6 @@ make dbrestore
 
 > ℹ️ INFO: `make restart` command is useful when facing
 > [`broken branch/note` issue](https://github.com/zadam/trilium/issues/2950).
-
-### Terraform documentation
-
-This project uses [**terraform-docs**](https://terraform-docs.io) to auto-generate markdown document of terraform
-resources being used. You can run following command to run the generator.
-
-```bash
-make tfdocs
-```
-
-Generated document will be stored at [`docs/terraform.md`](docs/terraform.md).
 
 ## 👋 Contributions
 
