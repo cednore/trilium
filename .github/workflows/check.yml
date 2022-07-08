@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  check:
+  drift:
     strategy:
       matrix:
         stage: [production]
@@ -40,7 +40,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGIOn }}
+          aws-region: ${{ secrets.AWS_REGION }}
           mask-aws-account-id: false
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -51,20 +51,8 @@ jobs:
         uses: autero1/action-terragrunt@v1.1.0
         with:
           terragrunt_version: 0.38.4
-      - name: Setup TFLint
-        uses: terraform-linters/setup-tflint@v1
-        with:
-          tflint_version: latest
-      - name: Format check tf files
-        run: terraform fmt -no-color
-      - name: Format check hcl files
-        run: terragrunt hclfmt
       - name: Initialize project
         run: terragrunt init -no-color
-      - name: Initialize tflint
-        run: tflint --init
-      - name: Lint project
-        run: tflint -f compact
       - name: Validate project
         run: terragrunt validate -no-color
       - name: Terragrunt plan (detailed exitcode)
