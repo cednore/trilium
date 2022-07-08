@@ -41,7 +41,7 @@ resource "aws_lb_listener" "app_https" {
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01" # Predefined policy, see https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html
-  certificate_arn   = var.acm_apex_cert_arn # Assuming apex domain certificate is subject to all subdomains as well
+  certificate_arn   = var.acm_apex_cert_arn               # Assuming apex domain certificate is subject to all subdomains as well
 
   default_action {
     type             = "forward"
