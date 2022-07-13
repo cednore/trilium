@@ -254,12 +254,12 @@ Contributions are welcome by opening issues and pull requests. See [CONTRIBUTING
 
 ## 🚧 Roadmap
 
-- [ ] Seperate CloudWatch logs every single day
 - [ ] Self-starter/forking guide
 - [ ] Budget-tracking
 - [ ] SRE concepts; monitoring performance and more
 - [ ] Diagrams explaining the infrastructure
 - [ ] GitHub issue templates; `bug`, `security`, `cost`, `feature` and so on
+- [ ] GitHub PR template
 
 ## 📄 License
 
