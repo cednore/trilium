@@ -21,3 +21,9 @@ variable "stage" {
   type        = string
   default     = "production"
 }
+
+variable "container_log_retention" {
+  description = "Number of days to retain container logs (0 means forever)"
+  type        = number
+  default     = 120 # days
+}

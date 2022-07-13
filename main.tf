@@ -41,7 +41,8 @@ module "data" {
 module "log" {
   source = "./modules/trilium-log"
 
-  stage = var.stage
+  stage                   = var.stage
+  container_log_retention = 120 # days
 }
 
 module "end" {
