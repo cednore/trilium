@@ -40,7 +40,7 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
    - Infrastructure drift detection (on every push, scheduled)
    - Linting and formatting (`terraform fmt`, `terragrunt hclfmt`, `tflint`)
    - Security vulnerability scanning (`checkov`, `tfsec`)
-4. Time-saving development scripts
+4. Time-saving development scripts by [justfile](https://github.com/casey/just)
 5. Documentations, including self-start/forking guide
 
 ### Infrastructure summary 🏗️
@@ -75,16 +75,17 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 8. `.env` file, for environment variables (see [`.env.example`](.env.example))
 9. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
    playbooks)
-10. [dotenv-cli](https://github.com/entropitor/dotenv-cli) or
-    [python-dotenv](https://github.com/theskumar/python-dotenv) for loading dotenv file (optional)
-11. [terraform-docs](https://terraform-docs.io/user-guide/installation/) for generating terraform documentation
-    (optional)
+10. [just](https://github.com/casey/just) (for running development scripts)
+11. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
 12. [TFLint](https://github.com/terraform-linters/tflint) for linting tf files
-13. [tfsec](https://github.com/aquasecurity/tfsec) and [Checkov](https://www.checkov.io/) for scanning security
+13. [dotenv-cli](https://github.com/entropitor/dotenv-cli) or
+    [python-dotenv](https://github.com/theskumar/python-dotenv) for loading dotenv file (optional)
+14. [terraform-docs](https://terraform-docs.io/user-guide/installation/) for generating terraform documentation
+    (optional)
+15. [tfsec](https://github.com/aquasecurity/tfsec) and [Checkov](https://www.checkov.io/) for scanning security
     vulnerabilities (optional)
-14. SQLite DB Browser (optional, for manually tweaking app db)
-15. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
-16. Code editor/IDE ofc 😉
+16. SQLite DB Browser (optional, for manually tweaking app db)
+17. Code editor/IDE ofc 😉
 
 ## ⚡ Getting started
 
@@ -103,20 +104,18 @@ cd trilium
 1. Prepare dotenv file at `.env`. If you don't have `.env` file, you can create a new one by `cp .env.example .env` and
    customize with your own settings.
 2. Prepare keypair file at `.keypair.pem`. You should either download from your secret vault or generate one by
-   `make keygen` if you don't have already.
-
-> ⚠️ WARNING: Don't wrap environment variables in double quote inside the `.env` file.
+   `just keygen` if you don't have already.
 
 ### 3. Intialize project
 
 ```bash
-make init
+just init
 ```
 
 ### 4. Try create an execution plan
 
 ```bash
-make plan
+just tg plan
 ```
 
 ## 🔨 Development scripts
@@ -124,27 +123,33 @@ make plan
 ### Basic terragrunt scripts
 
 Terragrunt doesn't load dotenv file automatically (see https://github.com/gruntwork-io/terragrunt/issues/1750), so I've
-wrapped basic terragrunt commands with preloading of dotenv files (see [`Makefile`](Makefile)).
+wrapped basic terragrunt commands with preloading of dotenv files (see [`justfile`](justfile)). Replace `terragrunt`
+with `just tg` to run your terragrunt commands with environment variables set from `.env` file.
 
 ```bash
-# terragrunt init
-make init # this initializes tflint as well
+# Equivalent of `terragrunt init -upgrade` with dotenv loading
+just tg init -upgrade #
 
-# terragrunt plan
-make plan
+# Equivalent of `terragrunt plan` with dotenv loading
+just tg plan
 
-# terragrunt validate
-make validate
+# Equivalent of `terragrunt validate` with dotenv loading
+just tg validate
 
-# terragrunt apply
-make apply
+# Equivalent of `terragrunt apply` with dotenv loading
+just tg apply
 ```
 
-For the rest of the terragrunt commands, you need to load the dotenv file prior to actual run, otherwise it fails. You
-can use dotenv cli tools like [dotenv-cli](https://github.com/entropitor/dotenv-cli) or
-[python-dotenv](https://github.com/theskumar/python-dotenv).
+> ℹ️ INFO: Environment variables inside `.env` file is mandatory for terragrunt to run. Terragrunt will go fail without
+> them. If you are going to run terragrunt commands without `just`, You should use dotenv cli tools like
+> [dotenv-cli](https://github.com/entropitor/dotenv-cli) or [python-dotenv](https://github.com/theskumar/python-dotenv).
 
-> ⚠️ WARNING: Don't wrap environment variables in double quote inside the `.env` file.
+### Initialization
+
+```bash
+# Initialize terragrunt and tflint
+just init
+```
 
 ### Outputs
 
@@ -158,7 +163,7 @@ See [`outputs.tf`](outputs.tf) file and check out what's being outputted.
 
 ```bash
 # Terragrunt output in json format (into output.json)
-make output
+just output
 ```
 
 > ℹ️ INFO: `output.json` file is gitignored.
@@ -170,7 +175,7 @@ SVG format, which is converted by GraphViz.
 
 ```bash
 # Generate terraform graph and convert into svg format (requires graphviz)
-make graph
+just graph
 ```
 
 ### Keypair and variable files
@@ -186,7 +191,7 @@ instance.
 cp .env.example .env
 
 # Generate a new keypair, if you don't have one already
-make keygen
+just keygen
 ```
 
 > ℹ️ INFO: Keypair file is only needed when `terragrunt apply`. It's not necessary for `terragrunt plan`.
@@ -195,13 +200,13 @@ make keygen
 
 ```bash
 # Format tf files
-make fmt
+just fmt
 
 # Format hcl files
-make hclfmt
+just hclfmt
 
 # Lint project (by tflint)
-make lint
+just lint
 ```
 
 ### Terraform documentation
@@ -211,7 +216,7 @@ resources being used. You can run following command to run the generator.
 
 ```bash
 # Generate terraform documentation in markdown
-make tfdocs
+just tfdocs
 ```
 
 Generated document will be stored at [`docs/terraform.md`](docs/terraform.md).
@@ -220,24 +225,24 @@ Generated document will be stored at [`docs/terraform.md`](docs/terraform.md).
 
 Often, you might wanna login to app instance (EC2) and run a few commands or download/upload app data.
 
-> ⚠️ WARNING: Below commands depends on terragrunt output file. Make sure you have `output.json` file. You can
-> run `make output` to generate this file.
+> ⚠️ WARNING: Below commands depends on terragrunt output file `output.json`. You can run `just output` to generate this
+> file.
 
 ```bash
 # Open a ssh session into app instance
-make connect
+just connect
 
 # Restart app container
-make restart
+just restart
 
 # Download app db file (sqlite)
-make dbdump
+just dbdump
 
 # Upload app db file
-make dbrestore
+just dbrestore
 ```
 
-> ℹ️ INFO: `make restart` command is useful when facing
+> ℹ️ INFO: `just restart` command is useful when facing
 > [_broken branch_ issue](https://github.com/zadam/trilium/issues/2950).
 
 ## 👋 Contributions
