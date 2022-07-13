@@ -123,6 +123,26 @@ just tg plan
 [just](https://github.com/casey/just) is being used to define and run development scripts. You can simply run
 `just --list` or see [`justfile`](justfile) to check out all of available development scripts.
 
+```
+$ just --list
+Available recipes:
+    check-output     # Check if output.json file exists
+    connect *args='' # Open a ssh session into app instance
+    dbdump           # Download app db file (sqlite)
+    dbrestore        # Upload app db file
+    default          # List available recipes
+    fmt              # Format tf files
+    graph            # Generate terraform graph and convert into svg format (requires graphviz)
+    hclfmt           # Format hcl files
+    init             # Initialize terragrunt and tflint
+    keygen           # Generate a new keypair
+    lint             # Lint project (by tflint)
+    output           # Terragrunt output in json format (into output.json)
+    restart          # Restart app container (this fixes broken notes and branches)
+    tfdocs           # Generate terraform documentation in markdown
+    tg *args=''      # Wrap terragrunt with dotenv loading
+```
+
 ### Basic terragrunt scripts
 
 Terragrunt doesn't load dotenv file automatically (see https://github.com/gruntwork-io/terragrunt/issues/1750), so I've
@@ -131,7 +151,7 @@ wrapped all terragrunt commands with preloading of dotenv files (see [`justfile`
 
 ```bash
 # Equivalent of `terragrunt init -upgrade` with dotenv loading
-just tg init -upgrade #
+just tg init -upgrade
 
 # Equivalent of `terragrunt plan` with dotenv loading
 just tg plan
