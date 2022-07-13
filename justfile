@@ -9,6 +9,7 @@ default:
 @tg *args='':
   terragrunt "$@"
 
+# Initialize terragrunt and tflint
 init:
   tflint --init
   terragrunt init
