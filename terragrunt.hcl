@@ -3,6 +3,7 @@ locals {
   repo_origin       = get_env("REPO_ORIGIN")
   backend_bucket    = get_env("BACKEND_BUCKET")
   backend_locktable = get_env("BACKEND_LOCKTABLE")
+  backend_region    = get_env("BACKEND_REGION")
 
   app_name                = get_env("APP_NAME", "Trilium Notes")
   app                     = get_env("APP", "trilium")
@@ -32,7 +33,7 @@ remote_state {
   backend = "s3"
   config = {
     encrypt        = true
-    region         = local.aws_region
+    region         = local.backend_region
     dynamodb_table = local.backend_locktable
     bucket         = local.backend_bucket
     key            = "env:/${local.stage}/${local.app}/terraform.tfstate"

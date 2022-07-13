@@ -27,6 +27,7 @@ jobs:
       REPO_ORIGIN: ${{ github.repositoryUrl }}
       BACKEND_BUCKET: ${{ secrets.BACKEND_BUCKET }}
       BACKEND_LOCKTABLE: ${{ secrets.BACKEND_LOCKTABLE }}
+      BACKEND_REGION: ${{ secrets.BACKEND_REGION }}
       APP_NAME: ${{ secrets.APP_NAME }}
       APP: ${{ secrets.APP }}
       STAGE: ${{ matrix.stage }}
