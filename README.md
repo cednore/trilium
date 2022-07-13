@@ -120,11 +120,14 @@ just tg plan
 
 ## 🔨 Development scripts
 
+[just](https://github.com/casey/just) is being used to define and run development scripts. You can simply run
+`just --list` or see [`justfile`](justfile) to check out all of available development scripts.
+
 ### Basic terragrunt scripts
 
 Terragrunt doesn't load dotenv file automatically (see https://github.com/gruntwork-io/terragrunt/issues/1750), so I've
-wrapped basic terragrunt commands with preloading of dotenv files (see [`justfile`](justfile)). Replace `terragrunt`
-with `just tg` to run your terragrunt commands with environment variables set from `.env` file.
+wrapped all terragrunt commands with preloading of dotenv files (see [`justfile`](justfile)). Replace `terragrunt` with
+`just tg` to run your terragrunt commands with environment variables set from `.env` file.
 
 ```bash
 # Equivalent of `terragrunt init -upgrade` with dotenv loading
