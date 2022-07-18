@@ -56,7 +56,7 @@ jobs:
         run: terragrunt init -no-color
       - name: Validate project
         run: terragrunt validate -no-color
-      - name: Terragrunt plan (detailed exitcode)
+      - name: Check for infrastructure drift
         run: terragrunt plan -detailed-exitcode -no-color
       - name: Generate outputs
         run: terragrunt output -json > output.json
