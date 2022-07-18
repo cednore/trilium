@@ -43,5 +43,5 @@ jobs:
           tflint_version: latest
       - name: Initialize
         run: tflint --init
-      - name: Run
+      - name: Run TFLint
         run: tflint -f compact
