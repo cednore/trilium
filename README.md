@@ -12,7 +12,7 @@
 [![Infrastructure](https://github.com/cednore/trilium/actions/workflows/infrastructure.yml/badge.svg)](https://github.com/cednore/trilium/actions/workflows/infrastructure.yml)
 [![Security](https://github.com/cednore/trilium/actions/workflows/security.yml/badge.svg)](https://github.com/cednore/trilium/actions/workflows/security.yml)
 [![Lint](https://github.com/cednore/trilium/actions/workflows/lint.yml/badge.svg)](https://github.com/cednore/trilium/actions/workflows/lint.yml)
-[![Current online status](https://img.shields.io/website?down_color=lightgrey&down_message=offline&label=notes.cednore.com&up_color=blue&up_message=online&url=https%3A%2F%2Fnotes.cednore.com)](https://notes.cednore.com)
+[![Current online status](https://img.shields.io/website?down_color=lightgrey&down_message=offline&label=notes.cednore.me&up_color=blue&up_message=online&url=https%3A%2F%2Fnotes.cednore.me)](https://notes.cednore.me)
 
 [![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com/)
