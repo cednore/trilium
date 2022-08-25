@@ -60,6 +60,6 @@
 | <a name="output_app_instance_public_ip"></a> [app\_instance\_public\_ip](#output\_app\_instance\_public\_ip) | Public IP of app instance | `<sensitive>` | yes |
 | <a name="output_app_instance_username"></a> [app\_instance\_username](#output\_app\_instance\_username) | User name for app instance | `<sensitive>` | yes |
 | <a name="output_app_lb_dns_name"></a> [app\_lb\_dns\_name](#output\_app\_lb\_dns\_name) | Domain name of app load balancer | `<sensitive>` | yes |
-| <a name="output_app_url"></a> [app\_url](#output\_app\_url) | URL for this app | `"https://notes.cednore.com"` | no |
+| <a name="output_app_url"></a> [app\_url](#output\_app\_url) | URL for this app | `"https://notes.cednore.me"` | no |
 | <a name="output_data_volume_mount_path"></a> [data\_volume\_mount\_path](#output\_data\_volume\_mount\_path) | Path to mount the data volume device | `<sensitive>` | yes |
 <!-- END_TF_DOCS -->
