@@ -22,12 +22,11 @@
 
 ## ✨ Introduction
 
-This project demonstrates how-to of hosting
-[![zadam/trilium](https://img.shields.io/badge/zadam-trilium-red?logo=github)](https://github.com/zadam/trilium) on your
-AWS infrastructure. If you want to self-host your very own personal knowledge base on AWS, this project could be a good
-starting point. You can easily use this project as a boilerplate for managing your trilium hosting infrastructure in IaC
-way; automatic infrastructure provisioning, frequent drift-checking, security scanning and more. (I use this repository
-too for managing my own trilium hosting 😉.)
+This project demonstrates how-to of hosting [trilium](https://github.com/zadam/trilium) on your AWS infrastructure. If
+you want to self-host your very own personal knowledge base on AWS, this project could be a good starting point. You can
+easily use this project as a boilerplate for managing your trilium hosting infrastructure in IaC way; automatic
+infrastructure provisioning, frequent drift-checking, security scanning and more. (I use this repository too for
+managing my own trilium hosting 😉.)
 
 Before you start, it is strongly recommended to read [trilium wiki](https://github.com/zadam/trilium/wiki) first,
 especially [server installation/deployment page](https://github.com/zadam/trilium/wiki/Docker-server-installation).
@@ -47,9 +46,7 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 
 1. Single **VPC** with 3 public/private subnets
 2. App instance by **EC2** (default `t3.micro`), publicly accessible via SSH
-3. **Docker**ized app container (default
-   [![zadam/trilium:0.52.4](https://img.shields.io/badge/zadam%2Ftrilium-0.52.4-blue?logo=docker)](https://hub.docker.com/r/zadam/trilium)
-   , count `1`)
+3. **Docker**ized app container (default `zadam/trilium:0.54.3`, count `1`)
 4. Frontline **ALB** with HTTP/HTTPS listeners
 5. **ACM** certificate attached to ALB (use apex domain's ACM by default, assuming this covers subdomains as well)
 6. **EBS** data volume attached (default `20GB`)
@@ -92,10 +89,10 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 ### 1. Clone this repository
 
 ```bash
-# Clone from github
+# clone from github
 git clone git@github.com:cednore/trilium.git
 
-# Cd into repo directory
+# cd into repo directory
 cd trilium
 ```
 
@@ -150,16 +147,16 @@ wrapped all terragrunt commands with preloading of dotenv files (see [`justfile`
 `just tg` to run your terragrunt commands with environment variables set from `.env` file.
 
 ```bash
-# Equivalent of `terragrunt init -upgrade` with dotenv loading
+# equivalent of `terragrunt init -upgrade` with dotenv loading
 just tg init -upgrade
 
-# Equivalent of `terragrunt plan` with dotenv loading
+# equivalent of `terragrunt plan` with dotenv loading
 just tg plan
 
-# Equivalent of `terragrunt validate` with dotenv loading
+# equivalent of `terragrunt validate` with dotenv loading
 just tg validate
 
-# Equivalent of `terragrunt apply` with dotenv loading
+# equivalent of `terragrunt apply` with dotenv loading
 just tg apply
 ```
 
@@ -170,7 +167,7 @@ just tg apply
 ### Initialization
 
 ```bash
-# Initialize terragrunt and tflint
+# initialize terragrunt and tflint
 just init
 ```
 
@@ -185,7 +182,7 @@ See [`outputs.tf`](outputs.tf) file and check out what's being outputted.
 > in public place where everyone is accessible (e.g CI/CD pipelines' stdout).
 
 ```bash
-# Terragrunt output in json format (into output.json)
+# terragrunt output in json format (into output.json)
 just output
 ```
 
@@ -197,7 +194,7 @@ Below command is used to generate a visual representation of terraform plan. The
 SVG format, which is converted by GraphViz.
 
 ```bash
-# Generate terraform graph and convert into svg format (requires graphviz)
+# generate terraform graph and convert into svg format (requires graphviz)
 just graph
 ```
 
@@ -210,10 +207,10 @@ If you are forking this repository and starting a new hosting, you might wanna g
 instance.
 
 ```bash
-# Create dotenv file based from example
+# create dotenv file based from example
 cp .env.example .env
 
-# Generate a new keypair, if you don't have one already
+# generate a new keypair, if you don't have one already
 just keygen
 ```
 
@@ -222,13 +219,13 @@ just keygen
 ### Formatting & linting
 
 ```bash
-# Format tf files
+# format tf files
 just fmt
 
-# Format hcl files
+# format hcl files
 just hclfmt
 
-# Lint project (by tflint)
+# lint project (by tflint)
 just lint
 ```
 
@@ -238,7 +235,7 @@ This project uses [**terraform-docs**](https://terraform-docs.io) to auto-genera
 resources being used. You can run following command to run the generator.
 
 ```bash
-# Generate terraform documentation in markdown
+# generate terraform documentation in markdown
 just tfdocs
 ```
 
@@ -252,16 +249,16 @@ Often, you might wanna login to app instance (EC2) and run a few commands or dow
 > file.
 
 ```bash
-# Open a ssh session into app instance
+# open a ssh session into app instance
 just connect
 
-# Restart app container
+# restart app container
 just restart
 
-# Download app db file (sqlite)
+# download app db file (sqlite)
 just dbdump
 
-# Upload app db file
+# upload app db file
 just dbrestore
 ```
 

@@ -75,7 +75,7 @@ module "provision" {
   app_instance_public_ip    = module.app.instance_public_ip
   app_keypair_path          = "${path.root}/${local.keypair_filename}"
   app_image                 = "zadam/trilium"
-  app_image_tag             = "0.52.4" # https://hub.docker.com/layers/trilium/zadam/trilium/0.52.4/images/sha256-98c15992753e7b9bc8bcc170ddb970cbcac72244765093a8b276660c6ef308d3
+  app_image_tag             = "0.54.3" # https://hub.docker.com/layers/zadam/trilium/0.54.3/images/sha256-54168cef9ebad30b3c8da93f36b316d179f3e5958dcc67016d09a75575dff7f9
   app_container_count       = 1
   app_container_name_prefix = local.app_container_name_prefix
   app_container_ports       = "80:8080"
