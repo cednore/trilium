@@ -1,5 +1,5 @@
 ---
-- name: Provision app instance
+- name: Install and configure Trilium
   hosts: all
   become: true
   vars:
@@ -45,11 +45,11 @@
     - name: Install docker module for python
       pip:
         name: docker
-    - name: Pull docker image
+    - name: Pull trilium docker image
       community.docker.docker_image:
         name: "{{ image }}:{{ tag }}"
         source: pull
-    - name: Create containers
+    - name: Create trilium app containers
       community.docker.docker_container:
         name: "{{ container_name_prefix }}{{ item }}"
         image: "{{ image }}:{{ tag }}"

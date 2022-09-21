@@ -2,13 +2,13 @@ resource "time_sleep" "initial_delay" {
   create_duration = "10s"
 }
 
-resource "null_resource" "app_data_volume_provisioner" {
+resource "null_resource" "trilium_data_volume_provisioner" {
   depends_on = [
     time_sleep.initial_delay,
   ]
 
   triggers = {
-    src_hash = filesha256("${path.module}/playbooks/app-data.yml")
+    src_hash = filesha256("${path.module}/playbooks/trilium-data.yml")
     variables = jsonencode([
       var.app_instance_public_ip,
       var.app_keypair_path,
@@ -20,7 +20,7 @@ resource "null_resource" "app_data_volume_provisioner" {
 
   provisioner "local-exec" {
     command = <<BASH
-      ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook ${path.module}/playbooks/app-data.yml \
+      ANSIBLE_NOCOWS=1 ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook ${path.module}/playbooks/trilium-data.yml \
         -u ubuntu \
         -i '${var.app_instance_public_ip},' \
         --private-key ${var.app_keypair_path} \
@@ -31,13 +31,13 @@ resource "null_resource" "app_data_volume_provisioner" {
   }
 }
 
-resource "null_resource" "app_instance_provisioner" {
+resource "null_resource" "trilium_installer" {
   depends_on = [
-    null_resource.app_data_volume_provisioner,
+    null_resource.trilium_data_volume_provisioner,
   ]
 
   triggers = {
-    src_hash = filesha256("${path.module}/playbooks/app.yml")
+    src_hash = filesha256("${path.module}/playbooks/trilium.yml")
     variables = jsonencode([
       var.app_instance_public_ip,
       var.app_keypair_path,
@@ -55,7 +55,7 @@ resource "null_resource" "app_instance_provisioner" {
 
   provisioner "local-exec" {
     command = <<BASH
-      ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook ${path.module}/playbooks/app.yml \
+      ANSIBLE_NOCOWS=1 ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook ${path.module}/playbooks/trilium.yml \
         -u ubuntu \
         -i '${var.app_instance_public_ip},' \
         --private-key ${var.app_keypair_path} \
