@@ -51,10 +51,11 @@ No resources.
 
 | Name | Description | Value | Sensitive |
 |------|-------------|-------|:---------:|
-| <a name="output_app_container_name_prefix"></a> [app\_container\_name\_prefix](#output\_app\_container\_name\_prefix) | Name prefix of app containers | `<sensitive>` | yes |
 | <a name="output_app_instance_public_ip"></a> [app\_instance\_public\_ip](#output\_app\_instance\_public\_ip) | Public IP of app instance | `<sensitive>` | yes |
-| <a name="output_app_instance_username"></a> [app\_instance\_username](#output\_app\_instance\_username) | User name for app instance | `<sensitive>` | yes |
 | <a name="output_app_lb_dns_name"></a> [app\_lb\_dns\_name](#output\_app\_lb\_dns\_name) | Domain name of app load balancer | `<sensitive>` | yes |
 | <a name="output_app_url"></a> [app\_url](#output\_app\_url) | URL for this app | `"https://notes.cednore.me"` | no |
-| <a name="output_data_volume_mount_path"></a> [data\_volume\_mount\_path](#output\_data\_volume\_mount\_path) | Path to mount the data volume device | `<sensitive>` | yes |
+| <a name="output_cmd_download_app_db"></a> [cmd\_download\_app\_db](#output\_cmd\_download\_app\_db) | Command to download app db file (sqlite) | `<sensitive>` | yes |
+| <a name="output_cmd_restart_app_container"></a> [cmd\_restart\_app\_container](#output\_cmd\_restart\_app\_container) | Command to restart app instance | `<sensitive>` | yes |
+| <a name="output_cmd_ssh_to_app_instance"></a> [cmd\_ssh\_to\_app\_instance](#output\_cmd\_ssh\_to\_app\_instance) | Command to ssh into app instance | `<sensitive>` | yes |
+| <a name="output_cmd_upload_app_db"></a> [cmd\_upload\_app\_db](#output\_cmd\_upload\_app\_db) | Command to upload app db file (sqlite) | `<sensitive>` | yes |
 <!-- END_TF_DOCS -->
