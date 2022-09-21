@@ -15,7 +15,7 @@ resource "aws_instance" "app" {
 
   lifecycle {
     ignore_changes = [
-      ami, # Ignore ami updates
+      ami, # ignore ami updates
     ]
   }
 }

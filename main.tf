@@ -23,7 +23,7 @@ module "app" {
   stage         = var.stage
   subnet_id     = module.root.public_subnet_ids[0]
   sg_ids        = module.root.app_instance_sg_ids
-  instance_type = "t3.micro" # 7$ per month
+  instance_type = "t3.micro"
   pubkey        = trimspace(var.app_instance_public_key)
 }
 
@@ -48,17 +48,14 @@ module "log" {
 module "end" {
   source = "./modules/trilium-end"
 
-  stage                = var.stage
-  domain               = var.domain
-  route53_apex_zone_id = data.aws_route53_zone.apex.zone_id
-  route53_default_ttl  = 3600
-  acm_apex_cert_arn    = data.aws_acm_certificate.apex.arn
-  vpc_id               = module.root.vpc_id
-  app_instance_id      = module.app.instance_id
-  app_lb_subnet_ids    = module.root.public_subnet_ids
-  app_lb_sg_ids        = module.root.app_lb_sg_ids
-  app_lb_log_bucket    = module.log.app_lb_log_bucket
-  app_lb_tg_port       = 80 # HTTP
+  stage             = var.stage
+  domain            = var.domain
+  vpc_id            = module.root.vpc_id
+  app_instance_id   = module.app.instance_id
+  app_lb_subnet_ids = module.root.public_subnet_ids
+  app_lb_sg_ids     = module.root.app_lb_sg_ids
+  app_lb_log_bucket = module.log.app_lb_log_bucket
+  app_lb_tg_port    = 80 # http
 }
 
 module "provision" {

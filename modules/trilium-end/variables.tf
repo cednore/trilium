@@ -28,22 +28,10 @@ variable "domain" {
   default     = "trilium.someone.me"
 }
 
-variable "route53_apex_zone_id" {
-  description = "Zone ID of master hosted zone"
-  type        = string
-  sensitive   = true
-}
-
 variable "route53_default_ttl" {
   description = "Default TTL for DNS records"
   type        = string
   default     = 3600
-}
-
-variable "acm_apex_cert_arn" {
-  description = "ARN to the apex domain's certificate to attach onto HTTPS listener"
-  type        = string
-  sensitive   = true
 }
 
 variable "vpc_id" {

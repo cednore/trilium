@@ -12,7 +12,7 @@ on:
       - '**.md'
       - 'docs/**'
   schedule:
-    - cron: '0 12 * * *' # Everyday
+    - cron: '0 12 * * *' # everyday
   workflow_dispatch:
 
 jobs:
