@@ -12,6 +12,8 @@ terraform {
 module "root" {
   source = "./modules/trilium-root"
 
+  app_name    = var.app_name
+  app         = var.app
   stage       = var.stage
   vpc_cidr    = "10.0.0.0/16"
   vpc_subnets = 3
@@ -20,6 +22,8 @@ module "root" {
 module "app" {
   source = "./modules/trilium-app"
 
+  app_name      = var.app_name
+  app           = var.app
   stage         = var.stage
   subnet_id     = module.root.public_subnet_ids[0]
   sg_ids        = module.root.app_instance_sg_ids
@@ -30,6 +34,8 @@ module "app" {
 module "data" {
   source = "./modules/trilium-data"
 
+  app_name              = var.app_name
+  app                   = var.app
   stage                 = var.stage
   app_instance_id       = module.app.instance_id
   availability_zone     = module.app.instance_availability_zone
@@ -41,6 +47,8 @@ module "data" {
 module "log" {
   source = "./modules/trilium-log"
 
+  app_name                = var.app_name
+  app                     = var.app
   stage                   = var.stage
   container_log_retention = 120 # days
 }
@@ -48,6 +56,8 @@ module "log" {
 module "end" {
   source = "./modules/trilium-end"
 
+  app_name          = var.app_name
+  app               = var.app
   stage             = var.stage
   domain            = var.domain
   vpc_id            = module.root.vpc_id
@@ -68,6 +78,8 @@ module "provision" {
     module.end,
   ]
 
+  app_name                  = var.app_name
+  app                       = var.app
   stage                     = var.stage
   app_instance_public_ip    = module.app.instance_public_ip
   app_keypair_path          = "${path.root}/${local.keypair_filename}"
