@@ -20,9 +20,7 @@
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.31.0 |
+No providers.
 
 ## Modules
 
@@ -37,10 +35,7 @@
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [aws_acm_certificate.apex](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/acm_certificate) | data source |
-| [aws_route53_zone.apex](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
+No resources.
 
 ## Inputs
 
