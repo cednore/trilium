@@ -15,20 +15,26 @@ output "app_instance_public_ip" {
   sensitive   = true
 }
 
-output "app_instance_username" {
-  description = "User name for app instance"
-  value       = module.app.instance_username
+output "cmd_ssh_to_app_instance" {
+  description = "Command to ssh into app instance"
+  value       = "ssh -i ${local.keypair_filename} -o IdentitiesOnly=yes ${module.app.instance_username}@${module.app.instance_public_ip}"
   sensitive   = true
 }
 
-output "app_container_name_prefix" {
-  description = "Name prefix of app containers"
-  value       = local.app_container_name_prefix
+output "cmd_restart_app_container" {
+  description = "Command to restart app instance"
+  value       = "ssh -i ${local.keypair_filename} -o IdentitiesOnly=yes ${module.app.instance_username}@${module.app.instance_public_ip} sudo docker restart ${local.app_container_name_prefix}1"
   sensitive   = true
 }
 
-output "data_volume_mount_path" {
-  description = "Path to mount the data volume device"
-  value       = local.data_volume_mount_path
+output "cmd_download_app_db" {
+  description = "Command to download app db file (sqlite)"
+  value       = "scp -i ${local.keypair_filename} -o IdentitiesOnly=yes ${module.app.instance_username}@${module.app.instance_public_ip}:${local.data_volume_mount_path}/document.db ."
+  sensitive   = true
+}
+
+output "cmd_upload_app_db" {
+  description = "Command to upload app db file (sqlite)"
+  value       = "scp -i ${local.keypair_filename} -o IdentitiesOnly=yes document.db ${module.app.instance_username}@${module.app.instance_public_ip}:${local.data_volume_mount_path}/document.db"
   sensitive   = true
 }

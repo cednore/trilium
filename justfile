@@ -48,16 +48,16 @@ check-output:
 
 # open a ssh session into app instance
 @connect *args='': check-output
-	ssh -i .keypair.pem $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json) "$@"
+	eval $(jq -r '.cmd_ssh_to_app_instance.value' output.json) "$@"
 
 # restart app container (this fixes broken notes and branches)
 restart: check-output
-	just connect sudo docker restart $(jq -r '.app_container_name_prefix.value' output.json)1
+	eval $(jq -r '.cmd_restart_app_container.value' output.json)
 
 # download app db file (sqlite)
 dbdump: check-output
-	scp -i .keypair.pem $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json):$(jq -r '.data_volume_mount_path.value' output.json)/document.db .
+	eval $(jq -r '.cmd_download_app_db.value' output.json)
 
 # upload app db file
 dbrestore: check-output
-	scp -i .keypair.pem document.db $(jq -r '.app_instance_username.value' output.json)@$(jq -r '.app_instance_public_ip.value' output.json):$(jq -r '.data_volume_mount_path.value' output.json)/document.db
+	eval $(jq -r '.cmd_upload_app_db.value' output.json)
