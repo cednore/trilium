@@ -57,5 +57,7 @@ No resources.
 | <a name="output_cmd_download_app_db"></a> [cmd\_download\_app\_db](#output\_cmd\_download\_app\_db) | Command to download app db file (sqlite) | `<sensitive>` | yes |
 | <a name="output_cmd_restart_app_container"></a> [cmd\_restart\_app\_container](#output\_cmd\_restart\_app\_container) | Command to restart app instance | `<sensitive>` | yes |
 | <a name="output_cmd_ssh_to_app_instance"></a> [cmd\_ssh\_to\_app\_instance](#output\_cmd\_ssh\_to\_app\_instance) | Command to ssh into app instance | `<sensitive>` | yes |
+| <a name="output_cmd_trilium_data_volume_provisioner"></a> [cmd\_trilium\_data\_volume\_provisioner](#output\_cmd\_trilium\_data\_volume\_provisioner) | Command to run to trilium data volume provisioner playbook | `<sensitive>` | yes |
+| <a name="output_cmd_trilium_installer"></a> [cmd\_trilium\_installer](#output\_cmd\_trilium\_installer) | Command to run to trilium installer playbook | `<sensitive>` | yes |
 | <a name="output_cmd_upload_app_db"></a> [cmd\_upload\_app\_db](#output\_cmd\_upload\_app\_db) | Command to upload app db file (sqlite) | `<sensitive>` | yes |
 <!-- END_TF_DOCS -->
