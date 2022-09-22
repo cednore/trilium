@@ -21,7 +21,7 @@ terraform {
     execute  = ["aws", "s3", "cp", "s3://${local.backend_bucket}/env:/${local.stage}/${local.app}/.keypair.pem", "."]
   }
 
-  after_hook "output_json" { # generate json-format output file after apply or plan
+  after_hook "output_json" { # generate output file in json after apply or plan
     commands = ["apply", "plan"]
     execute  = ["just", "output-json"]
   }
