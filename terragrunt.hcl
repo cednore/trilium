@@ -8,10 +8,10 @@ locals {
   backend_bucket    = get_env("BACKEND_BUCKET")
   backend_locktable = get_env("BACKEND_LOCKTABLE")
   backend_region    = get_env("BACKEND_REGION")
-  app_name = get_env("APP_NAME", "Trilium Notes")
-  app      = get_env("APP", "trilium")
-  stage    = get_env("STAGE", "production")
-  domain   = get_env("DOMAIN", "trilium.someone.me")
+  app_name          = get_env("APP_NAME", "Trilium Notes")
+  app               = get_env("APP", "trilium")
+  stage             = get_env("STAGE", "production")
+  domain            = get_env("DOMAIN", "trilium.someone.me")
 }
 
 # terragrunt configurations
