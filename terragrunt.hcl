@@ -104,7 +104,7 @@ data "aws_s3_object" "keypair" {
 }
 
 resource "local_sensitive_file" "keypair" {
-  filename = "$${abspath(path.root)}/$${local.keypair_filename}"
+  filename = "$${path.root}/$${local.keypair_filename}"
   content  = data.aws_s3_object.keypair.body
 }
 EOF

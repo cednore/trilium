@@ -100,7 +100,7 @@ module "provision" {
   app                       = var.app
   stage                     = var.stage
   app_instance_public_ip    = module.app.instance_public_ip
-  app_keypair_path          = "${abspath(path.root)}/${local.keypair_filename}"
+  app_keypair_path          = "${path.root}/${local.keypair_filename}"
   app_image                 = "zadam/trilium"
   app_image_tag             = "0.55.1"
   app_container_count       = 1
