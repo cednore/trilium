@@ -5,11 +5,10 @@ locals {
   backend_locktable = get_env("BACKEND_LOCKTABLE")
   backend_region    = get_env("BACKEND_REGION")
 
-  app_name                = get_env("APP_NAME", "Trilium Notes")
-  app                     = get_env("APP", "trilium")
-  stage                   = get_env("STAGE", "production")
-  domain                  = get_env("DOMAIN", "trilium.someone.me")
-  app_instance_public_key = get_env("APP_INSTANCE_PUBLIC_KEY")
+  app_name = get_env("APP_NAME", "Trilium Notes")
+  app      = get_env("APP", "trilium")
+  stage    = get_env("STAGE", "production")
+  domain   = get_env("DOMAIN", "trilium.someone.me")
 }
 
 generate "providers" {
@@ -17,15 +16,15 @@ generate "providers" {
   if_exists = "overwrite_terragrunt"
 
   contents = <<EOF
-    provider "aws" {
-      region = "${local.aws_region}"
+provider "aws" {
+  region = "${local.aws_region}"
 
-      default_tags {
-        tags = {
-          Repo = "${local.repo_origin}"
-        }
-      }
+  default_tags {
+    tags = {
+      Repo = "${local.repo_origin}"
     }
+  }
+}
   EOF
 }
 
@@ -46,9 +45,8 @@ remote_state {
 }
 
 inputs = {
-  app_name                = local.app_name
-  app                     = local.app
-  stage                   = local.stage
-  domain                  = local.domain
-  app_instance_public_key = local.app_instance_public_key
+  app_name = local.app_name
+  app      = local.app
+  stage    = local.stage
+  domain   = local.domain
 }

@@ -21,9 +21,3 @@ variable "domain" {
   type        = string
   default     = "trilium.someone.me"
 }
-
-variable "app_instance_public_key" {
-  description = "SSH public key for the app instance"
-  type        = string
-  sensitive   = true
-}

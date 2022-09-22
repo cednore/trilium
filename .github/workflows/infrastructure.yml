@@ -28,11 +28,10 @@ jobs:
       BACKEND_BUCKET: ${{ secrets.BACKEND_BUCKET }}
       BACKEND_LOCKTABLE: ${{ secrets.BACKEND_LOCKTABLE }}
       BACKEND_REGION: ${{ secrets.BACKEND_REGION }}
-      APP_NAME: ${{ secrets.APP_NAME }}
-      APP: ${{ secrets.APP }}
+      APP_NAME: Trilium Notes
+      APP: trilium
       STAGE: ${{ matrix.stage }}
-      DOMAIN: ${{ secrets.DOMAIN }}
-      APP_INSTANCE_PUBLIC_KEY: ${{ secrets.APP_INSTANCE_PUBLIC_KEY }}
+      DOMAIN: notes.cednore.me
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -42,7 +41,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-          mask-aws-account-id: false
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:

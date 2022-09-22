@@ -28,7 +28,7 @@ module "app" {
   subnet_id     = module.root.public_subnet_ids[0]
   sg_ids        = module.root.app_instance_sg_ids
   instance_type = "t3.micro"
-  pubkey        = trimspace(var.app_instance_public_key)
+  pubkey        = trimspace(local.app_env_secrets.app_instance_public_key)
 }
 
 module "data" {
