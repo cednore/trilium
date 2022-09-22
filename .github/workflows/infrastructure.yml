@@ -23,7 +23,6 @@ env:
   BACKEND_REGION: ${{ secrets.BACKEND_REGION }}
   APP_NAME: Trilium Notes
   APP: trilium
-  STAGE: ${{ matrix.stage }}
   DOMAIN: notes.cednore.me
 
 jobs:
