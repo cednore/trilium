@@ -55,9 +55,9 @@ jobs:
         with:
           terragrunt_version: 0.38.12
       - name: Initialize project
-        run: just init -no-color
+        run: just init -no-color &> /dev/null
       - name: Validate project
-        run: just validate -no-color
+        run: just validate -no-color &> /dev/null
       - name: Check for infrastructure drift
         run: just drift-check -no-color &> /dev/null
       - name: Generate terraform documents
