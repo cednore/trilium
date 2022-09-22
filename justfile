@@ -6,16 +6,27 @@ default:
   just --list
 
 # wrap terragrunt with dotenv loading
-@tg *args='':
-  terragrunt "$@"
+tg *args='':
+  terragrunt $@
 
-# initialize terragrunt and tflint
-init:
-  tflint --init
-  terragrunt init
+# initialize terragrunt project
+init *args='':
+  terragrunt init $@
+
+# upgrade providers
+upgrade *args='':
+  terragrunt init -upgrade $@
+
+# validate terragrunt project
+validate *args='':
+  terragrunt validate $@
+
+# check for infrastructure drift
+drift-check *args='':
+  terragrunt plan -detailed-exitcode $@
 
 # terragrunt output in json format (into output.json)
-output:
+output-json:
 	terragrunt output -json > output.json
 
 # generate terraform graph and convert into svg format (requires graphviz)
@@ -28,7 +39,7 @@ fmt:
 
 # lint project (by tflint)
 lint:
-	tflint
+	tflint --init && tflint
 
 # generate terraform documentation in markdown
 tfdocs:
@@ -47,7 +58,7 @@ trilium-install: check-output
 	bash -c "$(jq -r '.cmd_trilium_installer.value' output.json)"
 
 # open a ssh session into app instance
-@connect *args='': check-output
+connect *args='': check-output
 	env -- $(jq -r '.cmd_ssh_to_app_instance.value' output.json) $@
 
 # restart app container (this fixes broken notes and branches)

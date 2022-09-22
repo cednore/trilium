@@ -125,16 +125,19 @@ Available recipes:
     dbdump                # download app db file (sqlite)
     dbrestore             # upload app db file
     default               # list available recipes
+    drift-check *args=''  # check for infrastructure drift
     fmt                   # format tf and hcl files
     graph                 # generate terraform graph and convert into svg format (requires graphviz)
-    init                  # initialize terragrunt and tflint
+    init *args=''         # initialize terragrunt project
     lint                  # lint project (by tflint)
-    output                # terragrunt output in json format (into output.json)
+    output-json           # terragrunt output in json format (into output.json)
     provision-data-volume # run trilium data volume provisioner playbook from local
     restart               # restart app container (this fixes broken notes and branches)
     tfdocs                # generate terraform documentation in markdown
     tg *args=''           # wrap terragrunt with dotenv loading
     trilium-install       # run trilium installer playbook from local
+    upgrade *args=''      # upgrade providers
+    validate *args=''     # validate terragrunt project
 ```
 
 ### Basic terragrunt scripts
@@ -144,29 +147,25 @@ wrapped all terragrunt commands with preloading of dotenv files (see [`justfile`
 `just tg` to run your terragrunt commands with environment variables set from `.env` file.
 
 ```bash
-# equivalent of `terragrunt init -upgrade` with dotenv loading
-just tg init -upgrade
+# initialize terragrunt project
+just init
+
+# upgrade providers
+just upgrade
+
+# validate terragrunt project
+just validate
 
 # equivalent of `terragrunt plan` with dotenv loading
 just tg plan
 
-# equivalent of `terragrunt validate` with dotenv loading
-just tg validate
-
-# equivalent of `terragrunt apply` with dotenv loading
-just tg apply
+# check for infrastructure drift
+just drift-check
 ```
 
 > ℹ️ INFO: Environment variables inside `.env` file is mandatory for terragrunt to run. Terragrunt will go fail without
 > them. If you are going to run terragrunt commands without `just`, You should use dotenv cli tools like
 > [dotenv-cli](https://github.com/entropitor/dotenv-cli) or [python-dotenv](https://github.com/theskumar/python-dotenv).
-
-### Initialization
-
-```bash
-# initialize terragrunt and tflint
-just init
-```
 
 ### Outputs
 
@@ -180,7 +179,7 @@ See [`outputs.tf`](outputs.tf) file and check out what's being outputted.
 
 ```bash
 # terragrunt output in json format (into output.json)
-just output
+just output-json
 ```
 
 > ℹ️ INFO: `output.json` file is gitignored.
