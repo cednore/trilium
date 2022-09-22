@@ -18,7 +18,7 @@ locals {
 terraform {
   after_hook "download_keypair" { # make sure keypair file exists after init
     commands = ["init"]
-    execute  = ["just", "tg", "apply", "-auto-approve", "-target", "local_sensitive_file.keypair"]
+    execute  = ["aws", "s3", "cp", "s3://${local.backend_bucket}/env:/${local.stage}/${local.app}/.keypair.pem", "."]
   }
 
   after_hook "output_json" { # generate json-format output file after apply or plan
