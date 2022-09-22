@@ -55,11 +55,11 @@ jobs:
         with:
           terragrunt_version: 0.38.12
       - name: Initialize project
-        run: just init -no-color &> /dev/null
+        run: just init &> /dev/null
       - name: Validate project
-        run: just validate -no-color &> /dev/null
+        run: just validate &> /dev/null
       - name: Check for infrastructure drift
-        run: just drift-check -no-color &> /dev/null
+        run: just drift-check &> /dev/null
       - name: Generate terraform documents
         uses: terraform-docs/gh-actions@v1.0.0
         with:

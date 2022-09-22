@@ -41,7 +41,7 @@ jobs:
         with:
           terragrunt_version: 0.38.12
       - name: Initialize project
-        run: terragrunt init -no-color &> /dev/null
+        run: terragrunt init &> /dev/null
       - name: Format check tf files
         run: terraform fmt -diff -check -recursive -no-color
       - name: Format check hcl files
@@ -72,7 +72,7 @@ jobs:
         with:
           tflint_version: latest
       - name: Initialize project
-        run: terragrunt init -no-color &> /dev/null
+        run: terragrunt init &> /dev/null
       - name: Initialize tflint
         run: tflint --init
       - name: Run TFLint
