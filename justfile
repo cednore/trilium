@@ -22,17 +22,9 @@ output:
 graph:
 	terragrunt graph -draw-cycles > graph.gv && dot -Tsvg graph.gv > graph.svg
 
-# generate a new keypair
-keygen:
-	ssh-keygen -t rsa -m PEM -f .keypair.pem -N '' -C '' && chmod 400 .keypair.pem
-
-# format tf files
+# format tf and hcl files
 fmt:
-	terraform fmt -recursive
-
-# format hcl files
-hclfmt:
-	terragrunt hclfmt
+	terraform fmt -recursive && terragrunt hclfmt
 
 # lint project (by tflint)
 lint:

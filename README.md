@@ -60,29 +60,28 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 
 ## 🧱 Prerequisites
 
-1. [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.2`
-2. [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/) `>= 0.38.0`
+1. [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.3`
+2. [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/) `>= 0.38`
 3. An AWS account
 4. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
    configured)
 5. S3 backend (a S3 bucket and a DynamoDB table)
-6. A personal domain, Route 53 hosted zone, and an ACM certificate (preferably for the apex domain, which is subject to
-   all subdomains as well).
-7. SSH keypair at `.keypair.pem`, for connecting app instance
+6. A personal domain, a public Route 53 hosted zone managing this personal domain, and an ACM certificate which is
+   subject to the apex domain and all subdomains as well.
+7. A SSH keypair `.keypair.pem`, along with terraform state file inside the backend bucket, for connecting the EC2
+   instance and an ASM secret for holding secrets and configurations (these will be read and downloaded while applying,
+   see `generate "secrets"` block at [`terragrunt.hcl`](terragrunt.hcl)).
 8. `.env` file, for environment variables (see [`.env.example`](.env.example))
 9. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
    playbooks)
 10. [just](https://github.com/casey/just) (for running development scripts)
-11. Basic utilities `ssh`, `scp`, `jq` (for development scripts)
-12. [TFLint](https://github.com/terraform-linters/tflint) for linting tf files
-13. [dotenv-cli](https://github.com/entropitor/dotenv-cli) or
-    [python-dotenv](https://github.com/theskumar/python-dotenv) for loading dotenv file (optional)
-14. [terraform-docs](https://terraform-docs.io/user-guide/installation/) for generating terraform documentation
+11. [TFLint](https://github.com/terraform-linters/tflint) for linting tf files
+12. [terraform-docs](https://terraform-docs.io/user-guide/installation/) for generating terraform documentation
     (optional)
-15. [tfsec](https://github.com/aquasecurity/tfsec) and [Checkov](https://www.checkov.io/) for scanning security
+13. [tfsec](https://github.com/aquasecurity/tfsec) and [Checkov](https://www.checkov.io/) for scanning security
     vulnerabilities (optional)
-16. SQLite DB Browser (optional, for manually tweaking app db)
-17. Code editor/IDE ofc 😉
+14. SQLite DB Browser (optional, for manually tweaking app db)
+15. Code editor/IDE ofc 😉
 
 ## ⚡ Getting started
 
@@ -98,10 +97,8 @@ cd trilium
 
 ### 2. Configure project
 
-1. Prepare dotenv file at `.env`. If you don't have `.env` file, you can create a new one by `cp .env.example .env` and
-   customize with your own settings.
-2. Prepare keypair file at `.keypair.pem`. You should either download from your secret vault or generate one by
-   `just keygen` if you don't have already.
+Before start, prepare dotenv file at `.env`. If you don't have `.env` file, you can create a new one by
+`cp .env.example .env` and customize with your own settings.
 
 ### 3. Intialize project
 
@@ -128,11 +125,9 @@ Available recipes:
     dbdump                # download app db file (sqlite)
     dbrestore             # upload app db file
     default               # list available recipes
-    fmt                   # format tf files
+    fmt                   # format tf and hcl files
     graph                 # generate terraform graph and convert into svg format (requires graphviz)
-    hclfmt                # format hcl files
     init                  # initialize terragrunt and tflint
-    keygen                # generate a new keypair
     lint                  # lint project (by tflint)
     output                # terragrunt output in json format (into output.json)
     provision-data-volume # run trilium data volume provisioner playbook from local
@@ -181,7 +176,7 @@ JSON format.
 See [`outputs.tf`](outputs.tf) file and check out what's being outputted.
 
 > ⚠️ WARNING: Sensitive data is also included in terraform output. Please hide/mask sensitive values from being displayed
-> in public place where everyone is accessible (e.g CI/CD pipelines' stdout).
+> in public place where everyone is accessible (e.g CI/CD pipelines' stdout and stderr).
 
 ```bash
 # terragrunt output in json format (into output.json)
@@ -200,32 +195,11 @@ SVG format, which is converted by GraphViz.
 just graph
 ```
 
-### Keypair and variable files
-
-Keypair and dotenv file are essential parts of this project. It uses \*.pem format keypair file for SSH connection into
-EC2 app instance, `.env` file for customized terragrunt variables.
-
-If you are forking this repository and starting a new hosting, you might wanna generate a new keypair for your EC2 app
-instance.
-
-```bash
-# create dotenv file based from example
-cp .env.example .env
-
-# generate a new keypair, if you don't have one already
-just keygen
-```
-
-> ℹ️ INFO: Keypair file is only needed when `terragrunt apply`. It's not necessary for `terragrunt plan`.
-
 ### Formatting & linting
 
 ```bash
-# format tf files
+# format tf and hcl files
 just fmt
-
-# format hcl files
-just hclfmt
 
 # lint project (by tflint)
 just lint

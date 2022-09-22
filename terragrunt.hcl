@@ -25,7 +25,33 @@ provider "aws" {
     }
   }
 }
-  EOF
+EOF
+}
+
+generate "secrets" {
+  path      = "secrets.tf"
+  if_exists = "overwrite_terragrunt"
+
+  contents = <<EOF
+locals {
+  keypair_filename = ".keypair.pem"
+  app_env_secrets  = jsondecode(data.aws_secretsmanager_secret_version.app_env.secret_string)
+}
+
+data "aws_secretsmanager_secret_version" "app_env" {
+  secret_id = "scrt-$${var.app}-app-$${var.stage}-env"
+}
+
+data "aws_s3_object" "keypair" {
+  bucket = "${local.backend_bucket}"
+  key    = "env:/$${var.stage}/$${var.app}/.keypair.pem"
+}
+
+resource "local_sensitive_file" "keypair" {
+  filename = "$${abspath(path.root)}/$${local.keypair_filename}"
+  content  = data.aws_s3_object.keypair.body
+}
+EOF
 }
 
 remote_state {
