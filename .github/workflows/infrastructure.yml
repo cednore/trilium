@@ -57,7 +57,7 @@ jobs:
       - name: Validate project
         run: terragrunt validate -no-color
       - name: Check for infrastructure drift
-        run: terragrunt plan -detailed-exitcode -no-color
+        run: terragrunt plan -detailed-exitcode -no-color &> /dev/null
       - name: Generate outputs
         run: terragrunt output -json > output.json
       - name: Generate terraform documents
