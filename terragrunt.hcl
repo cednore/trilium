@@ -27,7 +27,7 @@ terraform {
   }
 }
 
-# generate main terraform block
+# generate terraform block
 generate "terraform" {
   path      = "terraform.tf"
   if_exists = "overwrite_terragrunt"
