@@ -2,17 +2,13 @@ name: Security
 
 on:
   push:
-    paths:
-      - '**.tf'
-      - '**.hcl'
-      - '.env.example'
-      - 'modules/**'
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
   pull_request:
-    paths:
-      - '**.tf'
-      - '**.hcl'
-      - '.env.example'
-      - 'modules/**'
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
   workflow_dispatch:
 
 jobs:
