@@ -11,6 +11,24 @@ locals {
   domain   = get_env("DOMAIN", "trilium.someone.me")
 }
 
+generate "terraform" {
+  path      = "terraform.tf"
+  if_exists = "overwrite_terragrunt"
+
+  contents = <<EOF
+terraform {
+  required_version = ">= 1.3"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.20"
+    }
+  }
+}
+EOF
+}
+
 generate "providers" {
   path      = "providers.tf"
   if_exists = "overwrite_terragrunt"
@@ -26,6 +44,22 @@ provider "aws" {
   }
 }
 EOF
+}
+
+remote_state {
+  backend = "s3"
+  config = {
+    encrypt        = true
+    region         = local.backend_region
+    dynamodb_table = local.backend_locktable
+    bucket         = local.backend_bucket
+    key            = "env:/${local.stage}/${local.app}/terraform.tfstate"
+  }
+
+  generate = {
+    path      = "backend.tf"
+    if_exists = "overwrite_terragrunt"
+  }
 }
 
 generate "secrets" {
@@ -52,22 +86,6 @@ resource "local_sensitive_file" "keypair" {
   content  = data.aws_s3_object.keypair.body
 }
 EOF
-}
-
-remote_state {
-  backend = "s3"
-  config = {
-    encrypt        = true
-    region         = local.backend_region
-    dynamodb_table = local.backend_locktable
-    bucket         = local.backend_bucket
-    key            = "env:/${local.stage}/${local.app}/terraform.tfstate"
-  }
-
-  generate = {
-    path      = "backend.tf"
-    if_exists = "overwrite_terragrunt"
-  }
 }
 
 inputs = {

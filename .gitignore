@@ -58,6 +58,7 @@ document.db*
 !.env.example
 
 # terragrunt generated files
-/backend.tf
+/terraform.tf
 /providers.tf
+/backend.tf
 /secrets.tf
