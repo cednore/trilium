@@ -15,6 +15,17 @@ on:
     - cron: '0 12 * * *' # everyday
   workflow_dispatch:
 
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  REPO_ORIGIN: ${{ github.repositoryUrl }}
+  BACKEND_BUCKET: ${{ secrets.BACKEND_BUCKET }}
+  BACKEND_LOCKTABLE: ${{ secrets.BACKEND_LOCKTABLE }}
+  BACKEND_REGION: ${{ secrets.BACKEND_REGION }}
+  APP_NAME: Trilium Notes
+  APP: trilium
+  STAGE: ${{ matrix.stage }}
+  DOMAIN: notes.cednore.me
+
 jobs:
   drift:
     strategy:
@@ -22,16 +33,6 @@ jobs:
         stage: [production]
     name: Drift detection
     runs-on: ubuntu-latest
-    env:
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      REPO_ORIGIN: ${{ github.repositoryUrl }}
-      BACKEND_BUCKET: ${{ secrets.BACKEND_BUCKET }}
-      BACKEND_LOCKTABLE: ${{ secrets.BACKEND_LOCKTABLE }}
-      BACKEND_REGION: ${{ secrets.BACKEND_REGION }}
-      APP_NAME: Trilium Notes
-      APP: trilium
-      STAGE: ${{ matrix.stage }}
-      DOMAIN: notes.cednore.me
     steps:
       - name: Checkout
         uses: actions/checkout@v3
