@@ -31,7 +31,6 @@ terraform {
 generate "terraform" {
   path      = "terraform.tf"
   if_exists = "overwrite_terragrunt"
-
   contents = <<EOF
 terraform {
   required_version = ">= 1.3"
@@ -55,7 +54,6 @@ EOF
 generate "providers" {
   path      = "providers.tf"
   if_exists = "overwrite_terragrunt"
-
   contents = <<EOF
 provider "aws" {
   region = "${local.aws_region}"
@@ -90,7 +88,6 @@ remote_state {
 generate "secrets" {
   path      = "secrets.tf"
   if_exists = "overwrite_terragrunt"
-
   contents = <<EOF
 locals {
   keypair_filename = "${local.keypair_filename}"
