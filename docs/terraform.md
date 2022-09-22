@@ -20,7 +20,9 @@
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.31.0 |
 
 ## Modules
 
@@ -35,14 +37,15 @@ No providers.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [aws_secretsmanager_secret_version.app_env](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_app"></a> [app](#input\_app) | URL friendly name of this app | `string` | `"trilium"` | no |
-| <a name="input_app_instance_public_key"></a> [app\_instance\_public\_key](#input\_app\_instance\_public\_key) | SSH public key for the app instance | `string` | n/a | yes |
 | <a name="input_app_name"></a> [app\_name](#input\_app\_name) | Name of this app | `string` | `"Trilium Notes"` | no |
 | <a name="input_domain"></a> [domain](#input\_domain) | Domain name to host this app | `string` | `"trilium.someone.me"` | no |
 | <a name="input_stage"></a> [stage](#input\_stage) | Stage of deployment | `string` | `"production"` | no |
