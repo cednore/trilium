@@ -1,4 +1,14 @@
+# Terragrunt configurations
+terraform {
+  after_hook "output_json" { # generate json-format output file after apply or plan
+    commands = ["apply", "plan"]
+    execute  = ["just", "output-json"]
+  }
+}
+
+# Read environment variables
 locals {
+  is_ci             = get_env("CI") == "true"
   aws_region        = get_env("AWS_REGION")
   repo_origin       = get_env("REPO_ORIGIN")
   backend_bucket    = get_env("BACKEND_BUCKET")
@@ -11,6 +21,7 @@ locals {
   domain   = get_env("DOMAIN", "trilium.someone.me")
 }
 
+# Generate main terraform block
 generate "terraform" {
   path      = "terraform.tf"
   if_exists = "overwrite_terragrunt"
@@ -24,11 +35,17 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 4.20"
     }
+
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.2"
+    }
   }
 }
 EOF
 }
 
+# Generate providers block
 generate "providers" {
   path      = "providers.tf"
   if_exists = "overwrite_terragrunt"
@@ -46,6 +63,7 @@ provider "aws" {
 EOF
 }
 
+# Generate remote state block
 remote_state {
   backend = "s3"
   config = {
@@ -62,6 +80,7 @@ remote_state {
   }
 }
 
+# Generate secrets block
 generate "secrets" {
   path      = "secrets.tf"
   if_exists = "overwrite_terragrunt"
@@ -82,12 +101,14 @@ data "aws_s3_object" "keypair" {
 }
 
 resource "local_sensitive_file" "keypair" {
+  count    = ${local.is_ci ? "0" : "1"}
   filename = "$${abspath(path.root)}/$${local.keypair_filename}"
   content  = data.aws_s3_object.keypair.body
 }
 EOF
 }
 
+# Input variables
 inputs = {
   app_name = local.app_name
   app      = local.app
