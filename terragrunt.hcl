@@ -8,7 +8,7 @@ terraform {
 
 # Read environment variables
 locals {
-  is_ci             = get_env("CI") == "true"
+  is_ci             = get_env("CI", "false") == "true"
   aws_region        = get_env("AWS_REGION")
   repo_origin       = get_env("REPO_ORIGIN")
   backend_bucket    = get_env("BACKEND_BUCKET")
