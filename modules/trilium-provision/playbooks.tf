@@ -21,6 +21,10 @@ resource "null_resource" "trilium_data_volume_provisioner" {
   provisioner "local-exec" {
     command = local.cmd_trilium_data_volume_provisioner
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "null_resource" "trilium_installer" {
@@ -47,5 +51,9 @@ resource "null_resource" "trilium_installer" {
 
   provisioner "local-exec" {
     command = local.cmd_trilium_installer
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
