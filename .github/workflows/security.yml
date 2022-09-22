@@ -17,10 +17,6 @@ env:
   BACKEND_BUCKET: ${{ secrets.BACKEND_BUCKET }}
   BACKEND_LOCKTABLE: ${{ secrets.BACKEND_LOCKTABLE }}
   BACKEND_REGION: ${{ secrets.BACKEND_REGION }}
-  APP_NAME: Trilium Notes
-  APP: trilium
-  STAGE: ${{ matrix.stage }}
-  DOMAIN: notes.cednore.me
 
 jobs:
   checkov:
