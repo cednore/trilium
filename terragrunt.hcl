@@ -1,27 +1,33 @@
-# Terragrunt configurations
-terraform {
-  after_hook "output_json" { # generate json-format output file after apply or plan
-    commands = ["apply", "plan"]
-    execute  = ["just", "output-json"]
-  }
-}
-
-# Read environment variables
 locals {
-  is_ci             = get_env("CI", "false") == "true"
+  # constants
+  keypair_filename = ".keypair.pem"
+
+  # read environment variables
   aws_region        = get_env("AWS_REGION")
   repo_origin       = get_env("REPO_ORIGIN")
   backend_bucket    = get_env("BACKEND_BUCKET")
   backend_locktable = get_env("BACKEND_LOCKTABLE")
   backend_region    = get_env("BACKEND_REGION")
-
   app_name = get_env("APP_NAME", "Trilium Notes")
   app      = get_env("APP", "trilium")
   stage    = get_env("STAGE", "production")
   domain   = get_env("DOMAIN", "trilium.someone.me")
 }
 
-# Generate main terraform block
+# terragrunt configurations
+terraform {
+  after_hook "download_keypair" { # make sure keypair file exists after init
+    commands = ["init"]
+    execute  = ["just", "tg", "apply", "-auto-approve", "-target", "local_sensitive_file.keypair"]
+  }
+
+  after_hook "output_json" { # generate json-format output file after apply or plan
+    commands = ["apply", "plan"]
+    execute  = ["just", "output-json"]
+  }
+}
+
+# generate main terraform block
 generate "terraform" {
   path      = "terraform.tf"
   if_exists = "overwrite_terragrunt"
@@ -45,7 +51,7 @@ terraform {
 EOF
 }
 
-# Generate providers block
+# generate providers block
 generate "providers" {
   path      = "providers.tf"
   if_exists = "overwrite_terragrunt"
@@ -63,7 +69,7 @@ provider "aws" {
 EOF
 }
 
-# Generate remote state block
+# generate remote state block
 remote_state {
   backend = "s3"
   config = {
@@ -80,14 +86,14 @@ remote_state {
   }
 }
 
-# Generate secrets block
+# generate secrets block
 generate "secrets" {
   path      = "secrets.tf"
   if_exists = "overwrite_terragrunt"
 
   contents = <<EOF
 locals {
-  keypair_filename = ".keypair.pem"
+  keypair_filename = "${local.keypair_filename}"
   app_env_secrets  = jsondecode(data.aws_secretsmanager_secret_version.app_env.secret_string)
 }
 
@@ -101,14 +107,13 @@ data "aws_s3_object" "keypair" {
 }
 
 resource "local_sensitive_file" "keypair" {
-  count    = ${local.is_ci ? "0" : "1"}
   filename = "$${abspath(path.root)}/$${local.keypair_filename}"
   content  = data.aws_s3_object.keypair.body
 }
 EOF
 }
 
-# Input variables
+# input variables
 inputs = {
   app_name = local.app_name
   app      = local.app
