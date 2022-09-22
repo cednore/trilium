@@ -46,18 +46,26 @@ tfdocs:
 check-output:
 	test -f output.json
 
+# run trilium data volume provisioner playbook from local
+provision-data-volume: check-output
+	bash -c "$(jq -r '.cmd_trilium_data_volume_provisioner.value' output.json)"
+
+# run trilium installer playbook from local
+trilium-install: check-output
+	bash -c "$(jq -r '.cmd_trilium_installer.value' output.json)"
+
 # open a ssh session into app instance
 @connect *args='': check-output
-	eval $(jq -r '.cmd_ssh_to_app_instance.value' output.json) "$@"
+	env -- $(jq -r '.cmd_ssh_to_app_instance.value' output.json) $@
 
 # restart app container (this fixes broken notes and branches)
 restart: check-output
-	eval $(jq -r '.cmd_restart_app_container.value' output.json)
+	bash -c "$(jq -r '.cmd_restart_app_container.value' output.json)"
 
 # download app db file (sqlite)
 dbdump: check-output
-	eval $(jq -r '.cmd_download_app_db.value' output.json)
+	bash -c "$(jq -r '.cmd_download_app_db.value' output.json)"
 
 # upload app db file
 dbrestore: check-output
-	eval $(jq -r '.cmd_upload_app_db.value' output.json)
+	bash -c "$(jq -r '.cmd_upload_app_db.value' output.json)"

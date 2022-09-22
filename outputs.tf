@@ -38,3 +38,15 @@ output "cmd_upload_app_db" {
   value       = "scp -i ${local.keypair_filename} -o IdentitiesOnly=yes document.db ${module.app.instance_username}@${module.app.instance_public_ip}:${local.data_volume_mount_path}/document.db"
   sensitive   = true
 }
+
+output "cmd_trilium_data_volume_provisioner" {
+  description = "Command to run to trilium data volume provisioner playbook"
+  value       = module.provision.cmd_trilium_data_volume_provisioner
+  sensitive   = true
+}
+
+output "cmd_trilium_installer" {
+  description = "Command to run to trilium installer playbook"
+  value       = module.provision.cmd_trilium_installer
+  sensitive   = true
+}

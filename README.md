@@ -123,21 +123,23 @@ just tg plan
 ```
 $ just --list
 Available recipes:
-    check-output     # Check if output.json file exists
-    connect *args='' # Open a ssh session into app instance
-    dbdump           # Download app db file (sqlite)
-    dbrestore        # Upload app db file
-    default          # List available recipes
-    fmt              # Format tf files
-    graph            # Generate terraform graph and convert into svg format (requires graphviz)
-    hclfmt           # Format hcl files
-    init             # Initialize terragrunt and tflint
-    keygen           # Generate a new keypair
-    lint             # Lint project (by tflint)
-    output           # Terragrunt output in json format (into output.json)
-    restart          # Restart app container (this fixes broken notes and branches)
-    tfdocs           # Generate terraform documentation in markdown
-    tg *args=''      # Wrap terragrunt with dotenv loading
+    check-output          # check if output.json file exists
+    connect *args=''      # open a ssh session into app instance
+    dbdump                # download app db file (sqlite)
+    dbrestore             # upload app db file
+    default               # list available recipes
+    fmt                   # format tf files
+    graph                 # generate terraform graph and convert into svg format (requires graphviz)
+    hclfmt                # format hcl files
+    init                  # initialize terragrunt and tflint
+    keygen                # generate a new keypair
+    lint                  # lint project (by tflint)
+    output                # terragrunt output in json format (into output.json)
+    provision-data-volume # run trilium data volume provisioner playbook from local
+    restart               # restart app container (this fixes broken notes and branches)
+    tfdocs                # generate terraform documentation in markdown
+    tg *args=''           # wrap terragrunt with dotenv loading
+    trilium-install       # run trilium installer playbook from local
 ```
 
 ### Basic terragrunt scripts
@@ -249,8 +251,17 @@ Often, you might wanna login to app instance (EC2) and run a few commands or dow
 > file.
 
 ```bash
+# run trilium data volume provisioner playbook from local
+just provision-data-volume
+
+# run trilium installer playbook from local
+just trilium-install
+
 # open a ssh session into app instance
 just connect
+
+# run command remotely on the app instance
+just connect free -hw
 
 # restart app container
 just restart
