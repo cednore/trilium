@@ -40,7 +40,6 @@
 
 | Name | Type |
 |------|------|
-| [aws_s3_object.keypair](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/s3_object) | data source |
 | [aws_secretsmanager_secret_version.app_env](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 
 ## Inputs
