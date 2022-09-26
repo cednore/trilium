@@ -1,4 +1,7 @@
 locals {
+  # constants
+  keypair_filename = ".keypair.pem"
+
   # read environment variables
   aws_region        = get_env("AWS_REGION")
   repo_origin       = get_env("REPO_ORIGIN")
@@ -87,6 +90,7 @@ generate "secrets" {
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 locals {
+  keypair_filename = "${local.keypair_filename}"
   app_env_secrets  = jsondecode(data.aws_secretsmanager_secret_version.app_env.secret_string)
 }
 
