@@ -24,7 +24,6 @@
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | 4.31.0 |
-| <a name="provider_local"></a> [local](#provider\_local) | 2.2.3 |
 
 ## Modules
 
@@ -41,7 +40,6 @@
 
 | Name | Type |
 |------|------|
-| [local_sensitive_file.keypair](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/sensitive_file) | resource |
 | [aws_s3_object.keypair](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/s3_object) | data source |
 | [aws_secretsmanager_secret_version.app_env](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 
