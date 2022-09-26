@@ -97,11 +97,6 @@ locals {
 data "aws_secretsmanager_secret_version" "app_env" {
   secret_id = "scrt-$${var.app}-app-$${var.stage}-env"
 }
-
-data "aws_s3_object" "keypair" {
-  bucket = "${local.backend_bucket}"
-  key    = "env:/$${var.stage}/$${var.app}/.keypair.pem"
-}
 EOF
 }
 
