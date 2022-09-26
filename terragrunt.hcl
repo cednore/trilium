@@ -102,11 +102,6 @@ data "aws_s3_object" "keypair" {
   bucket = "${local.backend_bucket}"
   key    = "env:/$${var.stage}/$${var.app}/.keypair.pem"
 }
-
-resource "local_sensitive_file" "keypair" {
-  filename = "$${path.root}/$${local.keypair_filename}"
-  content  = data.aws_s3_object.keypair.body
-}
 EOF
 }
 
