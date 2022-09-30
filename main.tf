@@ -23,6 +23,7 @@ variable "domain" {
 }
 
 locals {
+  letsencrypt_contact_email = "cednore@gmail.com"
   app_container_name_prefix = "app"
   data_volume_mount_path    = "/mnt/app_data"
 }
@@ -35,6 +36,16 @@ module "root" {
   stage       = var.stage
   vpc_cidr    = "10.0.0.0/16"
   vpc_subnets = 3
+}
+
+module "cert" {
+  source = "./modules/trilium-cert"
+
+  app_name      = var.app_name
+  app           = var.app
+  stage         = var.stage
+  domain        = var.domain
+  email_address = local.letsencrypt_contact_email
 }
 
 module "app" {
