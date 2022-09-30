@@ -40,11 +40,6 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 4.31"
     }
-
-    local = {
-      source  = "hashicorp/local"
-      version = "~> 2.2"
-    }
   }
 }
 EOF
