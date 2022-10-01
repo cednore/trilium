@@ -29,6 +29,7 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_app"></a> [app](#module\_app) | ./modules/trilium-app | n/a |
+| <a name="module_cert"></a> [cert](#module\_cert) | ./modules/trilium-cert | n/a |
 | <a name="module_data"></a> [data](#module\_data) | ./modules/trilium-data | n/a |
 | <a name="module_end"></a> [end](#module\_end) | ./modules/trilium-end | n/a |
 | <a name="module_log"></a> [log](#module\_log) | ./modules/trilium-log | n/a |
