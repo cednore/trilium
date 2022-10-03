@@ -20,10 +20,3 @@ output "app_instance_sg_ids" {
     aws_security_group.ssh.id,
   ]
 }
-
-output "app_lb_sg_ids" {
-  description = "Security group IDs to apply on app load balancer"
-  value = [
-    aws_security_group.lb.id,
-  ]
-}
