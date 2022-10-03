@@ -85,16 +85,11 @@ module "log" {
 module "end" {
   source = "./modules/trilium-end"
 
-  app_name          = var.app_name
-  app               = var.app
-  stage             = var.stage
-  domain            = var.domain
-  vpc_id            = module.root.vpc_id
-  app_instance_id   = module.app.instance_id
-  app_lb_subnet_ids = module.root.public_subnet_ids
-  app_lb_sg_ids     = module.root.app_lb_sg_ids
-  app_lb_log_bucket = module.log.app_lb_log_bucket
-  app_lb_tg_port    = 80 # http
+  app_name               = var.app_name
+  app                    = var.app
+  stage                  = var.stage
+  domain                 = var.domain
+  app_instance_public_ip = module.app.instance_public_ip
 }
 
 module "provision" {
@@ -127,12 +122,6 @@ module "provision" {
 output "app_url" {
   description = "URL for this app"
   value       = "https://${var.domain}"
-}
-
-output "app_lb_dns_name" {
-  description = "Domain name of app load balancer"
-  value       = module.end.app_lb_dns_name
-  sensitive   = true
 }
 
 output "app_instance_public_ip" {

@@ -34,33 +34,8 @@ variable "route53_default_ttl" {
   default     = 3600
 }
 
-variable "vpc_id" {
-  description = "ID of root VPC"
+variable "app_instance_public_ip" {
+  description = "Public IP address of the app instance"
   type        = string
-}
-
-variable "app_instance_id" {
-  description = "ID of the app instance"
-  type        = string
-}
-
-variable "app_lb_subnet_ids" {
-  description = "IDs of subnets for app load balancer"
-  type        = list(string)
-}
-
-variable "app_lb_sg_ids" {
-  description = "IDs of security groups to apply to the app load balancer"
-  type        = list(string)
-}
-
-variable "app_lb_log_bucket" {
-  description = "S3 bucket to store app load balancer logs"
-  type        = string
-}
-
-variable "app_lb_tg_port" {
-  description = "HTTP port for app load balancer target group to look for"
-  type        = string
-  default     = 80
+  sensitive   = true
 }
