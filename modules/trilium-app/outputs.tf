@@ -10,7 +10,7 @@ output "instance_public_ip" {
 }
 
 output "instance_username" {
-  description = "User name of app instance"
+  description = "User name of the app instance"
   value       = "ubuntu"
   sensitive   = true
 }
