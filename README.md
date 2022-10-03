@@ -131,7 +131,6 @@ Available recipes:
     init *args=''         # initialize terragrunt project
     lint                  # lint project (by tflint)
     output-json           # terragrunt output in json format (into output.json)
-    provision-data-volume # run trilium data volume provisioner playbook from local
     restart               # restart app container (this fixes broken notes and branches)
     tfdocs                # generate terraform documentation in markdown
     tg *args=''           # wrap terragrunt with dotenv loading
@@ -224,9 +223,6 @@ Often, you might wanna login to app instance (EC2) and run a few commands or dow
 > file.
 
 ```bash
-# run trilium data volume provisioner playbook from local
-just provision-data-volume
-
 # run trilium installer playbook from local
 just trilium-install
 

@@ -125,6 +125,12 @@ output "app_instance_public_ip" {
   sensitive   = true
 }
 
+output "cmd_trilium_installer" {
+  description = "Command to run to trilium installer playbook"
+  value       = module.provision.cmd_trilium_installer
+  sensitive   = true
+}
+
 output "cmd_ssh_to_app_instance" {
   description = "Command to ssh into the app instance"
   value       = "ssh -i ${local.keypair_path} -o IdentitiesOnly=yes ${module.app.instance_username}@${module.app.instance_public_ip}"
@@ -146,11 +152,5 @@ output "cmd_download_app_db" {
 output "cmd_upload_app_db" {
   description = "Command to upload app db file (sqlite)"
   value       = "scp -i ${local.keypair_path} -o IdentitiesOnly=yes document.db ${module.app.instance_username}@${module.app.instance_public_ip}:${local.app_instance_data_dir}/document.db"
-  sensitive   = true
-}
-
-output "cmd_trilium_installer" {
-  description = "Command to run to trilium installer playbook"
-  value       = module.provision.cmd_trilium_installer
   sensitive   = true
 }

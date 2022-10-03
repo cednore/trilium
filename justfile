@@ -49,10 +49,6 @@ tfdocs:
 check-output:
 	test -f output.json
 
-# run trilium data volume provisioner playbook from local
-provision-data-volume: check-output
-	bash -c "$(jq -r '.cmd_trilium_data_volume_provisioner.value' output.json)"
-
 # run trilium installer playbook from local
 trilium-install: check-output
 	bash -c "$(jq -r '.cmd_trilium_installer.value' output.json)"
