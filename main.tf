@@ -23,9 +23,6 @@ variable "domain" {
 }
 
 locals {
-  letsencrypt_contact_email = "cednore@gmail.com"
-  app_container_name_prefix = "app"
-  data_volume_mount_path    = "/mnt/app_data"
 }
 
 module "root" {
@@ -66,11 +63,6 @@ module "data" {
   app_name              = var.app_name
   app                   = var.app
   stage                 = var.stage
-  app_instance_id       = module.app.instance_id
-  availability_zone     = module.app.instance_availability_zone
-  device_letter         = "f" # /dev/sdf, /dev/xvdf
-  volume_size           = 20  # 20 GB
-  snapshot_retain_count = 4   # keep last 4 snapshots
 }
 
 module "log" {
@@ -79,7 +71,7 @@ module "log" {
   app_name                = var.app_name
   app                     = var.app
   stage                   = var.stage
-  container_log_retention = 120 # days
+  log_retention = 120 # days
 }
 
 module "end" {
