@@ -3,14 +3,13 @@
   hosts: all
   become: true
   vars:
-    image: zadam/trilium
-    tag: latest
-    container_count: 1
-    container_name_prefix: app
-    ports: 80:8080
-    volumes: /mnt/app_data:/home/node/trilium-data
-    awslogs_region: us-east-2
-    awslogs_group:
+    image: zadam/trilium:latest
+    trilium_port: 8080
+    trilium_container_data_dir: /home/node/trilium-data
+    host_data_dir: /var/trilium
+    awslogs_region:
+    awslogs_group_app:
+    awslogs_group_proxy:
   tasks:
     - name: Install aptitude
       apt:
@@ -20,6 +19,7 @@
     - name: Install required system packages
       apt:
         pkg:
+          - acl
           - apt-transport-https
           - ca-certificates
           - curl
@@ -46,19 +46,23 @@
       pip:
         name: docker
     - name: Pull trilium docker image
-      community.docker.docker_image:
-        name: "{{ image }}:{{ tag }}"
+      docker_image:
+        name: "{{ image }}"
         source: pull
-    - name: Create trilium app containers
-      community.docker.docker_container:
-        name: "{{ container_name_prefix }}{{ item }}"
-        image: "{{ image }}:{{ tag }}"
-        ports: "{{ ports }}"
-        volumes: "{{ volumes }}"
+    - name: Prepare app data directory
+      file:
+        path: "{{ host_data_dir }}"
+        state: directory
+        mode: 0700
+    - name: Create trilium app container
+      docker_container:
+        name: app
+        image: "{{ image }}"
+        ports: "{{ trilium_port }}:{{ trilium_port }}"
+        volumes: "{{ host_data_dir }}:{{ trilium_container_data_dir }}"
         log_driver: awslogs
         log_options:
           awslogs-region: "{{ awslogs_region }}"
-          awslogs-group: "{{ awslogs_group }}"
+          awslogs-group: "{{ awslogs_group_app }}"
         state: started
         restart_policy: always
-      with_sequence: count={{ container_count }}

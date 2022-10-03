@@ -22,73 +22,47 @@ variable "stage" {
   default     = "production"
 }
 
+variable "app_instance_username" {
+  description = "User name of the app instance"
+  type        = string
+  sensitive   = true
+}
+
 variable "app_instance_public_ip" {
   description = "Public IP address of the app instance"
   type        = string
   sensitive   = true
 }
 
-variable "app_keypair_path" {
+variable "app_instance_keypair_path" {
   description = "Path to keypair file for ssh connection to the app instance"
   type        = string
   sensitive   = true
 }
 
+variable "app_instance_data_dir" {
+  description = "Path to data directory inside the app instance"
+  type        = string
+  default     = "/var/trilium"
+}
+
 variable "app_image" {
   description = "App docker image"
   type        = string
-  default     = "zadam/trilium"
+  default     = "zadam/trilium:latest"
 }
 
-variable "app_image_tag" {
-  description = "Tag for app docker image"
-  type        = string
-  default     = "latest"
-}
-
-variable "app_container_count" {
-  description = "Number of app containers to run"
-  type        = number
-  default     = 1
-}
-
-variable "app_container_name_prefix" {
-  description = "Name prefix of app containers"
-  type        = string
-  default     = "app"
-}
-
-variable "app_container_ports" {
-  description = "Ports to publish from the container to the host"
-  type        = string
-  default     = "80:8080"
-}
-
-variable "app_container_data_path" {
-  description = "Path to the data directory inside the app container"
-  type        = string
-  default     = "/home/node/trilium-data"
-}
-
-variable "app_container_log_group" {
-  description = "CloudWatch log group for app containers"
+variable "log_group_region" {
+  description = "Region of the log groups"
   type        = string
 }
 
-variable "data_volume_id" {
-  description = "Volume ID of data volume"
+variable "app_log_group" {
+  description = "CloudWatch log group for the app"
   type        = string
-  sensitive   = true
 }
 
-variable "data_volume_filesystem" {
-  description = "Filesystem of data volume"
+variable "proxy_log_group" {
+  description = "CloudWatch log group for the proxy"
   type        = string
-  default     = "ext4"
-}
-
-variable "data_volume_mount_path" {
-  description = "Path to mount the data volume device"
-  type        = string
-  default     = "/mnt/app_data"
 }
