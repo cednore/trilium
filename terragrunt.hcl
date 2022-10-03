@@ -16,9 +16,12 @@ locals {
 
 # terragrunt configurations
 terraform {
-  after_hook "download_keypair" { # make sure keypair file exists after init
+  after_hook "download_keypair" { # making sure keypair file exists after init
     commands = ["init"]
-    execute  = ["aws", "s3", "cp", "s3://${local.backend_bucket}/env:/${local.stage}/${local.app}/.keypair.pem", "."]
+    execute = [
+      "aws", "s3", "cp",
+      "s3://${local.backend_bucket}/env:/${local.stage}/${local.app}/${local.keypair_filename}", ".",
+    ]
   }
 
   after_hook "output_json" { # generate output file in json after apply or plan
@@ -86,11 +89,12 @@ generate "secrets" {
   contents  = <<EOF
 locals {
   keypair_filename = "${local.keypair_filename}"
-  app_env_secrets  = jsondecode(data.aws_secretsmanager_secret_version.app_env.secret_string)
+  keypair_path     = "$${path.root}/$${local.keypair_filename}"
+  secret           = jsondecode(data.aws_secretsmanager_secret_version.main.secret_string)
 }
 
-data "aws_secretsmanager_secret_version" "app_env" {
-  secret_id = "scrt-$${var.app}-app-$${var.stage}-env"
+data "aws_secretsmanager_secret_version" "main" {
+  secret_id = "scrt-$${var.app}-secret-$${var.stage}-secret"
 }
 EOF
 }
