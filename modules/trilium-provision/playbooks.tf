@@ -9,6 +9,7 @@ resource "null_resource" "trilium_installer" {
 
   triggers = {
     src_hash = filesha256("${path.module}/trilium.yml")
+    config_hash = filesha256("${path.module}/config/nginx/nginx.conf.j2")
     dependencies = jsonencode([
       var.cert,
       var.app_instance_username,

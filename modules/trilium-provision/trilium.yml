@@ -95,3 +95,9 @@
           awslogs-group: "{{ awslogs_group_proxy }}"
         state: started
         restart_policy: always
+    - name: Create docker network
+      docker_network:
+        name: trilium
+        connected:
+          - app
+          - proxy
