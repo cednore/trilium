@@ -19,13 +19,6 @@
         name: aptitude
         state: latest
         update_cache: true
-    - name: Remove apache2 if installed
-      apt:
-        pkg:
-          - apache2
-        state: absent
-        purge: true
-        update_cache: true
     - name: Install required system packages
       apt:
         pkg:
@@ -37,7 +30,6 @@
           - python3-pip
           - virtualenv
           - python3-setuptools
-          - nginx
         state: latest
         update_cache: true
     - name: Add docker gpg apt key
@@ -74,7 +66,7 @@
     - name: Copy SSL certificates
       copy:
         src: "{{ config_src }}/ssl"
-        dest: "{{ app_dir }}/config/ssl"
+        dest: "{{ app_dir }}/config"
     - name: Start trilium app container
       docker_container:
         name: app

@@ -99,6 +99,7 @@ module "provision" {
   app                       = var.app
   stage                     = var.stage
   domain                    = var.domain
+  cert                      = module.cert.cert
   app_instance_username     = module.app.instance_username
   app_instance_public_ip    = module.app.instance_public_ip
   app_instance_keypair_path = local.keypair_path

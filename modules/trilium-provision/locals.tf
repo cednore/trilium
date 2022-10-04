@@ -6,6 +6,11 @@ locals {
   }
   slug = "${var.app}-${var.module}-${var.stage}"
 
+  cmd_prepare_local_ssl_cert_files = <<BASH
+    mkdir -p ${path.module}/config/ssl/cert && \
+    echo "${var.cert.certificate_pem}" > ${path.module}/config/ssl/cert/${var.domain}.crt && \
+    echo "${var.cert.private_key_pem}" > ${path.module}/config/ssl/cert/${var.domain}.key
+  BASH
   cmd_trilium_installer = <<BASH
     ANSIBLE_NOCOWS=1 ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook ${path.module}/trilium.yml \
       -u ${var.app_instance_username} \

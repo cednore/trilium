@@ -10,6 +10,7 @@ resource "null_resource" "trilium_installer" {
   triggers = {
     src_hash = filesha256("${path.module}/trilium.yml")
     dependencies = jsonencode([
+      var.cert,
       var.app_instance_username,
       var.app_instance_public_ip,
       var.app_instance_keypair_path,
@@ -21,6 +22,10 @@ resource "null_resource" "trilium_installer" {
       var.app_log_group,
       var.proxy_log_group,
     ])
+  }
+
+  provisioner "local-exec" {
+    command = local.cmd_prepare_local_ssl_cert_files
   }
 
   provisioner "local-exec" {

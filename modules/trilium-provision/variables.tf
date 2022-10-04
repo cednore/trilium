@@ -28,6 +28,16 @@ variable "domain" {
   default     = "trilium.someone.me"
 }
 
+variable "cert" {
+  description = "The SSL certificate files for the domain"
+  type = object({
+    certificate_pem = string
+    issuer_pem      = string
+    private_key_pem = string
+  })
+  sensitive = true
+}
+
 variable "app_instance_username" {
   description = "User name of the app instance"
   type        = string
