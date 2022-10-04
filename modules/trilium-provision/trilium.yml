@@ -1,0 +1,105 @@
+---
+- name: Install and configure Trilium
+  hosts: all
+  become: true
+  vars:
+    config_src: ./config
+    app_dir: /opt/trilium
+    app_domain: trilium.someone.me
+    app_image: zadam/trilium:latest
+    app_port: 8080
+    app_container_data_dir: /home/node/trilium-data
+    proxy_image: nginx:alpine
+    awslogs_region:
+    awslogs_group_app:
+    awslogs_group_proxy:
+  tasks:
+    - name: Install aptitude
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+    - name: Remove apache2 if installed
+      apt:
+        pkg:
+          - apache2
+        state: absent
+        purge: true
+        update_cache: true
+    - name: Install required system packages
+      apt:
+        pkg:
+          - acl
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+          - nginx
+        state: latest
+        update_cache: true
+    - name: Add docker gpg apt key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: Add docker repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+    - name: Install docker module for python
+      pip:
+        name: docker
+    - name: Prepare app data directory
+      file:
+        path: "{{ item.path }}"
+        state: directory
+        mode: 0700
+        recurse: yes
+      loop:
+        - { path: "{{ app_dir }}" }
+        - { path: "{{ app_dir }}/data" }
+        - { path: "{{ app_dir }}/config" }
+        - { path: "{{ app_dir }}/config/nginx" }
+    - name: Prepare nginx proxy config
+      template:
+        src: "{{ config_src }}/nginx/nginx.conf.j2"
+        dest: "{{ app_dir }}/config/nginx/nginx.conf"
+    - name: Copy SSL certificates
+      copy:
+        src: "{{ config_src }}/ssl"
+        dest: "{{ app_dir }}/config/ssl"
+    - name: Start trilium app container
+      docker_container:
+        name: app
+        image: "{{ app_image }}"
+        ports: "{{ app_port }}:{{ app_port }}"
+        volumes: "{{ app_dir }}/data:{{ app_container_data_dir }}"
+        log_driver: awslogs
+        log_options:
+          awslogs-region: "{{ awslogs_region }}"
+          awslogs-group: "{{ awslogs_group_app }}"
+        state: started
+        restart_policy: always
+    - name: Start nginx proxy container
+      docker_container:
+        name: proxy
+        image: "{{ proxy_image }}"
+        ports:
+          - 80:80
+          - 443:443
+        volumes:
+          - "{{ app_dir }}/config/nginx:/etc/nginx:ro"
+          - "{{ app_dir }}/config/ssl:/etc/ssl:ro"
+        log_driver: awslogs
+        log_options:
+          awslogs-region: "{{ awslogs_region }}"
+          awslogs-group: "{{ awslogs_group_proxy }}"
+        state: started
+        restart_policy: always

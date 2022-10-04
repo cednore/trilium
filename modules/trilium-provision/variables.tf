@@ -22,6 +22,12 @@ variable "stage" {
   default     = "production"
 }
 
+variable "domain" {
+  description = "Domain name to host this app"
+  type        = string
+  default     = "trilium.someone.me"
+}
+
 variable "app_instance_username" {
   description = "User name of the app instance"
   type        = string
@@ -40,16 +46,22 @@ variable "app_instance_keypair_path" {
   sensitive   = true
 }
 
-variable "app_instance_data_dir" {
-  description = "Path to data directory inside the app instance"
+variable "app_dir" {
+  description = "Path to app directory inside the app instance"
   type        = string
-  default     = "/var/trilium"
+  default     = "/opt/trilium"
 }
 
 variable "app_image" {
   description = "App docker image"
   type        = string
   default     = "zadam/trilium:latest"
+}
+
+variable "proxy_image" {
+  description = "Proxy docker image"
+  type        = string
+  default     = "nginx:alpine"
 }
 
 variable "log_group_region" {

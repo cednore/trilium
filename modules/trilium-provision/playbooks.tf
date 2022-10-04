@@ -8,13 +8,15 @@ resource "null_resource" "trilium_installer" {
   ]
 
   triggers = {
-    src_hash = filesha256("${path.module}/playbooks/trilium.yml")
+    src_hash = filesha256("${path.module}/trilium.yml")
     dependencies = jsonencode([
       var.app_instance_username,
       var.app_instance_public_ip,
       var.app_instance_keypair_path,
-      var.app_instance_data_dir,
+      var.app_dir,
+      var.domain,
       var.app_image,
+      var.proxy_image,
       var.log_group_region,
       var.app_log_group,
       var.proxy_log_group,

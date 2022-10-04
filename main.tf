@@ -23,7 +23,7 @@ variable "domain" {
 }
 
 locals {
-  app_instance_data_dir = "/var/trilium"
+  app_dir = "/opt/trilium"
 }
 
 module "root" {
@@ -98,11 +98,13 @@ module "provision" {
   app_name                  = var.app_name
   app                       = var.app
   stage                     = var.stage
+  domain                    = var.domain
   app_instance_username     = module.app.instance_username
   app_instance_public_ip    = module.app.instance_public_ip
   app_instance_keypair_path = local.keypair_path
-  app_instance_data_dir     = local.app_instance_data_dir
+  app_dir                   = local.app_dir
   app_image                 = "zadam/trilium:0.55.1"
+  proxy_image               = "nginx:1.23.1-alpine"
   log_group_region          = module.log.log_group_region
   app_log_group             = module.log.app_log_group
   proxy_log_group           = module.log.proxy_log_group
@@ -145,12 +147,12 @@ output "cmd_restart_app_container" {
 
 output "cmd_download_app_db" {
   description = "Command to download app db file (sqlite)"
-  value       = "scp -i ${local.keypair_path} -o IdentitiesOnly=yes ${module.app.instance_username}@${module.app.instance_public_ip}:${local.app_instance_data_dir}/document.db ."
+  value       = "scp -i ${local.keypair_path} -o IdentitiesOnly=yes ${module.app.instance_username}@${module.app.instance_public_ip}:${local.app_dir}/document.db ."
   sensitive   = true
 }
 
 output "cmd_upload_app_db" {
   description = "Command to upload app db file (sqlite)"
-  value       = "scp -i ${local.keypair_path} -o IdentitiesOnly=yes document.db ${module.app.instance_username}@${module.app.instance_public_ip}:${local.app_instance_data_dir}/document.db"
+  value       = "scp -i ${local.keypair_path} -o IdentitiesOnly=yes document.db ${module.app.instance_username}@${module.app.instance_public_ip}:${local.app_dir}/document.db"
   sensitive   = true
 }
