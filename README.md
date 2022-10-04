@@ -33,7 +33,7 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 
 ### What's included 🗃️
 
-1. A **terragrunt** project defining multi-staged hosting infrastructure and provisioners (**Ansible playbook** powered)
+1. A **terragrunt** project defining multi-staged hosting infrastructure and provisioners
 2. Auto-generated [terraform documentation](#terraform-documentation)
 3. GitHub actions;
    - Infrastructure drift detection (on every push, scheduled)
@@ -44,44 +44,45 @@ especially [server installation/deployment page](https://github.com/zadam/triliu
 
 ### Infrastructure summary 🏗️
 
-1. Single **VPC** with 3 public/private subnets
-2. App instance by **EC2** (default `t3.micro`), publicly accessible via SSH
-3. **Docker**ized app container (default `zadam/trilium:0.55.1`, count `1`)
-4. Frontline **ALB** with HTTP/HTTPS listeners
-5. **ACM** certificate attached to ALB (use apex domain's ACM by default, assuming this covers subdomains as well)
-6. **EBS** data volume attached (default `20GB`)
-7. **DLM lifecycle policy** to snapshot data volume (`every Sunday` by default, keeping last 4 snapshots)
-8. **CloudWatch log group** to keep app container logs
-9. **S3** bucket to keep ALB logs
-10. **Security group**s for app instance and ALB
-11. **Route53** records for domain name registration (default subdomain level)
-12. **Ansible** playbooks to provision app container and data volume
-13. Everything is written in **Terraform**, highly modularized, wrapped by **Terragrunt**
+1. Single **VPC** with `3` public/private subnets
+2. An **EC2** instance (`t3.micro` as default), publicly accessible via SSH
+3. **Docker**ized app container (default `zadam/trilium:0.55.1`)
+4. HTTPS proxy powered by **nginx** (inside a docker container)
+5. **CloudWatch log group** to keep app logs and proxy logs
+6. **S3** bucket to keep the app data backups
+7. **Security group**s for the app instance
+8. **Route53** records for domain name registration (subdomain level as default)
+9. A SSL certificate issued by **Let's Encrypt** for the app domain name
+10. **Ansible** playbooks to install and configure trilium on the EC2 instance
+11. Everything is written in **Terraform**, highly modularized, wrapped by **Terragrunt**
 
 ## 🧱 Prerequisites
 
-1. [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.3`
-2. [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/) `>= 0.38`
-3. An AWS account
-4. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (with credentials
-   configured)
-5. S3 backend (a S3 bucket and a DynamoDB table)
-6. A personal domain, a public Route 53 hosted zone managing this personal domain, and an ACM certificate which is
-   subject to the apex domain and all subdomains as well.
-7. A SSH keypair `.keypair.pem`, along with terraform state file inside the backend bucket, for connecting the EC2
-   instance and an ASM secret for holding secrets and configurations (these will be read and downloaded while applying,
-   see `generate "secrets"` block at [`terragrunt.hcl`](terragrunt.hcl)).
-8. `.env` file, for environment variables (see [`.env.example`](.env.example))
-9. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (for provisioning
-   playbooks)
-10. [just](https://github.com/casey/just) (for running development scripts)
-11. [TFLint](https://github.com/terraform-linters/tflint) for linting tf files
-12. [terraform-docs](https://terraform-docs.io/user-guide/installation/) for generating terraform documentation
-    (optional)
-13. [tfsec](https://github.com/aquasecurity/tfsec) and [Checkov](https://www.checkov.io/) for scanning security
-    vulnerabilities (optional)
-14. SQLite DB Browser (optional, for manually tweaking app db)
-15. Code editor/IDE ofc 😉
+### Cloud
+
+1. An AWS account + [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+   (with credentials configured)
+2. S3 backend (a S3 bucket and a DynamoDB table)
+3. A personal domain and a public Route53 hosted zone managing this personal domain
+4. A SSH keypair `.keypair.pem`, along with terraform state file inside the backend bucket, and an ASM secret for
+   holding secrets and configurations (these will be read and downloaded while applying, see `generate "secrets"` block
+   at [`terragrunt.hcl`](terragrunt.hcl))
+5. `.env` file, for environment variables (see [`.env.example`](.env.example))
+
+### Development tools
+
+1. [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) `>= 1.3` +
+   [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/) `>= 0.38`
+2. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html), for provisioning
+   playbooks
+3. [just](https://github.com/casey/just), for running development scripts
+4. [TFLint](https://github.com/terraform-linters/tflint), for linting tf files
+5. [terraform-docs](https://terraform-docs.io/user-guide/installation/), for generating terraform documentation
+   (optional)
+6. [tfsec](https://github.com/aquasecurity/tfsec) and [Checkov](https://www.checkov.io/), for scanning security
+   vulnerabilities (optional)
+7. SQLite DB Browser (optional, for manually tweaking app db)
+8. Code editor/IDE ofc 😉
 
 ## ⚡ Getting started
 
@@ -120,23 +121,23 @@ just tg plan
 ```
 $ just --list
 Available recipes:
-    check-output          # check if output.json file exists
-    connect *args=''      # open a ssh session into app instance
-    dbdump                # download app db file (sqlite)
-    dbrestore             # upload app db file
-    default               # list available recipes
-    drift-check *args=''  # check for infrastructure drift
-    fmt                   # format tf and hcl files
-    graph                 # generate terraform graph and convert into svg format (requires graphviz)
-    init *args=''         # initialize terragrunt project
-    lint                  # lint project (by tflint)
-    output-json           # terragrunt output in json format (into output.json)
-    restart               # restart app container (this fixes broken notes and branches)
-    tfdocs                # generate terraform documentation in markdown
-    tg *args=''           # wrap terragrunt with dotenv loading
-    trilium-install       # run trilium installer playbook from local
-    upgrade *args=''      # upgrade providers
-    validate *args=''     # validate terragrunt project
+    check-output         # check if output.json file exists
+    connect *args=''     # open a ssh session into app instance
+    dbdump               # download app db file (sqlite)
+    dbrestore            # upload app db file
+    default              # list available recipes
+    drift-check *args='' # check for infrastructure drift
+    fmt                  # format tf and hcl files
+    graph                # generate terraform graph and convert into svg format (requires graphviz)
+    init *args=''        # initialize terragrunt project
+    lint                 # lint project (by tflint)
+    output-json          # terragrunt output in json format (into output.json)
+    restart              # restart app container (this fixes broken notes and branches)
+    tfdocs               # generate terraform documentation in markdown
+    tg *args=''          # wrap terragrunt with dotenv loading
+    trilium-install      # run trilium installer playbook from local
+    upgrade *args=''     # upgrade providers
+    validate *args=''    # validate terragrunt project
 ```
 
 ### Basic terragrunt scripts
@@ -158,6 +159,9 @@ just validate
 # equivalent of `terragrunt plan` with dotenv loading
 just tg plan
 
+# equivalent of `terragrunt apply` with dotenv loading
+just tg apply
+
 # check for infrastructure drift
 just drift-check
 ```
@@ -173,8 +177,8 @@ JSON format.
 
 See [`outputs.tf`](outputs.tf) file and check out what's being outputted.
 
-> ⚠️ WARNING: Sensitive data is also included in terraform output. Please hide/mask sensitive values from being displayed
-> in public place where everyone is accessible (e.g CI/CD pipelines' stdout and stderr).
+> ⚠️ WARNING: The terraform output includes sensitive data. Please hide/mask sensitive values from being displayed in
+> public place where everyone is accessible (e.g CI/CD pipelines' stdout and stderr).
 
 ```bash
 # terragrunt output in json format (into output.json)
@@ -226,10 +230,10 @@ Often, you might wanna login to app instance (EC2) and run a few commands or dow
 # run trilium installer playbook from local
 just trilium-install
 
-# open a ssh session into app instance
+# open a ssh session into the app instance
 just connect
 
-# run command remotely on the app instance
+# run a command remotely on the app instance
 just connect free -hw
 
 # restart app container
@@ -251,6 +255,7 @@ Contributions are welcome by opening issues and pull requests. See [CONTRIBUTING
 
 ## 🚧 Roadmap
 
+- [ ] Automagical backup to S3 bucket
 - [ ] Self-starter/forking guide
 - [ ] Budget-tracking
 - [ ] SRE concepts; monitoring performance and more
