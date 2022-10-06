@@ -11,4 +11,56 @@
 [![Ansible](https://img.shields.io/badge/ansible-%231A1918.svg?style=for-the-badge&logo=ansible&logoColor=white)](https://ansible.com/)
 
 <!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.31 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.33.0 |
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_app"></a> [app](#module\_app) | ./modules/trilium-app | n/a |
+| <a name="module_cert"></a> [cert](#module\_cert) | ./modules/trilium-cert | n/a |
+| <a name="module_data"></a> [data](#module\_data) | ./modules/trilium-data | n/a |
+| <a name="module_end"></a> [end](#module\_end) | ./modules/trilium-end | n/a |
+| <a name="module_log"></a> [log](#module\_log) | ./modules/trilium-log | n/a |
+| <a name="module_provision"></a> [provision](#module\_provision) | ./modules/trilium-provision | n/a |
+| <a name="module_root"></a> [root](#module\_root) | ./modules/trilium-root | n/a |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [aws_secretsmanager_secret_version.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_app"></a> [app](#input\_app) | URL friendly name of this app | `string` | `"trilium"` | no |
+| <a name="input_app_name"></a> [app\_name](#input\_app\_name) | Name of this app | `string` | `"Trilium Notes"` | no |
+| <a name="input_domain"></a> [domain](#input\_domain) | Domain name to host this app | `string` | `"trilium.someone.me"` | no |
+| <a name="input_stage"></a> [stage](#input\_stage) | Stage of deployment | `string` | `"production"` | no |
+
+## Outputs
+
+| Name | Description | Value | Sensitive |
+|------|-------------|-------|:---------:|
+| <a name="output_app_instance_public_ip"></a> [app\_instance\_public\_ip](#output\_app\_instance\_public\_ip) | Public IP address of the app instance | `<sensitive>` | yes |
+| <a name="output_app_instance_username"></a> [app\_instance\_username](#output\_app\_instance\_username) | User name of the app instance | `<sensitive>` | yes |
+| <a name="output_app_url"></a> [app\_url](#output\_app\_url) | URL for this app | `"https://notes.cednore.me"` | no |
+| <a name="output_cmd_download_app_db"></a> [cmd\_download\_app\_db](#output\_cmd\_download\_app\_db) | Command to download app db file (sqlite) | `<sensitive>` | yes |
+| <a name="output_cmd_restart_app_container"></a> [cmd\_restart\_app\_container](#output\_cmd\_restart\_app\_container) | Command to restart the app instance | `<sensitive>` | yes |
+| <a name="output_cmd_ssh_to_app_instance"></a> [cmd\_ssh\_to\_app\_instance](#output\_cmd\_ssh\_to\_app\_instance) | Command to ssh into the app instance | `<sensitive>` | yes |
+| <a name="output_cmd_trilium_installer"></a> [cmd\_trilium\_installer](#output\_cmd\_trilium\_installer) | Command to run to trilium installer playbook | `<sensitive>` | yes |
+| <a name="output_cmd_upload_app_db"></a> [cmd\_upload\_app\_db](#output\_cmd\_upload\_app\_db) | Command to upload app db file (sqlite) | `<sensitive>` | yes |
 <!-- END_TF_DOCS -->
