@@ -148,12 +148,12 @@ output "cmd_restart_app_container" {
 
 output "cmd_download_app_db" {
   description = "Command to download app db file (sqlite)"
-  value       = "scp -i ${local.keypair_path} -o IdentitiesOnly=yes ${module.app.instance_username}@${module.app.instance_public_ip}:${local.app_dir}/document.db ."
+  value       = "scp -i ${local.keypair_path} -o IdentitiesOnly=yes ${module.app.instance_username}@${module.app.instance_public_ip}:${local.app_dir}/data/document.db ."
   sensitive   = true
 }
 
 output "cmd_upload_app_db" {
   description = "Command to upload app db file (sqlite)"
-  value       = "scp -i ${local.keypair_path} -o IdentitiesOnly=yes document.db ${module.app.instance_username}@${module.app.instance_public_ip}:${local.app_dir}/document.db"
+  value       = "scp -i ${local.keypair_path} -o IdentitiesOnly=yes document.db ${module.app.instance_username}@${module.app.instance_public_ip}:${local.app_dir}/data/document.db"
   sensitive   = true
 }
