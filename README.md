@@ -256,6 +256,7 @@ Contributions are welcome by opening issues and pull requests. See [CONTRIBUTING
 ## 🚧 Roadmap
 
 - [ ] Automagical backup to S3 bucket
+- [ ] dbdump not working due to permission error
 - [ ] Self-starter/forking guide
 - [ ] Budget-tracking
 - [ ] SRE concepts; monitoring performance and more
